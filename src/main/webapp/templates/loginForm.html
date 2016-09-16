@@ -1,0 +1,33 @@
+<div class="bighalftransbox col-xs-11" ng-controller="loginController as loginCtrl" > 
+<div class="container formHolder">
+  <div class="col-sm-offset-3"><h2>Вход</h2></div>
+  <br/>
+  <br/>
+  <form class="form-horizontal" ng-submit="loginCtrl.login()">
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="username">Имя пользователя:</label>
+      <div class="col-sm-6">
+        <input type="text" ng-model="loginCtrl.user.username" class="form-control" name="username" id="username" placeholder="Имя" class="input-xlarge">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="pwd">Пароль:</label>
+      <div class="col-sm-6">
+        <input type="password" ng-model="loginCtrl.user.password" class="form-control" name="password" id="pwd" placeholder="Пароль" class="input-xlarge">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-6">
+        <div class="checkbox">
+          <label><input type="checkbox" ng-model="loginCtrl.user.rememberMe">Запомнить меня</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-6">
+        <button type="submit" class="btn btn-default">Войти</button>
+      </div>
+    </div>
+  </form>
+</div>
+</div>

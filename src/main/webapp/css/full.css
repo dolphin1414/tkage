@@ -1,0 +1,127 @@
+/*
+ * Start Bootstrap - Full (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+body {
+	margin-top: 50px;
+	/* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+/* Header Image Background - Change the URL below to your image path (example: ../images/background.jpg) */
+.full {
+	/* background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+		url('../img/serjexp.jpg') no-repeat center center fixed; */
+	/* Location of the image */
+	background-image: url(../img/serjexp.jpg);
+	width: 100%; height : 130%;
+	/* Background image is centered vertically and horizontally at all times */
+	background-position: center center;
+	/* Background image doesn't tile */
+	background-repeat: no-repeat;
+	/* Background image is fixed in the viewport so that it doesn't move when 
+     the content's height is greater than the image's height */
+	/* background-attachment: fixed; */
+	/* This is what makes the background image rescale based
+     on the container's size */
+	-webkit-background-size: cover; -moz-background-size : cover;
+	background-size : cover; -o-background-size : cover;
+	/* Set a background color that will be displayed
+     while the background image is loading */
+	background-color: #464646;
+	-moz-background-size: cover;
+	background-size: cover;
+	-o-background-size: cover;
+	height: 100%;
+}
+div.transbox {
+	position: absolute;
+	top: 90%;
+	left: 40%;
+	transform: translate(-50%, -50%);
+	color: white;
+	text-align: center;
+}
+
+div.transbox>h1 {
+	text-transform: uppercase;
+	margin: 0;
+	font-size: 4rem;
+	white-space: nowrap;
+}
+
+div.transbox>p {
+	margin: 0;
+	font-size: 1.5rem;
+}
+
+a:hover {
+	cursor: pointer;
+}
+
+div.halftransbox {
+	background-color: rgba(255, 255, 255, 0.85);
+	position: absolute;
+	height: 70%;
+	top: 10%;
+	left: 5%;
+	margin: 10px;
+	padding: 20px;
+	overflow: auto;
+	color: black;
+	text-align: left;
+}
+
+div.bighalftransbox {
+	background-color: rgba(255, 255, 255, 0.9);
+	position: absolute;
+	height: 90%;
+	width: 90%;
+	top: 5%;
+	right: 5%;
+	left: 5%;
+	margin: 5px;
+	padding: 20px;
+	overflow: auto;
+	color: black;
+	text-align: left;
+}
+
+div::-webkit-scrollbar {
+	width: 1em;
+}
+
+div::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+div::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: rgba(33, 33, 33, 0.85);
+	outline: 1px solid slategrey;
+}
+
+.videoWrapperWrapper {
+	max-width: 600px;
+	/* max-height: 400px ; */
+	height: 100%;
+}
+
+.videoWrapper {
+	/* float: none; */
+	/* padding-bottom: 56.25%; 16:9 Aspect Ratio */
+	/* padding-top: 5px; */
+	/*  width: 100%;
+	height: 150%;  */
+	/* max-width: 600px;
+	max-height: 400px; */
+	
+}
+
+.videoWrapper iframe {
+	position: relative;
+	width: 100% !important;
+	/* height: 400px !important;  */
+	/* max-width: 560px !important;
+	max-height: 315px !important;  */
+}
