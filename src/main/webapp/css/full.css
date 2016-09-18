@@ -14,7 +14,8 @@ body {
 		url('../img/serjexp.jpg') no-repeat center center fixed; */
 	/* Location of the image */
 	background-image: url(../img/serjexp.jpg);
-	width: 100%; height : 130%;
+	width: 100%;
+	height: 130%;
 	/* Background image is centered vertically and horizontally at all times */
 	background-position: center center;
 	/* Background image doesn't tile */
@@ -24,8 +25,10 @@ body {
 	/* background-attachment: fixed; */
 	/* This is what makes the background image rescale based
      on the container's size */
-	-webkit-background-size: cover; -moz-background-size : cover;
-	background-size : cover; -o-background-size : cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+	-o-background-size: cover;
 	/* Set a background color that will be displayed
      while the background image is loading */
 	background-color: #464646;
@@ -34,6 +37,7 @@ body {
 	-o-background-size: cover;
 	height: 100%;
 }
+
 div.transbox {
 	position: absolute;
 	top: 90%;
@@ -71,6 +75,23 @@ div.halftransbox {
 	color: black;
 	text-align: left;
 }
+
+@media ( max-width : 767px) {
+	div.halftransbox {
+		background-color: rgba(255, 255, 255, 0.85);
+		position: absolute;
+		height: 85%;
+		top: 10%;
+		left: 5%;
+		margin: 10px;
+		padding: 20px;
+		overflow: auto;
+		color: black;
+		text-align: left;
+	}
+}
+
+
 
 div.bighalftransbox {
 	background-color: rgba(255, 255, 255, 0.9);

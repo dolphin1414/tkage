@@ -25,13 +25,32 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.utils;
+package tk.serjmusic.models;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.security.core.GrantedAuthority;
+
+import javax.persistence.Cacheable;
 
 /**
- * Resource file for application constants.
+ * Enumeration of user roles for access distinction. It's an implementation 
+ * of {@link GrantedAuthority} interface
  *
  * @author Roman Kondakov
  */
-public class R {
-    public static final  String HIBERNATE_QUERY_CACHE = "org.hibernate.cacheable";
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+public enum UserRole implements GrantedAuthority {
+    
+    ROLE_USER, ROLE_ADMIN, ROLE_OWNER;
+
+    /* (non-Javadoc)
+     * @see org.springframework.security.core.GrantedAuthority#getAuthority()
+     */
+    @Override
+    public String getAuthority() {
+        return name();
+    }
+    
 }

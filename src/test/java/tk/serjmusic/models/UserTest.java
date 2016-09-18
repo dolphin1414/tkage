@@ -25,13 +25,39 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.utils;
+package tk.serjmusic.models;
+
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
+
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.HashSet;
 
 /**
- * Resource file for application constants.
+ * Test case for hashCode()/equals contract for user entity. 
  *
  * @author Roman Kondakov
  */
-public class R {
-    public static final  String HIBERNATE_QUERY_CACHE = "org.hibernate.cacheable";
+public class UserTest {
+
+    /**
+     * <p>Testing hC/e contract using EqualsVerifier library.</p>
+     *
+     * <p>Test method for {@link tk.serjmusic.models.User#equals(java.lang.Object)} and
+     * {@link tk.serjmusic.models.User#hashCode(java.lang.Object)}</p>
+     */
+    @Test
+    public final void testHashCodeEqualsContract() {
+        EqualsVerifier.forClass(BlogEntry.class)
+        .withPrefabValues(User.class, new User("a"), new User("b"))
+        .withPrefabValues(BlogEntry.class, new BlogEntry("a"), new BlogEntry("b"))
+        .withPrefabValues(HashSet.class, 
+                new HashSet<BlogEntry>(Arrays.asList(new BlogEntry("a"))),
+                new HashSet<BlogEntry>(Arrays.asList(new BlogEntry("b"))))
+        .suppress(Warning.STRICT_INHERITANCE)
+        .suppress(Warning.ALL_FIELDS_SHOULD_BE_USED)
+        .verify();
+    }
 }

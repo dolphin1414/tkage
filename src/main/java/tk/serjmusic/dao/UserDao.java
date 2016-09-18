@@ -25,13 +25,45 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.utils;
+package tk.serjmusic.dao;
+
+
+import tk.serjmusic.models.BlogComment;
+import tk.serjmusic.models.User;
+
+import java.util.List;
 
 /**
- * Resource file for application constants.
+ * DAO interface for {@link User} entity.
  *
  * @author Roman Kondakov
  */
-public class R {
-    public static final  String HIBERNATE_QUERY_CACHE = "org.hibernate.cacheable";
+public interface UserDao extends GenericDao<User> {
+    
+    /**
+     * Retrieve user by his name.
+     * 
+     * @param username user's name for lookup
+     * @return found user
+     */
+    public User getUserByUsername(String username);
+    
+    /**
+     * Retrieve user by his e-mail.
+     * 
+     * @param email user's e-mail.
+     * @return user with requested e-mail.
+     */
+    public User getUserByEmail(String email);
+    
+    /**
+     * Retrieve paginated user's comments.
+     * 
+     * @param id id of requested user
+     * @param pageNumber he number of page of comments (pagination starts with 1)
+     * @param pageSize size of each page
+     * @return list of user's comments
+     */
+    public List<BlogComment> getUserCommentsByUserId(int id, int pageNumber, int pageSize);
+
 }

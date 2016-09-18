@@ -25,13 +25,32 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.utils;
+package tk.serjmusic.dao.impl;
+
+import org.springframework.stereotype.Repository;
+
+import tk.serjmusic.dao.AbstractGenericDao;
+import tk.serjmusic.dao.PhotoEntryDao;
+import tk.serjmusic.models.PhotoEntry;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
- * Resource file for application constants.
+ * JPA implementation of {@link PhotoEntryDao}.
  *
  * @author Roman Kondakov
  */
-public class R {
-    public static final  String HIBERNATE_QUERY_CACHE = "org.hibernate.cacheable";
+@Repository
+public class PhotoEntryDaoImpl extends AbstractGenericDao<PhotoEntry> implements PhotoEntryDao {
+    
+    @PersistenceContext
+    private EntityManager entityManager;
+    
+    @PostConstruct
+    private void init() {
+        setEntityManager(entityManager);
+    }
+    
 }

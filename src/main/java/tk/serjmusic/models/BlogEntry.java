@@ -1,22 +1,22 @@
 /**
  * This is free and unencumbered software released into the public domain.
- * 
+ *
  * Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software, either
  * in source code form or as a compiled binary, for any purpose, commercial or non-commercial, and
  * by any means.
- * 
+ *
  * In jurisdictions that recognize copyright laws, the author or authors of this software dedicate
  * any and all copyright interest in the software to the public domain. We make this dedication for
  * the benefit of the public at large and to the detriment of our heirs and successors. We intend
  * this dedication to be an overt act of relinquishment in perpetuity of all present and future
  * rights to this software under copyright law.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
  * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- * 
+ *
  * For more information, please refer to <http://unlicense.org/>
  */
 
@@ -25,47 +25,65 @@ package tk.serjmusic.models;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
- * A photo entry entity for a blog. Contains a photo description and a link to image source.
- * 
+ * A blog entity. Contains blog title, description and link to blog images. Blog entries may be
+ * associated with it's comments.
+ *
  * @author Roman Kondakov
  */
+
 @Entity
-@Table(name = "photo_entries")
+@Table(name = "blog_entries")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class PhotoEntry extends AbstractEntity {
+public class BlogEntry extends AbstractEntity {
 
     @Column(name = "title", nullable = false, columnDefinition = "TINYTEXT")
     private String title;
 
-    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
-    private String description;
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
+    private String content;
 
-    @Column(name = "image_link", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "inage_link", columnDefinition = "TEXT")
     private String imageLink;
 
-    @Column(name = "for_background", columnDefinition = "TINYINT(1)")
-    private boolean isBackgroundImage = false;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_created")
+    private Date dateCreated;
 
-    public PhotoEntry() {
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
+    
+    @OneToMany(mappedBy = "blogEntry", fetch = FetchType.LAZY)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private List<BlogComment> comments = new ArrayList<>();
 
+    public BlogEntry() {
+        
     }
-
-    public PhotoEntry(String title) {
-        //For testing purposes
+    
+    public BlogEntry(String title) {
         this.title = title;
-        this.description = title;
-        this.imageLink = title;
     }
 
     /**
-     * Photo title getter.
+     * Title getter.
      * 
      * @return the title
      */
@@ -74,66 +92,102 @@ public class PhotoEntry extends AbstractEntity {
     }
 
     /**
-     * Photo title setter.
+     * Title setter.
      * 
-     * @param title the title to set.
+     * @param title the title to set
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
-     * Photo description getter.
+     * Content getter.
      * 
-     * @return the description.
+     * @return the content
      */
-    public String getDescription() {
-        return description;
+    public String getContent() {
+        return content;
     }
 
     /**
-     * Photo description setter.
+     * Content setter.
      * 
-     * @param description the description to set.
+     * @param content the content to set
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     /**
-     * Photo link getter.
+     * Image link getter.
      * 
-     * @return the imageLink.
+     * @return the imageLink
      */
     public String getImageLink() {
         return imageLink;
     }
 
     /**
-     * Photo link setter.
+     * Image link setter.
      * 
-     * @param imageLink the imageLink to set.
+     * @param imageLink the imageLink to set
      */
     public void setImageLink(String imageLink) {
         this.imageLink = imageLink;
     }
 
     /**
-     * Photo link getter.
+     * Creation date getter.
      * 
-     * @return whether background image.
+     * @return the dateCreated
      */
-    public boolean isBackgroundImage() {
-        return isBackgroundImage;
+    public Date getDateCreated() {
+        return new Date(dateCreated.getTime());
     }
 
     /**
-     * Set image as a site background image.
+     * Creation date setter.
      * 
-     * @param isBackgroundImage the isBackgroundImage to set
+     * @param dateCreated the dateCreated to set
      */
-    public void setBackgroundImage(boolean isBackgroundImage) {
-        this.isBackgroundImage = isBackgroundImage;
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = new Date(dateCreated.getTime());
+    }
+
+    /**
+     * Author getter.
+     * 
+     * @return the author
+     */
+    public User getAuthor() {
+        return author;
+    }
+
+    /**
+     * Author setter.
+     * 
+     * @param author the author to set
+     */
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    /**
+     * Comments getter.
+     * 
+     * @return the comments
+     */
+    public List<BlogComment> getComments() {
+        return comments;
+    }
+
+    /**
+     * Comments setter.
+     * 
+     * @param comments the comments to set
+     */
+    public void setComments(List<BlogComment> comments) {
+        this.comments = comments;
     }
 
     /*
@@ -145,9 +199,10 @@ public class PhotoEntry extends AbstractEntity {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + ((author == null) ? 0 : author.hashCode());
+        result = prime * result + ((content == null) ? 0 : content.hashCode());
+        result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
         result = prime * result + ((imageLink == null) ? 0 : imageLink.hashCode());
-        result = prime * result + (isBackgroundImage ? 1231 : 1237);
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         return result;
     }
@@ -165,15 +220,29 @@ public class PhotoEntry extends AbstractEntity {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof PhotoEntry)) {
+        if (!(obj instanceof BlogEntry)) {
             return false;
         }
-        PhotoEntry other = (PhotoEntry) obj;
-        if (description == null) {
-            if (other.description != null) {
+        BlogEntry other = (BlogEntry) obj;
+        if (author == null) {
+            if (other.author != null) {
                 return false;
             }
-        } else if (!description.equals(other.description)) {
+        } else if (!author.equals(other.author)) {
+            return false;
+        }
+        if (content == null) {
+            if (other.content != null) {
+                return false;
+            }
+        } else if (!content.equals(other.content)) {
+            return false;
+        }
+        if (dateCreated == null) {
+            if (other.dateCreated != null) {
+                return false;
+            }
+        } else if (!dateCreated.equals(other.dateCreated)) {
             return false;
         }
         if (imageLink == null) {
@@ -181,9 +250,6 @@ public class PhotoEntry extends AbstractEntity {
                 return false;
             }
         } else if (!imageLink.equals(other.imageLink)) {
-            return false;
-        }
-        if (isBackgroundImage != other.isBackgroundImage) {
             return false;
         }
         if (title == null) {
@@ -203,9 +269,7 @@ public class PhotoEntry extends AbstractEntity {
      */
     @Override
     public String toString() {
-        return "PhotoEntry [title=" + title + ", description=" + description + ", imageLink="
-                + imageLink + ", isBackgroundImage=" + isBackgroundImage + "]";
+        return "BlogEntry [title=" + title + ", content=" + content + ", imageLink=" + imageLink
+                + ", dateCreated=" + dateCreated + ", author=" + author + "]";
     }
-
-
 }

@@ -25,6 +25,7 @@ package tk.serjmusic.models;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -36,17 +37,28 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "static_content")
+@Cacheable
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class StaticContent extends AbstractEntity {
 
-    @Column(name = "content_description", nullable = false, columnDefinition = "TYNYTEXT")
+    @Column(name = "content_description", nullable = false, columnDefinition = "TINYTEXT")
     private String contentDescription;
 
     @Column(name = "content_language", nullable = false, columnDefinition = "CHAR(2)")
-    private String language;
+    private String language = "RU";
 
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
+    
+    public StaticContent() {
+        
+    }
+    
+    public StaticContent(String content) {
+        //For testing purposes
+        this.contentDescription = content;
+        this.content = content;
+    }
 
     /**
      * Static content description getter.

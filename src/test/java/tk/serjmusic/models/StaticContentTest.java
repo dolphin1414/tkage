@@ -25,13 +25,31 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.utils;
+package tk.serjmusic.models;
+
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
+
+import org.junit.Test;
 
 /**
- * Resource file for application constants.
+ * Test case for hashCode()/equals contract for static content. 
  *
  * @author Roman Kondakov
  */
-public class R {
-    public static final  String HIBERNATE_QUERY_CACHE = "org.hibernate.cacheable";
+public class StaticContentTest {
+
+    /**
+     * <p>Testing hC/e contract using EqualsVerifier library.</p>
+     *
+     * <p>Test method for {@link tk.serjmusic.models.StaticContent#equals(java.lang.Object)} and
+     * {@link tk.serjmusic.models.StaticContent#hashCode(java.lang.Object)}</p>
+     */
+    @Test
+    public final void testHashCodeEqualsContract() {
+        EqualsVerifier.forClass(StaticContent.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .suppress(Warning.ALL_FIELDS_SHOULD_BE_USED)
+                .verify();
+    }
 }

@@ -13,7 +13,7 @@
 		<org.springframework-version>4.3.2.RELEASE</org.springframework-version>
 		<org.springframework.security-version>4.1.2.RELEASE</org.springframework.security-version>
 		<org.aspectj-version>1.8.9</org.aspectj-version>
-		<org.hibernate-vesion>5.2.1.Final</org.hibernate-vesion>
+		<org.hibernate-version>5.2.1.Final</org.hibernate-version>
 		<net.sf.ehcache-version>2.6.11</net.sf.ehcache-version>
 		<javax.servlet-version>3.0.1</javax.servlet-version>
 		<mysql.connector-version>5.1.6</mysql.connector-version>
@@ -25,6 +25,7 @@
 		<org.mockito-version>1.9.5</org.mockito-version>
 		<com.jayway.jsonpath-version>2.2.0</com.jayway.jsonpath-version>
 	</properties>
+
 
 	<!-- SPRING BOM -->
 	<dependencyManagement>
@@ -41,7 +42,7 @@
 
 	<!-- PROJECT DEPENDENCIES -->
 	<dependencies>
-	
+
 		<!-- SPRING -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -79,7 +80,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
-		
+
 		<!-- SPRING SECURITY -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -101,17 +102,17 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>${org.hibernate-vesion}</version>
+			<version>${org.hibernate-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>${org.hibernate-vesion}</version>
+			<version>${org.hibernate-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-ehcache</artifactId>
-			<version>${org.hibernate-vesion}</version>
+			<version>${org.hibernate-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
@@ -128,7 +129,10 @@
 			<artifactId>commons-dbcp2</artifactId>
 			<version>${org.apache.commons-version}</version>
 		</dependency>
-		
+		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-jpamodelgen</artifactId> 
+			<version>${org.hibernate-version}</version> <scope>compile</scope> <optional>true</optional> 
+			</dependency> -->
+
 		<!-- ASPECTJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -219,13 +223,18 @@
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>nl.jqno.equalsverifier</groupId>
+			<artifactId>equalsverifier</artifactId>
+			<version>2.1.5</version>
+		</dependency>
 	</dependencies>
 
 	<!-- BUILD & PLUGINS -->
 	<build>
 		<finalName>ROOT</finalName>
 		<plugins>
-			<plugin>
+			<!-- <plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
@@ -233,7 +242,7 @@
 					<source>${java-version}</source>
 					<target>${java-version}</target>
 				</configuration>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -261,18 +270,48 @@
 				<configuration>
 					<url>http://localhost:8080/manager/text</url>
 					<server>TomcatServer</server>
-					<path>/spritter</path>
+					<path>/</path>
 					<username>admin</username>
 					<password>admin</password>
 				</configuration>
-				<!-- <configuration>
-					<url>http://serjmusic.tk:80/manager/text</url>
-					<server>AmazonServer</server>
-					<path>/</path>
-					<username>admin</username>
-					<password>***</password>
-					<update>true</update>
-				</configuration> -->
+				<!-- <configuration> <url>http://serjmusic.tk:80/manager/text</url> <server>AmazonServer</server> 
+					<path>/</path> <username>admin</username> <password>***</password> <update>true</update> 
+					</configuration> -->
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version> 
+				<executions>
+					<execution>
+						<id>generate-entity-metamodel</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<source>1.8</source>
+							<target>1.8</target>
+							<optimize>true</optimize>
+							<showDeprecation>true</showDeprecation>
+							<showWarnings>true</showWarnings>
+							<proc>only</proc>
+							<compilerArgument>-Aopenjpa.metamodel=true</compilerArgument>
+							<generatedSourcesDirectory>src/generated/java</generatedSourcesDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>compile</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<source>1.8</source>
+							<target>1.8</target>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

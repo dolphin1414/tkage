@@ -14,7 +14,7 @@ local.properties
 .recommenders
 Users/
 target/
-
+secret.properties
 
 # Eclipse Core
 .project

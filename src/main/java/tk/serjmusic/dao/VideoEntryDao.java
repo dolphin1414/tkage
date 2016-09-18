@@ -25,13 +25,15 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.utils;
+package tk.serjmusic.dao;
+
+import tk.serjmusic.models.VideoEntry;
 
 /**
- * Resource file for application constants.
+ * DAO interface for {@link VideoEntry} entity.
  *
  * @author Roman Kondakov
  */
-public class R {
-    public static final  String HIBERNATE_QUERY_CACHE = "org.hibernate.cacheable";
+public interface VideoEntryDao extends GenericDao<VideoEntry> {
+
 }
