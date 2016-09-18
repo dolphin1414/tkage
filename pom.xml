@@ -129,9 +129,13 @@
 			<artifactId>commons-dbcp2</artifactId>
 			<version>${org.apache.commons-version}</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-jpamodelgen</artifactId> 
-			<version>${org.hibernate-version}</version> <scope>compile</scope> <optional>true</optional> 
-			</dependency> -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<version>${org.hibernate-version}</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
 
 		<!-- ASPECTJ -->
 		<dependency>
@@ -234,7 +238,7 @@
 	<build>
 		<finalName>ROOT</finalName>
 		<plugins>
-			<!-- <plugin>
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
@@ -242,7 +246,8 @@
 					<source>${java-version}</source>
 					<target>${java-version}</target>
 				</configuration>
-			</plugin> -->
+			</plugin>
+
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -278,41 +283,7 @@
 					<path>/</path> <username>admin</username> <password>***</password> <update>true</update> 
 					</configuration> -->
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version> 
-				<executions>
-					<execution>
-						<id>generate-entity-metamodel</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<configuration>
-							<source>1.8</source>
-							<target>1.8</target>
-							<optimize>true</optimize>
-							<showDeprecation>true</showDeprecation>
-							<showWarnings>true</showWarnings>
-							<proc>only</proc>
-							<compilerArgument>-Aopenjpa.metamodel=true</compilerArgument>
-							<generatedSourcesDirectory>src/generated/java</generatedSourcesDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>compile</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<configuration>
-							<source>1.8</source>
-							<target>1.8</target>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+
 		</plugins>
 	</build>
 </project>

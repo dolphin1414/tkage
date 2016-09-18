@@ -55,3 +55,4 @@ secret.properties
 # Code Recommenders
 .recommenders/
 .checkstyle
+/generated-sources/
