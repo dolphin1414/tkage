@@ -70,10 +70,10 @@ public class User extends AbstractEntity implements UserDetails {
     private String username;
     
     @Column(name = "password", nullable = false, columnDefinition = "VARCHAR(255)")
-    private String password;
+    private String password = "";
     
     @Column(name = "email", nullable = false, unique = true, columnDefinition = "VARCHAR(255)")
-    private String email;
+    private String email = "";
     
     @ElementCollection(targetClass = tk.serjmusic.models.UserRole.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "user_id"))
@@ -105,8 +105,6 @@ public class User extends AbstractEntity implements UserDetails {
     public User(String username) {
         //Testing purposes
         this.username = username;
-        this.password = username;
-        this.email = username;
     }
 
     /* (non-Javadoc)
@@ -368,7 +366,7 @@ public class User extends AbstractEntity implements UserDetails {
      */
     @Override
     public String toString() {
-        return "User [username=" + username + ", password=" + password + ", email=" + email
+        return "#" + getId() + ", User [username=" + username + ", password=" + password + ", email=" + email
                 + ", roles=" + roles + ", isBanned=" + isBanned + "]";
     }
 }

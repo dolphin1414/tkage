@@ -56,3 +56,4 @@ secret.properties
 .recommenders/
 .checkstyle
 /generated-sources/
+/hibernate-jpamodelgen-5.2.1.Final.jar

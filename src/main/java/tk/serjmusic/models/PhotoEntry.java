@@ -45,10 +45,10 @@ public class PhotoEntry extends AbstractEntity {
     private String title;
 
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
-    private String description;
+    private String description = "";
 
     @Column(name = "image_link", nullable = false, columnDefinition = "TEXT")
-    private String imageLink;
+    private String imageLink = "";
 
     @Column(name = "for_background", columnDefinition = "TINYINT(1)")
     private boolean isBackgroundImage = false;
@@ -60,8 +60,6 @@ public class PhotoEntry extends AbstractEntity {
     public PhotoEntry(String title) {
         //For testing purposes
         this.title = title;
-        this.description = title;
-        this.imageLink = title;
     }
 
     /**
@@ -203,7 +201,7 @@ public class PhotoEntry extends AbstractEntity {
      */
     @Override
     public String toString() {
-        return "PhotoEntry [title=" + title + ", description=" + description + ", imageLink="
+        return "#" + getId() + ", PhotoEntry [title=" + title + ", description=" + description + ", imageLink="
                 + imageLink + ", isBackgroundImage=" + isBackgroundImage + "]";
     }
 

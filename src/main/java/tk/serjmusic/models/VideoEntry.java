@@ -46,10 +46,10 @@ public class VideoEntry extends AbstractEntity {
     private String title;
 
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
-    private String description;
+    private String description = "";
 
     @Column(name = "youtube_link", nullable = false, columnDefinition = "TEXT")
-    private String youTubeLink;
+    private String youTubeLink = "";
 
     public VideoEntry() {
 
@@ -57,8 +57,6 @@ public class VideoEntry extends AbstractEntity {
 
     public VideoEntry(String title) {
         this.title = title;
-        this.description = title;
-        this.youTubeLink = title;
     }
 
     /**
@@ -178,7 +176,7 @@ public class VideoEntry extends AbstractEntity {
      */
     @Override
     public String toString() {
-        return "VideoEntry [title=" + title + ", description=" + description + ", youTubeLink="
+        return "#" + getId() + ", VideoEntry [title=" + title + ", description=" + description + ", youTubeLink="
                 + youTubeLink + "]";
     }
 }

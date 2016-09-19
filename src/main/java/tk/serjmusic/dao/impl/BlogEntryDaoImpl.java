@@ -31,11 +31,21 @@ import org.springframework.stereotype.Repository;
 
 import tk.serjmusic.dao.AbstractGenericDao;
 import tk.serjmusic.dao.BlogEntryDao;
+import tk.serjmusic.models.BlogComment;
+import tk.serjmusic.models.BlogComment_;
 import tk.serjmusic.models.BlogEntry;
+import tk.serjmusic.models.BlogEntry_;
+
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 
 /**
  * JPA implementation of {@link BlogEntryDao}.
@@ -51,6 +61,25 @@ public class BlogEntryDaoImpl extends AbstractGenericDao<BlogEntry> implements B
     @PostConstruct
     private void init() {
         setEntityManager(entityManager);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see tk.serjmusic.dao.BlogEntryDao#getPaginatedCommentsForBlogId(int, int, int)
+     */
+    @Override
+    public List<BlogComment> getPaginatedCommentsForBlogId(int blogId, int pageNumber, 
+            int pageSize) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<BlogComment> cq = cb.createQuery(BlogComment.class);
+        Root<BlogComment> qr = cq.from(BlogComment.class);
+        Join<BlogComment, BlogEntry> join = qr.join(BlogComment_.blogEntry);
+        cq.multiselect(join).where(cb.equal(join.get(BlogEntry_.id), blogId));
+        cq.distinct(true);
+        TypedQuery<BlogComment> tq = entityManager.createQuery(cq);
+        int startPosition = (pageNumber - 1) * pageSize;
+        tq.setFirstResult(startPosition).setMaxResults(pageSize);
+        return tq.getResultList();
     }
     
 }

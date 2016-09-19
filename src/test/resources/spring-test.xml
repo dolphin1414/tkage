@@ -10,24 +10,19 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
     http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
-	<context:property-placeholder location="classpath:datasource.properties, 
-			  	  							classpath:hibernate.properties,
-			  	  							classpath:secret.properties" />
 
-	<context:component-scan base-package="tk.serjmusic.models,
+
+	<context:component-scan
+							base-package="tk.serjmusic.models,
 										  tk.serjmusic.dao,
 										  tk.serjmusic.dao.impl" />
 
-	<aop:aspectj-autoproxy proxy-target-class="true" />
-
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
 		destroy-method="close">
-		<property name="driverClassName" value="${db.driverClassName}" />
-		<property name="username" value="${db.username}" />
-		<property name="password" value="${db.password}" />
-		<property name="url" value="${db.url}" />
-		<property name="maxIdle" value="${db.maxIdle}" />
-		<property name="maxTotal" value="${db.maxTotal}" />
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="username" value="sa" />
+		<property name="password" value="sa" />
+		<property name="url" value="jdbc:h2:mem:test" />
 	</bean>
 
 	<bean id="entityManagerFactory"
@@ -39,22 +34,16 @@
 		
 		<property name="jpaProperties">
 			<map>
-				<entry key="hibernate.dialect" value="${hibernate.dialect}" />
-				<entry key="hibernate.hbm2ddl.auto" value="${hibernate.hbm2ddl.auto}" />
-				<entry key="hibernate.show_sql" value="${hibernate.show_sql}" />
-				<entry key="hibernate.generate_statistics" value="${hibernate.generate_statistics}" />
-				<entry key="hibernate.cache.provider_class" value="${hibernate.cache.provider_class}" />
-				<entry key="hibernate.cache.use_second_level_cache" value="${hibernate.cache.use_second_level_cache}" />
-				<entry key="hibernate.cache.use_query_cache" value="${hibernate.cache.use_query_cache}" />
-				<entry key="net.sf.ehcache.configurationResourceName" value="${net.sf.ehcache.configurationResourceName}" />
-				<entry key="hibernate.cache.region.factory_class" value="${hibernate.cache.region.factory_class}" />
-				<entry key="hibernate.enable_lazy_load_no_trans" value="${hibernate.enable_lazy_load_no_trans}" />
+				<entry key="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+				<entry key="hibernate.hbm2ddl.auto" value="create" />
+				<entry key="hibernate.show_sql" value="true" />
+				<entry key="hibernate.generate_statistics" value="true" />
 			</map>
 		</property>
 		<property name="packagesToScan" value="tk.serjmusic.models" />
 	</bean>
 
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />

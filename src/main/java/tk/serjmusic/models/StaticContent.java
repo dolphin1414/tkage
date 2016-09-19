@@ -42,7 +42,7 @@ import javax.persistence.Table;
 public class StaticContent extends AbstractEntity {
 
     @Column(name = "content_description", nullable = false, columnDefinition = "TINYTEXT")
-    private String contentDescription;
+    private String contentDescription = "";
 
     @Column(name = "content_language", nullable = false, columnDefinition = "CHAR(2)")
     private String language = "RU";
@@ -55,8 +55,6 @@ public class StaticContent extends AbstractEntity {
     }
     
     public StaticContent(String content) {
-        //For testing purposes
-        this.contentDescription = content;
         this.content = content;
     }
 
@@ -119,7 +117,7 @@ public class StaticContent extends AbstractEntity {
      */
     @Override
     public String toString() {
-        return "StaticContent [contentDescription=" + contentDescription + ", language=" + language
+        return "#" + getId() + ", StaticContent [contentDescription=" + contentDescription + ", language=" + language
                 + ", content=" + content + "]";
     }
 

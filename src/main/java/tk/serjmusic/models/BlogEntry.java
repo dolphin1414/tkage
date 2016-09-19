@@ -59,7 +59,7 @@ public class BlogEntry extends AbstractEntity {
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "inage_link", columnDefinition = "TEXT")
+    @Column(name = "image_link", columnDefinition = "TEXT")
     private String imageLink;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -269,7 +269,7 @@ public class BlogEntry extends AbstractEntity {
      */
     @Override
     public String toString() {
-        return "BlogEntry [title=" + title + ", content=" + content + ", imageLink=" + imageLink
+        return "#" + getId() + ", BlogEntry [title=" + title + ", content=" + content + ", imageLink=" + imageLink
                 + ", dateCreated=" + dateCreated + ", author=" + author + "]";
     }
 }

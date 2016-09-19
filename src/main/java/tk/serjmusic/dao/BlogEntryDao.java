@@ -27,7 +27,10 @@
 
 package tk.serjmusic.dao;
 
+import tk.serjmusic.models.BlogComment;
 import tk.serjmusic.models.BlogEntry;
+
+import java.util.List;
 
 /**
  * DAO interface for {@link BlogEntry} entity.
@@ -35,5 +38,16 @@ import tk.serjmusic.models.BlogEntry;
  * @author Roman Kondakov
  */
 public interface BlogEntryDao extends GenericDao<BlogEntry> {
+    
+    
+    /**
+     * Get paginated comments associated with required blog entry.
+     * 
+     * @param blogId  required blog entry ID
+     * @param pageNumber number of desired page (pages begin with 1)
+     * @param pageSize size of each page
+     * @return list of comments
+     */
+    public List<BlogComment> getPaginatedCommentsForBlogId(int blogId, int pageNumber, int pageSize);
 
 }
