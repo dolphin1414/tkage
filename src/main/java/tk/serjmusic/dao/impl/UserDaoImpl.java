@@ -30,6 +30,7 @@ import tk.serjmusic.models.BlogComment;
 import tk.serjmusic.models.BlogComment_;
 import tk.serjmusic.models.User;
 import tk.serjmusic.models.User_;
+import tk.serjmusic.utils.R;
 
 import java.util.List;
 
@@ -68,6 +69,7 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
      */
     @Override
     public User findUserByUsername(String username) {
+        //TODO: add caching
         User result = null;
         try {
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -75,6 +77,7 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
             Root<User> from = cq.from(User.class);
             cq.select(from).where(cb.equal(from.get(User_.username), username));
             TypedQuery<User> tq = entityManager.createQuery(cq);
+            tq.setHint(R.HIBERNATE_QUERY_CACHE_NAME, true);
             result = tq.getSingleResult();
         } catch (NoResultException ex) {
             if (logger.isDebugEnabled()) {
@@ -99,6 +102,7 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
             Root<User> from = cq.from(User.class);
             cq.select(from).where(cb.equal(from.get(User_.email), email));
             TypedQuery<User> tq = entityManager.createQuery(cq);
+            tq.setHint(R.HIBERNATE_QUERY_CACHE_NAME, true);
             result = tq.getSingleResult();
         } catch (NoResultException ex) {
             if (logger.isDebugEnabled()) {
@@ -128,6 +132,7 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
             TypedQuery<BlogComment> tq = entityManager.createQuery(cq);
             int startPosition = (pageNumber - 1) * pageSize;
             tq.setFirstResult(startPosition).setMaxResults(pageSize);
+            tq.setHint(R.HIBERNATE_QUERY_CACHE_NAME, true);
             result = tq.getResultList();
         } catch (NoResultException ex) {
             if (logger.isDebugEnabled()) {

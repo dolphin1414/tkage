@@ -184,6 +184,7 @@ public abstract class AbstractGenericDao<T extends AbstractEntity> implements Ge
             TypedQuery<T> typedQuery = entityManager.createQuery(cq);
             int startPosition = (pageNumber - 1) * pageSize;
             typedQuery.setFirstResult(startPosition).setMaxResults(pageSize);
+            typedQuery.setHint(R.HIBERNATE_QUERY_CACHE_NAME, true);
             result =  typedQuery.getResultList();
         } catch (NoResultException ex) {
             if (logger.isDebugEnabled()) {

@@ -80,7 +80,7 @@ public class BlogEntryServiceImpl extends AbstractGenericServiceImpl<BlogEntry>
         }
         if (result == null) {
             throw new CanNotFindException(
-                    "DAO " + dao.getClass().getSimpleName() + " can not find entities");
+                    "DAO " + blogDao.getClass().getSimpleName() + " can not find entities");
         }
         return result;
     }

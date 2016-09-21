@@ -65,7 +65,7 @@ import java.util.Set;
  * @author Roman Kondakov
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-test.xml")
+@ContextConfiguration("classpath:spring-test-dao.xml")
 @Transactional
 @Rollback
 public class UserDaoImplTest {

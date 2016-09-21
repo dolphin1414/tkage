@@ -82,7 +82,7 @@ public class UserServiceImpl extends AbstractGenericServiceImpl<User>
             throw new PersistentLayerProblemsException("username: " + username, ex);
         }
         if (result == null) {
-            throw new CanNotFindException("DAO " + dao.getClass().getSimpleName() 
+            throw new CanNotFindException("DAO " + userDao.getClass().getSimpleName() 
                     + " can not find entity for username=" + username);
         }
         return result;
@@ -104,7 +104,7 @@ public class UserServiceImpl extends AbstractGenericServiceImpl<User>
             throw new PersistentLayerProblemsException("email: " + email, ex);
         }
         if (result == null) {
-            throw new CanNotFindException("DAO " + dao.getClass().getSimpleName() 
+            throw new CanNotFindException("DAO " + userDao.getClass().getSimpleName() 
                     + " can not find entity for email=" + email);
         }
         return result;
@@ -128,7 +128,7 @@ public class UserServiceImpl extends AbstractGenericServiceImpl<User>
         }
         if (result == null) {
             throw new CanNotFindException(
-                    "DAO " + dao.getClass().getSimpleName() + " can not find entities");
+                    "DAO " + userDao.getClass().getSimpleName() + " can not find entities");
         }
         return result;
     }

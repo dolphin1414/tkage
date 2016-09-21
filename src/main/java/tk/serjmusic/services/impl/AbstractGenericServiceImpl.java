@@ -59,7 +59,7 @@ public abstract class AbstractGenericServiceImpl<T extends AbstractEntity>
      */
 
     @Autowired
-    protected GenericDao<T> dao;
+    private GenericDao<T> dao;
 
     /*
      * (non-Javadoc)

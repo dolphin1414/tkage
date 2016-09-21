@@ -48,7 +48,7 @@ public class LoggingAspect {
     private Logger logger = Logger.getLogger(getClass());
     
     
-    @Pointcut("@annotation(spritter.utils.logging.Loggable)")
+    @Pointcut("@annotation(tk.serjmusic.utils.logging.Loggable)")
     public void annotationPointCutDefinition(){
     }
  

@@ -30,6 +30,7 @@ import tk.serjmusic.models.BlogComment;
 import tk.serjmusic.models.BlogComment_;
 import tk.serjmusic.models.BlogEntry;
 import tk.serjmusic.models.BlogEntry_;
+import tk.serjmusic.utils.R;
 
 import java.util.List;
 
@@ -78,6 +79,7 @@ public class BlogEntryDaoImpl extends AbstractGenericDao<BlogEntry> implements B
             cq.select(blogCommentRoot).where(cb.equal(u.get(BlogEntry_.id), blogId));
             cq.distinct(true);
             TypedQuery<BlogComment> tq = entityManager.createQuery(cq);
+            tq.setHint(R.HIBERNATE_QUERY_CACHE_NAME, true);
             int startPosition = (pageNumber - 1) * pageSize;
             tq.setFirstResult(startPosition).setMaxResults(pageSize);
             result = tq.getResultList();
