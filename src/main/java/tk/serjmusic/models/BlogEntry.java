@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -70,7 +71,7 @@ public class BlogEntry extends AbstractEntity {
     @JoinColumn(name = "author_id")
     private User author;
     
-    @OneToMany(mappedBy = "blogEntry", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "blogEntry", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<BlogComment> comments = new ArrayList<>();
 
@@ -269,7 +270,8 @@ public class BlogEntry extends AbstractEntity {
      */
     @Override
     public String toString() {
-        return "#" + getId() + ", BlogEntry [title=" + title + ", content=" + content + ", imageLink=" + imageLink
-                + ", dateCreated=" + dateCreated + ", author=" + author + "]";
+        return "#" + getId() + ", BlogEntry [title=" + title + ", content=" + content 
+                + ", imageLink=" + imageLink + ", dateCreated=" + dateCreated 
+                + ", author=" + author + "]";
     }
 }

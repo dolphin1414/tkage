@@ -25,45 +25,24 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.dao;
+package tk.serjmusic.services.impl;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import tk.serjmusic.models.BlogComment;
-import tk.serjmusic.models.User;
-
-import java.util.List;
+import tk.serjmusic.models.PhotoEntry;
+import tk.serjmusic.services.PhotoEntryService;
 
 /**
- * DAO interface for {@link User} entity.
+ * An implementation of {@link PhotoEntryService}. Most of basic logic is implemented in the
+ * {@link AbstractGenericServiceImpl}.
  *
  * @author Roman Kondakov
  */
-public interface UserDao extends GenericDao<User> {
-    
-    /**
-     * Retrieve user by his name.
-     * 
-     * @param username user's name for lookup
-     * @return found user
-     */
-    public User findUserByUsername(String username);
-    
-    /**
-     * Retrieve user by his e-mail.
-     * 
-     * @param email user's e-mail.
-     * @return user with requested e-mail.
-     */
-    public User findUserByEmail(String email);
-    
-    /**
-     * Retrieve paginated user's comments.
-     * 
-     * @param id id of requested user
-     * @param pageNumber he number of page of comments (pagination starts with 1)
-     * @param pageSize size of each page
-     * @return list of user's comments
-     */
-    public List<BlogComment> findUserCommentsByUserId(int id, int pageNumber, int pageSize);
+
+@Service
+@Transactional
+public class PhotoEntryServiceImpl extends AbstractGenericServiceImpl<PhotoEntry> 
+        implements PhotoEntryService{
 
 }

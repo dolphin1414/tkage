@@ -25,62 +25,58 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.dao;
+package tk.serjmusic.services;
 
-import tk.serjmusic.dao.impl.AbstractGenericDao;
 import tk.serjmusic.models.AbstractEntity;
 
 import java.util.List;
 
 /**
- * Generic interface for all DAO classes in project. All it's functionality is already
- * implemented in {@link AbstractGenericDao} abstract class, so it's not necessary to 
- * implement this logic for each entity class separately - it's enough to create subclass of
- * this abstract class.
+ * The main generic service interface for the most common service functions.
  *
  * @author Roman Kondakov
  */
-public interface GenericDao<T extends AbstractEntity> {
-    
+public interface GenericService<T extends AbstractEntity> {
+
     /**
-     * Persist entity in a persistence context.
+     * Create new entity in data layer.
      * 
      * @param t - entity instance
      */
-    public void persist(T t);
+    public void create(T t);
     
     /**
-     * Get entity from persistence context by id.
+     * Get entity from data layer by id.
      * 
      * @param id the id of entity
      * @return the entity with requested id
      */
-    public T find(int id);
+    public T getById(int id);
     
     /**
-     * Merge (update) entity in the persistence context.
+     * Update entity in the data layer.
      * 
      * @param t entity
      * @return updated entity
      */
-    public T merge(T t);
+    public T update(T t);
 
     /**
-     * Removes entity from the persistence context.
+     * Delete entity from the data layer.
      * 
      * @param t entity to be removed
      */
-    public void remove(T t);
+    public void delete(T t);
     
     /**
-     * Retrieve all entities of specified type from the persistence context.
+     * Retrieve all entities of specified type from the data layer.
      * 
      * @return list of entities
      */
-    public List<T> findAll();
+    public List<T> getAll();
     
     /**
-     * Count a number of entities of specified type in the persistence context.
+     * Count a number of entities of specified type in the data layer.
      * 
      * @return number of entities
      */
@@ -88,14 +84,13 @@ public interface GenericDao<T extends AbstractEntity> {
     
     /**
      * Retrieve up to {@code maxResults} entities beginning with {@code firstResult}
-     * from the all entities which fit to given criteria.
+     * from the all entities of specified type.
      * 
      * @param ascOrderById whether the ascend ID order should be used for result retrieving
      * @param pageNumber number of page to be returned (pages starts with 1)
      * @param pageSize size of data page
      * @return list of entities fit to criteria
      */
-    public List<T> findPaginatedAndOrdered(boolean ascOrderById, int pageNumber, int pageSize);
-    
+    public List<T> getPaginatedAndOrdered(boolean ascOrderById, int pageNumber, int pageSize);
     
 }

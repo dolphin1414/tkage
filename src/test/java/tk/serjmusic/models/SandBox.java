@@ -27,17 +27,14 @@
 
 package tk.serjmusic.models;
 
-import tk.serjmusic.dao.impl.PhotoEntryDaoImpl;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.support.XmlWebApplicationContext;
+
+import tk.serjmusic.dao.impl.PhotoEntryDaoImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  * 
@@ -56,7 +53,7 @@ public class SandBox {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         
         EntityManagerFactory factory = ctx.getBean(EntityManagerFactory.class, "entityManagerFactory");
-        EntityManager em =  factory.createEntityManager();
+        //EntityManager em =  factory.createEntityManager();
         PhotoEntryDaoImpl photoEntryDaoImpl = ctx.getBean(PhotoEntryDaoImpl.class, "photoEntryDaoImpl");
         System.out.println("photoEntryDaoImpl " + photoEntryDaoImpl);
         photoEntryDaoImpl.persist(new PhotoEntry("kokoko"));
@@ -67,6 +64,7 @@ public class SandBox {
         photoEntryDaoImpl.merge(photo);
         System.out.println("3 " + photoEntryDaoImpl.findAll());
         System.out.println("4 " + photoEntryDaoImpl.findAll());
+        
     }
 
 }

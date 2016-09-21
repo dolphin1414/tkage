@@ -38,6 +38,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -92,10 +93,10 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(name = "image_file")
     private byte[] imageFile;
     
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<BlogEntry> blogs = new HashSet<>();
     
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<BlogComment> comments = new HashSet<>();
     
     public User() {
@@ -366,7 +367,7 @@ public class User extends AbstractEntity implements UserDetails {
      */
     @Override
     public String toString() {
-        return "#" + getId() + ", User [username=" + username + ", password=" + password + ", email=" + email
-                + ", roles=" + roles + ", isBanned=" + isBanned + "]";
+        return "#" + getId() + ", User [username=" + username + ", password=" + password 
+                + ", email=" + email + ", roles=" + roles + ", isBanned=" + isBanned + "]";
     }
 }

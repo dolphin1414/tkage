@@ -25,45 +25,29 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.dao;
+package tk.serjmusic.utils.logging;
 
+import org.apache.log4j.Priority;
 
-import tk.serjmusic.models.BlogComment;
-import tk.serjmusic.models.User;
-
-import java.util.List;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * DAO interface for {@link User} entity.
+ * Makes method loggable. It means that method name, parameters and time of execution 
+ * will be logged.
  *
  * @author Roman Kondakov
  */
-public interface UserDao extends GenericDao<User> {
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD})
+public @interface Loggable {
     
     /**
-     * Retrieve user by his name.
+     * Priority level for logging.
      * 
-     * @param username user's name for lookup
-     * @return found user
+     * @return logging level
      */
-    public User findUserByUsername(String username);
-    
-    /**
-     * Retrieve user by his e-mail.
-     * 
-     * @param email user's e-mail.
-     * @return user with requested e-mail.
-     */
-    public User findUserByEmail(String email);
-    
-    /**
-     * Retrieve paginated user's comments.
-     * 
-     * @param id id of requested user
-     * @param pageNumber he number of page of comments (pagination starts with 1)
-     * @param pageSize size of each page
-     * @return list of user's comments
-     */
-    public List<BlogComment> findUserCommentsByUserId(int id, int pageNumber, int pageSize);
-
+    public int level() default Priority.DEBUG_INT;
 }

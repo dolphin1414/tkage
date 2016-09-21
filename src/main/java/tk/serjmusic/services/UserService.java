@@ -25,8 +25,7 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.dao;
-
+package tk.serjmusic.services;
 
 import tk.serjmusic.models.BlogComment;
 import tk.serjmusic.models.User;
@@ -34,11 +33,11 @@ import tk.serjmusic.models.User;
 import java.util.List;
 
 /**
- * DAO interface for {@link User} entity.
+ * The main service class for user entity handling.
  *
  * @author Roman Kondakov
  */
-public interface UserDao extends GenericDao<User> {
+public interface UserService extends GenericService<User> {
     
     /**
      * Retrieve user by his name.
@@ -46,7 +45,7 @@ public interface UserDao extends GenericDao<User> {
      * @param username user's name for lookup
      * @return found user
      */
-    public User findUserByUsername(String username);
+    public User getUserByUsername(String username);
     
     /**
      * Retrieve user by his e-mail.
@@ -54,7 +53,7 @@ public interface UserDao extends GenericDao<User> {
      * @param email user's e-mail.
      * @return user with requested e-mail.
      */
-    public User findUserByEmail(String email);
+    public User getUserByEmail(String email);
     
     /**
      * Retrieve paginated user's comments.
@@ -64,6 +63,7 @@ public interface UserDao extends GenericDao<User> {
      * @param pageSize size of each page
      * @return list of user's comments
      */
-    public List<BlogComment> findUserCommentsByUserId(int id, int pageNumber, int pageSize);
+    public List<BlogComment> getUserCommentsByUserId(int id, int pageNumber, int pageSize);
 
+    
 }

@@ -33,5 +33,5 @@ package tk.serjmusic.utils;
  * @author Roman Kondakov
  */
 public class R {
-    public static final  String HIBERNATE_QUERY_CACHE = "org.hibernate.cacheable";
+    public static final  String HIBERNATE_QUERY_CACHE_NAME = "org.hibernate.cacheable";
 }

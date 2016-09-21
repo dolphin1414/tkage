@@ -201,8 +201,9 @@ public class PhotoEntry extends AbstractEntity {
      */
     @Override
     public String toString() {
-        return "#" + getId() + ", PhotoEntry [title=" + title + ", description=" + description + ", imageLink="
-                + imageLink + ", isBackgroundImage=" + isBackgroundImage + "]";
+        return "#" + getId() + ", PhotoEntry [title=" + title + ", description=" 
+                + description + ", imageLink=" + imageLink + ", isBackgroundImage=" 
+                + isBackgroundImage + "]";
     }
 
 

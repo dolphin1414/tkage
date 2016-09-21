@@ -29,7 +29,6 @@ package tk.serjmusic.dao.impl;
 
 import org.springframework.stereotype.Repository;
 
-import tk.serjmusic.dao.AbstractGenericDao;
 import tk.serjmusic.dao.VideoEntryDao;
 import tk.serjmusic.models.VideoEntry;
 

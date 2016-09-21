@@ -214,8 +214,8 @@ public class BlogComment extends AbstractEntity {
      */
     @Override
     public String toString() {
-        return "#" + getId() + ", BlogComment [content=" + content + ", dateCreated=" + dateCreated + ", author="
-                + author + ", blogEntry=" + blogEntry + "]";
+        return "#" + getId() + ", BlogComment [content=" + content + ", dateCreated=" 
+                + dateCreated + ", author=" + author + ", blogEntry=" + blogEntry + "]";
     }
 
 

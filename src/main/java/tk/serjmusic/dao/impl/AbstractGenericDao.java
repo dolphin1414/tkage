@@ -20,8 +20,11 @@
  * For more information, please refer to <http://unlicense.org/>
  */
 
-package tk.serjmusic.dao;
+package tk.serjmusic.dao.impl;
 
+import org.apache.log4j.Logger;
+
+import tk.serjmusic.dao.GenericDao;
 import tk.serjmusic.models.AbstractEntity;
 import tk.serjmusic.models.AbstractEntity_;
 import tk.serjmusic.utils.R;
@@ -31,6 +34,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -42,10 +46,11 @@ import javax.persistence.criteria.Root;
  *
  * @author Roman Kondakov
  */
-public class AbstractGenericDao<T extends AbstractEntity> implements GenericDao<T> {
+public abstract class AbstractGenericDao<T extends AbstractEntity> implements GenericDao<T> {
 
     private EntityManager entityManager;
-    private Class<T> genericType;
+    protected final Class<T> genericType;
+    private static final Logger logger = Logger.getLogger(AbstractGenericDao.class);
     
     /**
      * Constructor resolves a generic type of DAO subclass.
@@ -79,7 +84,16 @@ public class AbstractGenericDao<T extends AbstractEntity> implements GenericDao<
      */
     @Override
     public T find(int id) {
-        return entityManager.find(genericType, id);
+        T result = null;
+        try {
+            result = entityManager.find(genericType, id);
+        } catch (NoResultException ex) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("No results for find " + genericType + "id: " + id, ex);
+            }
+            result = null;
+        }
+        return result;
     }
 
     /*
@@ -109,13 +123,23 @@ public class AbstractGenericDao<T extends AbstractEntity> implements GenericDao<
      */
     @Override
     public List<T> findAll() {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> cq = cb.createQuery(genericType);
-        Root<T> from = cq.from(genericType);
-        cq.select(from);
-        TypedQuery<T> typedQuery = entityManager.createQuery(cq);
-        typedQuery.setHint(R.HIBERNATE_QUERY_CACHE, true);
-        return typedQuery.getResultList();
+        List<T> result = null;
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<T> cq = cb.createQuery(genericType);
+            Root<T> from = cq.from(genericType);
+            cq.select(from);
+            TypedQuery<T> typedQuery = entityManager.createQuery(cq);
+            typedQuery.setHint(R.HIBERNATE_QUERY_CACHE_NAME, true);
+            result = typedQuery.getResultList(); 
+        } catch (NoResultException ex) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("No results for findAll " + genericType , ex);
+            }
+            result = null;
+        }
+        return result;
+        
     }
 
     /*
@@ -125,13 +149,23 @@ public class AbstractGenericDao<T extends AbstractEntity> implements GenericDao<
      */
     @Override
     public int countAll() {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root<T> from = cq.from(genericType);
-        cq.select(cb.count(from));
-        TypedQuery<Long> typedQuery = entityManager.createQuery(cq);
-        typedQuery.setHint(R.HIBERNATE_QUERY_CACHE, true);
-        return (int) (long) typedQuery.getSingleResult();
+        int result;
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+            Root<T> from = cq.from(genericType);
+            cq.select(cb.count(from));
+            TypedQuery<Long> typedQuery = entityManager.createQuery(cq);
+            typedQuery.setHint(R.HIBERNATE_QUERY_CACHE_NAME, true);
+            result = (int) (long) typedQuery.getSingleResult();
+        } catch (NoResultException ex) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("No results for countAll " + genericType, ex);
+            }
+            result = 0;
+        }
+        return result;
+        
     }
 
     /* (non-Javadoc)
@@ -139,15 +173,26 @@ public class AbstractGenericDao<T extends AbstractEntity> implements GenericDao<
      */
     @Override
     public List<T> findPaginatedAndOrdered(boolean ascOrderById, int pageNumber, int pageSize) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> cq = cb.createQuery(genericType);
-        Root<T> from = cq.from(genericType);
-        Order order = ascOrderById ? cb.asc(from.get(AbstractEntity_.id)) 
-                                   : cb.desc(from.get(AbstractEntity_.id));
-        cq.orderBy(order);
-        TypedQuery<T> typedQuery = entityManager.createQuery(cq);
-        int startPosition = (pageNumber - 1) * pageSize;
-        typedQuery.setFirstResult(startPosition).setMaxResults(pageSize);
-        return typedQuery.getResultList();
+        List<T> result = null;
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<T> cq = cb.createQuery(genericType);
+            Root<T> from = cq.from(genericType);
+            Order order = ascOrderById ? cb.asc(from.get(AbstractEntity_.id)) 
+                                       : cb.desc(from.get(AbstractEntity_.id));
+            cq.orderBy(order);
+            TypedQuery<T> typedQuery = entityManager.createQuery(cq);
+            int startPosition = (pageNumber - 1) * pageSize;
+            typedQuery.setFirstResult(startPosition).setMaxResults(pageSize);
+            result =  typedQuery.getResultList();
+        } catch (NoResultException ex) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("No results for findPaginatedAndOrdered " + genericType 
+                        + "; Id asc order: " + ascOrderById + "; page number: " + pageNumber
+                        + "; page size: " + pageSize, ex);
+            }
+            result = null;
+        }
+        return result;
     }
 }

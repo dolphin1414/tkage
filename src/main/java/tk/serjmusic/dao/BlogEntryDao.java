@@ -48,6 +48,7 @@ public interface BlogEntryDao extends GenericDao<BlogEntry> {
      * @param pageSize size of each page
      * @return list of comments
      */
-    public List<BlogComment> getPaginatedCommentsForBlogId(int blogId, int pageNumber, int pageSize);
+    public List<BlogComment> findPaginatedCommentsForBlogId(int blogId, 
+            int pageNumber, int pageSize);
 
 }

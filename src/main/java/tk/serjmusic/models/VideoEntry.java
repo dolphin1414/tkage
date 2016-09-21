@@ -176,7 +176,7 @@ public class VideoEntry extends AbstractEntity {
      */
     @Override
     public String toString() {
-        return "#" + getId() + ", VideoEntry [title=" + title + ", description=" + description + ", youTubeLink="
-                + youTubeLink + "]";
+        return "#" + getId() + ", VideoEntry [title=" + title + ", description=" + description 
+                + ", youTubeLink=" + youTubeLink + "]";
     }
 }

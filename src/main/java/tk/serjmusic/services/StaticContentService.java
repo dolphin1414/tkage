@@ -25,45 +25,16 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.dao;
+package tk.serjmusic.services;
 
-
-import tk.serjmusic.models.BlogComment;
-import tk.serjmusic.models.User;
-
-import java.util.List;
+import tk.serjmusic.models.StaticContent;
 
 /**
- * DAO interface for {@link User} entity.
+ * The main service class for static content handling.
  *
  * @author Roman Kondakov
  */
-public interface UserDao extends GenericDao<User> {
-    
-    /**
-     * Retrieve user by his name.
-     * 
-     * @param username user's name for lookup
-     * @return found user
-     */
-    public User findUserByUsername(String username);
-    
-    /**
-     * Retrieve user by his e-mail.
-     * 
-     * @param email user's e-mail.
-     * @return user with requested e-mail.
-     */
-    public User findUserByEmail(String email);
-    
-    /**
-     * Retrieve paginated user's comments.
-     * 
-     * @param id id of requested user
-     * @param pageNumber he number of page of comments (pagination starts with 1)
-     * @param pageSize size of each page
-     * @return list of user's comments
-     */
-    public List<BlogComment> findUserCommentsByUserId(int id, int pageNumber, int pageSize);
+public interface StaticContentService extends GenericService<StaticContent> {
 
+    
 }

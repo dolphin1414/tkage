@@ -29,7 +29,6 @@ package tk.serjmusic.dao.impl;
 
 import org.springframework.stereotype.Repository;
 
-import tk.serjmusic.dao.AbstractGenericDao;
 import tk.serjmusic.dao.StaticContentDao;
 import tk.serjmusic.models.StaticContent;
 
@@ -43,7 +42,8 @@ import javax.persistence.PersistenceContext;
  * @author Roman Kondakov
  */
 @Repository
-public class StaticContentDaoImpl extends AbstractGenericDao<StaticContent> implements StaticContentDao {
+public class StaticContentDaoImpl extends AbstractGenericDao<StaticContent>
+        implements StaticContentDao {
     
     @PersistenceContext
     private EntityManager entityManager;

@@ -113,15 +113,6 @@ public class StaticContent extends AbstractEntity {
     }
 
     /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return "#" + getId() + ", StaticContent [contentDescription=" + contentDescription + ", language=" + language
-                + ", content=" + content + "]";
-    }
-
-    /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -172,5 +163,14 @@ public class StaticContent extends AbstractEntity {
             return false;
         }
         return true;
+    }
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "#" + getId() + ", StaticContent [contentDescription=" + contentDescription 
+                + ", language=" + language + ", content=" + content + "]";
     }
 }
