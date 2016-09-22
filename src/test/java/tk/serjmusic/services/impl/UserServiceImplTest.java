@@ -393,8 +393,6 @@ public class UserServiceImplTest {
     @Test
     public final void testGetAll() {
         
-        
-        
         // should be OK
         when(userDao.findAll()).thenReturn(users);
         assertEquals(users, userService.getAll());
