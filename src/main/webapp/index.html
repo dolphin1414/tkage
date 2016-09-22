@@ -4,20 +4,23 @@
 
 <head>
 
-    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
 
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta name="yandex-verification" content="7150ccd2be2e3fd5" />
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="yandex-verification" content="7150ccd2be2e3fd5" />
 
-    <title ng-bind="pageTitle"></title>
-	<link rel="shortcut icon" href="img/microphone_3_small.png" />
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title ng-bind="pageTitle"></title>
+<link rel="shortcut icon" href="img/microphone_3_small.png" />
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script
@@ -28,101 +31,108 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-resource.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
-	<script src="js/app.js"></script>
-	<script src="js/bio.js"></script>
-	<script src="js/contacts.js"></script>
-	<script src="js/video.js"></script>
-	<script src="js/photo.js"></script>
-	<script src="js/blog.js"></script>
-	<script src="js/blogDetails.js"></script>
-	<script src="js/user.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/full.css">
-	<link rel="stylesheet" type="text/css" href="css/mobile.css" media="(max-width: 768px)"   />
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+<script src="js/app.js"></script>
+<script src="js/bio.js"></script>
+<script src="js/contacts.js"></script>
+<script src="js/video.js"></script>
+<script src="js/photo.js"></script>
+<script src="js/blog.js"></script>
+<script src="js/blogDetails.js"></script>
+<script src="js/user.js"></script>
+<link rel="stylesheet" type="text/css" href="css/full.css">
+<link rel="stylesheet" type="text/css" href="css/mobile.css"
+	media="(max-width: 768px)" />
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-	<base href="/">
+<base href="/">
 
 </head>
 
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" ui-sref="home" ng-click='navCollapsed = true;'>
-                <span class="hidden-sm">Сергей Ткаченко</span></a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-class="!navCollapsed && 'in'">
-			
-                <ul class="nav navbar-nav">
-					<li ui-sref-active="active">
-                        <a ui-sref="home" ng-click='navCollapsed = true'>
-	                        <span class="glyphicon glyphicon-home"></span>
-	                        <span class="hidden-sm">  Home</span>
-                        </a>
-                    </li>
-                    <li ui-sref-active="active">
-                        <a ui-sref="bio" ng-click='navCollapsed = true'>
-	                    <span class="glyphicon glyphicon-pencil"></span>Обо мне</a>
-                    </li>
-                    <li ui-sref-active="active">
-                        <a ui-sref="video" ng-click='navCollapsed = true'>
-                        <span class="glyphicon glyphicon-facetime-video"></span> Видео</a>
-                    </li>
-					<li ui-sref-active="active">
-                        <a ui-sref="photo" ng-click='navCollapsed = true'>
-                        <span class="glyphicon glyphicon-camera"></span> Фото</a>
-                    </li>
-					<li ui-sref-active="active">
-                        <a ui-sref="blog" ng-click='navCollapsed = true'>
-                        <span class="glyphicon glyphicon-book"></span> Блог</a>
-                    </li>
-                    <li ui-sref-active="active">
-                        <a ui-sref="contacts" ng-click='navCollapsed = true'>
-                        <span class="glyphicon glyphicon-map-marker"></span> Контакты</a>
-                    </li>
-                </ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li ui-sref-active="active" ng-hide="isLoggedIn()">
-						<a  ui-sref="login" ng-click='navCollapsed = true'> 
-						<span class="glyphicon glyphicon-log-in"></span><span class="hidden-sm"> Вход</span></a>
-					</li>
-					<li ui-sref-active="active" ng-hide="isLoggedIn()">
-						<a  ui-sref="register" ng-click='navCollapsed = true'> 
-						<span class="glyphicon glyphicon-user"></span><span class="hidden-sm">  Регистрация</span></a>
-					</li>
-					
-					<li ui-sref-active="active" ng-show="isLoggedIn()">
-						<a  ng-click="logout()" ng-click='navCollapsed = true'> 
-						<span class="glyphicon glyphicon-log-out"></span><span class="hidden-sm">  Выход</span></a>
-					</li> 
+	<!-- Navigation -->
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle"
+					ng-init="navCollapsed = true"
+					ng-click="navCollapsed = !navCollapsed">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" ui-sref="home"
+					ng-click='navCollapsed = true;'> <span class="hidden-sm">Сергей
+						Ткаченко</span></a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1" ng-class="!navCollapsed && 'in'">
+
+				<ul class="nav navbar-nav">
+					<li ui-sref-active="active"><a ui-sref="home"
+						ng-click='navCollapsed = true'> <span
+							class="glyphicon glyphicon-home"></span> <span class="hidden-sm">
+								Home</span>
+					</a></li>
+					<li ui-sref-active="active"><a ui-sref="bio"
+						ng-click='navCollapsed = true'> <span
+							class="glyphicon glyphicon-pencil"></span>Обо мне
+					</a></li>
+					<li ui-sref-active="active"><a ui-sref="video"
+						ng-click='navCollapsed = true'> <span
+							class="glyphicon glyphicon-facetime-video"></span> Видео
+					</a></li>
+					<li ui-sref-active="active"><a ui-sref="photo"
+						ng-click='navCollapsed = true'> <span
+							class="glyphicon glyphicon-camera"></span> Фото
+					</a></li>
+					<li ui-sref-active="active"><a ui-sref="blog"
+						ng-click='navCollapsed = true'> <span
+							class="glyphicon glyphicon-book"></span> Блог
+					</a></li>
+					<li ui-sref-active="active"><a ui-sref="contacts"
+						ng-click='navCollapsed = true'> <span
+							class="glyphicon glyphicon-map-marker"></span> Контакты
+					</a></li>
 				</ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-	<div class="transbox" >
-		<h1><span class="hidden-xs">Сергей Ткаченко</span></h1>
-		<p><span class="hidden-xs">Певец</span></p>
+				<ul class="nav navbar-nav navbar-right">
+					<li ui-sref-active="active" ng-hide="isLoggedIn()"><a
+						ui-sref="login" ng-click='navCollapsed = true'> <span
+							class="glyphicon glyphicon-log-in"></span><span class="hidden-sm">
+								Вход</span></a></li>
+					<li ui-sref-active="active" ng-hide="isLoggedIn()"><a
+						ui-sref="register" ng-click='navCollapsed = true'> <span
+							class="glyphicon glyphicon-user"></span><span class="hidden-sm">
+								Регистрация</span></a></li>
+
+					<li ui-sref-active="active" ng-show="isLoggedIn()"><a
+						ng-click="logout()" ng-click='navCollapsed = true'> <span
+							class="glyphicon glyphicon-log-out"></span><span
+							class="hidden-sm"> Выход</span></a></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container -->
+	</nav>
+	<div class="transbox">
+		<h1>
+			<span class="hidden-xs">Сергей Ткаченко</span>
+		</h1>
+		<p>
+			<span class="hidden-xs">Певец</span>
+		</p>
 	</div>
 
-    <!-- UIROUTER CONTENT -->
+	<!-- UIROUTER CONTENT -->
 	<div class="container" ui-view="main"></div>
-   
+
 
 </body>
 

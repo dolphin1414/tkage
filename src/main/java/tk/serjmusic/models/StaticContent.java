@@ -41,7 +41,7 @@ import javax.persistence.Table;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class StaticContent extends AbstractEntity {
 
-    @Column(name = "content_description", nullable = false, columnDefinition = "TINYTEXT")
+    @Column(name = "content_description", unique = true, nullable = false)
     private String contentDescription = "";
 
     @Column(name = "content_language", nullable = false, columnDefinition = "CHAR(2)")

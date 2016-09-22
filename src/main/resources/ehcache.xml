@@ -3,13 +3,9 @@
 	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true"
 	monitoring="autodetect" dynamicConfig="true">
 	<diskStore path="ehcachetmp" />
-	<defaultCache maxElementsInMemory="10000" 
-				  eternal="true"
-				  timeToIdleSeconds="5" 
-				  timeToLiveSeconds="10" 
-				  overflowToDisk="false"
-				  diskPersistent="false" 
-				  diskExpiryThreadIntervalSeconds="1800"
-				  memoryStoreEvictionPolicy="LRU">
+	<defaultCache maxElementsInMemory="10000" eternal="true"
+		timeToIdleSeconds="5" timeToLiveSeconds="10" overflowToDisk="false"
+		diskPersistent="false" diskExpiryThreadIntervalSeconds="1800"
+		memoryStoreEvictionPolicy="LRU">
 	</defaultCache>
 </ehcache> 

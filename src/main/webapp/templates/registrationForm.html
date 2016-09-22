@@ -1,45 +1,58 @@
-<div class="bighalftransbox col-xs-11" ng-controller="registerController as registerCtrl" > 
-<div class="container formHolder">
-  <div class="col-sm-offset-3"><h2>Регистрация</h2></div>
-  <br/>
-  <br/>
-  <form class="form-horizontal" ng-submit="registerCtrl.register()">
-    <div class="form-group">
-      <label class="control-label col-sm-3" for="username">Имя пользователя:</label>
-      <div class="col-sm-6">
-        <input type="text" ng-model="registerCtrl.user.username" class="form-control" name="username" id="username" placeholder="Имя" class="input-xlarge">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-3" for="email">E-mail</label>
-      <div class="col-sm-6">
-        <input type="email" ng-model="registerCtrl.user.email" class="form-control" name="email" id="email" placeholder="e-mail" class="input-xlarge">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-3" for="pwd">Пароль:</label>
-      <div class="col-sm-6">
-        <input type="password" ng-model="registerCtrl.user.password" class="form-control" name="password" id="pwd" placeholder="Пароль" class="input-xlarge">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-3" for="pwd">Подтверждение пароля:</label>
-      <div class="col-sm-6">
-        <input type="password" ng-model="registerCtrl.user.passwordConfirm" class="form-control" name="password_confirm" id="pwd" placeholder="Подтверждение пароля" class="input-xlarge">
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-3 col-sm-6">
-        <div class="checkbox">
-          <label><input type="checkbox" ng-model="registerCtrl.user.rememberMe">Запомнить меня</label>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-3 col-sm-6">
-        <button type="submit" class="btn btn-default">Зарегистрироваться</button>
-      </div>
-    </div>
-  </form>
-</div>
+<div class="bighalftransbox col-xs-11"
+	ng-controller="registerController as registerCtrl">
+	<div class="container formHolder">
+		<div class="col-sm-offset-3">
+			<h2>Регистрация</h2>
+		</div>
+		<br /> <br />
+		<form class="form-horizontal" ng-submit="registerCtrl.register()">
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="username">Имя
+					пользователя:</label>
+				<div class="col-sm-6">
+					<input type="text" ng-model="registerCtrl.user.username"
+						class="form-control" name="username" id="username"
+						placeholder="Имя" class="input-xlarge">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="email">E-mail</label>
+				<div class="col-sm-6">
+					<input type="email" ng-model="registerCtrl.user.email"
+						class="form-control" name="email" id="email" placeholder="e-mail"
+						class="input-xlarge">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="pwd">Пароль:</label>
+				<div class="col-sm-6">
+					<input type="password" ng-model="registerCtrl.user.password"
+						class="form-control" name="password" id="pwd" placeholder="Пароль"
+						class="input-xlarge">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="pwd">Подтверждение
+					пароля:</label>
+				<div class="col-sm-6">
+					<input type="password" ng-model="registerCtrl.user.passwordConfirm"
+						class="form-control" name="password_confirm" id="pwd"
+						placeholder="Подтверждение пароля" class="input-xlarge">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-3 col-sm-6">
+					<div class="checkbox">
+						<label><input type="checkbox"
+							ng-model="registerCtrl.user.rememberMe">Запомнить меня</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-3 col-sm-6">
+					<button type="submit" class="btn btn-default">Зарегистрироваться</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>

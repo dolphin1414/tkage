@@ -25,24 +25,13 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.services.impl;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import tk.serjmusic.models.PhotoEntry;
-import tk.serjmusic.services.PhotoEntryService;
+package tk.serjmusic.controllers;
 
 /**
- * An implementation of {@link PhotoEntryService}. Most of basic logic is implemented in the
- * {@link AbstractGenericServiceImpl}.
+ * 
  *
  * @author Roman Kondakov
  */
-
-@Service("photoEntryServiceImpl")
-@Transactional
-public class PhotoEntryServiceImpl extends AbstractGenericServiceImpl<PhotoEntry> 
-        implements PhotoEntryService{
+public class StaticContentController {
 
 }

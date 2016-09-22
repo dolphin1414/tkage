@@ -31,6 +31,7 @@ import tk.serjmusic.models.BlogComment_;
 import tk.serjmusic.models.User;
 import tk.serjmusic.models.User_;
 import tk.serjmusic.utils.R;
+import tk.serjmusic.utils.logging.Loggable;
 
 import java.util.List;
 
@@ -67,6 +68,7 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
      * 
      * @see tk.serjmusic.dao.UserDao#getUserByUsername(java.lang.String)
      */
+    @Loggable
     @Override
     public User findUserByUsername(String username) {
         //TODO: add caching
@@ -93,6 +95,7 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
      * 
      * @see tk.serjmusic.dao.UserDao#getUserByEmail(java.lang.String)
      */
+    @Loggable
     @Override
     public User findUserByEmail(String email) {
         User result = null;
@@ -118,6 +121,7 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
      * 
      * @see tk.serjmusic.dao.UserDao#getUserCommentsByUserId(int, int, int)
      */
+    @Loggable
     @Override
     public List<BlogComment> findUserCommentsByUserId(int id, int pageNumber, int pageSize) {
         List<BlogComment> result = null;

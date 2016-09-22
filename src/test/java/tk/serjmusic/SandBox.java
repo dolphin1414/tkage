@@ -25,24 +25,35 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.services.impl;
+package tk.serjmusic;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import tk.serjmusic.models.PhotoEntry;
 import tk.serjmusic.services.PhotoEntryService;
 
 /**
- * An implementation of {@link PhotoEntryService}. Most of basic logic is implemented in the
- * {@link AbstractGenericServiceImpl}.
+ * 
  *
  * @author Roman Kondakov
  */
+@Component
+public class SandBox {
 
-@Service("photoEntryServiceImpl")
-@Transactional
-public class PhotoEntryServiceImpl extends AbstractGenericServiceImpl<PhotoEntry> 
-        implements PhotoEntryService{
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        PhotoEntryService photoEntryService = context.getBean(PhotoEntryService.class, "photoEntryService");
+        photoEntryService.create(new PhotoEntry("koko"));
+        System.out.println("ENTRIES: " + photoEntryService.getAll());
+        System.out.println("ENTRIES: " + photoEntryService.getAll());
+        photoEntryService.create(new PhotoEntry("lyalya"));
+        System.out.println("ENTRIES: " + photoEntryService.getAll());
+        System.out.println("ENTRIES: " + photoEntryService.getAll());
+    }
 
 }

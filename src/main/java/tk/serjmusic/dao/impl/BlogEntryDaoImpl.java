@@ -31,6 +31,7 @@ import tk.serjmusic.models.BlogComment_;
 import tk.serjmusic.models.BlogEntry;
 import tk.serjmusic.models.BlogEntry_;
 import tk.serjmusic.utils.R;
+import tk.serjmusic.utils.logging.Loggable;
 
 import java.util.List;
 
@@ -67,6 +68,7 @@ public class BlogEntryDaoImpl extends AbstractGenericDao<BlogEntry> implements B
      * 
      * @see tk.serjmusic.dao.BlogEntryDao#getPaginatedCommentsForBlogId(int, int, int)
      */
+    @Loggable
     @Override
     public List<BlogComment> findPaginatedCommentsForBlogId(int blogId, int pageNumber,
             int pageSize) {

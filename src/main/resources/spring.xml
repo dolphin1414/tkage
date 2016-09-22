@@ -10,11 +10,13 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
     http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
-	<context:property-placeholder location="classpath:datasource.properties, 
+	<context:property-placeholder
+		location="classpath:datasource.properties, 
 			  	  							classpath:hibernate.properties,
 			  	  							classpath:secret.properties" />
 
-	<context:component-scan base-package="tk.serjmusic.models,
+	<context:component-scan
+		base-package="tk.serjmusic.models,
 										  tk.serjmusic.dao,
 										  tk.serjmusic.dao.impl,
 										  tk.serjmusic.services,
@@ -39,7 +41,7 @@
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
-		
+
 		<property name="jpaProperties">
 			<map>
 				<entry key="hibernate.dialect" value="${hibernate.dialect}" />
@@ -57,7 +59,7 @@
 		<property name="packagesToScan" value="tk.serjmusic.models" />
 	</bean>
 
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />

@@ -12,7 +12,8 @@
 
 
 
-	<context:component-scan base-package="tk.serjmusic.models,
+	<context:component-scan
+		base-package="tk.serjmusic.models,
 										  tk.serjmusic.dao,
 										  tk.serjmusic.dao.impl" />
 
@@ -30,7 +31,7 @@
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
-		
+
 		<property name="jpaProperties">
 			<map>
 				<entry key="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />

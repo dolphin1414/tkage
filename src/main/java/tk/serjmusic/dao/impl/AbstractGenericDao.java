@@ -28,6 +28,7 @@ import tk.serjmusic.dao.GenericDao;
 import tk.serjmusic.models.AbstractEntity;
 import tk.serjmusic.models.AbstractEntity_;
 import tk.serjmusic.utils.R;
+import tk.serjmusic.utils.logging.Loggable;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -72,6 +73,7 @@ public abstract class AbstractGenericDao<T extends AbstractEntity> implements Ge
      * 
      * @see tk.serjmusic.dao.GenericDao#persist(java.lang.Object)
      */
+    @Loggable
     @Override
     public void persist(T t) {
         entityManager.persist(t);
@@ -82,6 +84,7 @@ public abstract class AbstractGenericDao<T extends AbstractEntity> implements Ge
      * 
      * @see tk.serjmusic.dao.GenericDao#find(int)
      */
+    @Loggable
     @Override
     public T find(int id) {
         T result = null;
@@ -101,6 +104,7 @@ public abstract class AbstractGenericDao<T extends AbstractEntity> implements Ge
      * 
      * @see tk.serjmusic.dao.GenericDao#merge(java.lang.Object)
      */
+    @Loggable
     @Override
     public T merge(T t) {
         return entityManager.merge(t);
@@ -111,6 +115,7 @@ public abstract class AbstractGenericDao<T extends AbstractEntity> implements Ge
      * 
      * @see tk.serjmusic.dao.GenericDao#remove(java.lang.Object)
      */
+    @Loggable
     @Override
     public void remove(T t) {
         entityManager.remove(t);
@@ -121,6 +126,7 @@ public abstract class AbstractGenericDao<T extends AbstractEntity> implements Ge
      * 
      * @see tk.serjmusic.dao.GenericDao#findAll()
      */
+    @Loggable
     @Override
     public List<T> findAll() {
         List<T> result = null;
@@ -147,6 +153,7 @@ public abstract class AbstractGenericDao<T extends AbstractEntity> implements Ge
      * 
      * @see tk.serjmusic.dao.GenericDao#countAll()
      */
+    @Loggable
     @Override
     public int countAll() {
         int result;
@@ -171,6 +178,7 @@ public abstract class AbstractGenericDao<T extends AbstractEntity> implements Ge
     /* (non-Javadoc)
      * @see tk.serjmusic.dao.GenericDao#findPaginatedAndOrdered(boolean, int, int)
      */
+    @Loggable
     @Override
     public List<T> findPaginatedAndOrdered(boolean ascOrderById, int pageNumber, int pageSize) {
         List<T> result = null;
