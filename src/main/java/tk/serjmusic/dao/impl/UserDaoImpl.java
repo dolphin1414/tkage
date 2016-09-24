@@ -71,7 +71,6 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
     @Loggable
     @Override
     public User findUserByUsername(String username) {
-        //TODO: add caching
         User result = null;
         try {
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();

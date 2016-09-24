@@ -27,8 +27,6 @@
 
 package tk.serjmusic.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,6 +36,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -59,8 +58,10 @@ import javax.validation.constraints.Size;
  *
  * @author Roman Kondakov
  */
+
 @Entity
 @Table(name = "users")
+@Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends AbstractEntity implements UserDetails {
     
@@ -119,7 +120,6 @@ public class User extends AbstractEntity implements UserDetails {
     /* (non-Javadoc)
      * @see org.springframework.security.core.userdetails.UserDetails#getPassword()
      */
-    @JsonIgnore
     @Override
     public String getPassword() {
         return password;
