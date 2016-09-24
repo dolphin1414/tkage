@@ -40,7 +40,7 @@ import java.lang.reflect.Method;
 
 /**
  * Aspect for easier logging methods invocation using AOP. Every method annotated 
- * with {@link Loggable} will be logged during it invocation in a pretty format including 
+ * with {@link Loggable} will be logged during it's invocation in a pretty format including 
  * it's name, params, result, thrown exceptions and duration of invocation.
  *
  * @author Roman Kondakov
@@ -60,7 +60,7 @@ public class LoggingAspect {
     public void atExecution(){}
     
     /**
-     * Log every method invocation for each method annotated with {@link Loggable}.
+     * Log every invocation of method annotated with {@link Loggable}.
      * @param joinPoint method joinpoint
      * @return result of loggable method
      * @throws Throwable exception of loggable method
