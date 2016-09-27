@@ -31,15 +31,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * The MVC controller for {@link StaticContent} resources requests.
+ * The MVC controller for {@link PhotoEntry} resources requests.
  *
  * @author Roman Kondakov
  */
 
 @Controller
-@RequestMapping("api/v1/resources/static")
-public class StaticContentController {
-//TODO implement 
-//    api/v1/resources/static/ - all static info
-//    api/v1/resources/static/{contentDescription} - concrete static info
+@RequestMapping("api/v1/resources/photo")
+public class PhotoEntryController {
+//TODO
+//    api/v1/resources/photo – all photos
+//    api/v1/resources/photo/{photoId} – concrete photo
+//    api/v1/resources/photo?pageNumber={int}&pageSize={int} – paginated photo
 }

@@ -25,21 +25,28 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.controllers;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+package tk.serjmusic.controllers.exceptions;
 
 /**
- * The MVC controller for {@link StaticContent} resources requests.
+ * This exception should be thrown when the given request URL couldh't be mapped.
  *
  * @author Roman Kondakov
  */
+public class NotFoundException extends RuntimeException {
+    
+    public NotFoundException() {
+        super();
+    }
 
-@Controller
-@RequestMapping("api/v1/resources/static")
-public class StaticContentController {
-//TODO implement 
-//    api/v1/resources/static/ - all static info
-//    api/v1/resources/static/{contentDescription} - concrete static info
+    public NotFoundException(String message) {
+        super(message);
+    }
+    
+    public NotFoundException(Throwable cause) {
+        super(cause);
+    }
+
+    public NotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

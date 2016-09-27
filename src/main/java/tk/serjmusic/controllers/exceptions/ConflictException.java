@@ -25,21 +25,33 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.controllers;
+package tk.serjmusic.controllers.exceptions;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * The MVC controller for {@link StaticContent} resources requests.
+ * This exception should be thrown when the given request URL couldh't be mapped.
  *
  * @author Roman Kondakov
  */
 
-@Controller
-@RequestMapping("api/v1/resources/static")
-public class StaticContentController {
-//TODO implement 
-//    api/v1/resources/static/ - all static info
-//    api/v1/resources/static/{contentDescription} - concrete static info
+@ResponseStatus(code = HttpStatus.CONFLICT)
+public class ConflictException extends RuntimeException {
+    
+    public ConflictException() {
+        super();
+    }
+
+    public ConflictException(String message) {
+        super(message);
+    }
+    
+    public ConflictException(Throwable cause) {
+        super(cause);
+    }
+
+    public ConflictException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

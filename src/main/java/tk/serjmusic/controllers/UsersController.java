@@ -31,15 +31,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * The MVC controller for {@link StaticContent} resources requests.
+ * The MVC controller for {@link User} resources requests.
  *
  * @author Roman Kondakov
  */
 
 @Controller
-@RequestMapping("api/v1/resources/static")
-public class StaticContentController {
-//TODO implement 
-//    api/v1/resources/static/ - all static info
-//    api/v1/resources/static/{contentDescription} - concrete static info
+@RequestMapping("")
+public class UsersController {
+    
+//TODO api/v1/resources/users – all blog entries
+//    api/v1/resources/users/{userId} – concrete user
+//    api/v1/resources/users?pageNumber={int}&pageSize={int} – paginated users
+
 }

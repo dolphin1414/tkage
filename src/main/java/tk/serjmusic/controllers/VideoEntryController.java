@@ -28,18 +28,18 @@
 package tk.serjmusic.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * The MVC controller for {@link StaticContent} resources requests.
+ * The MVC controller for {@link VideoEntry} resources requests.
  *
  * @author Roman Kondakov
  */
 
 @Controller
-@RequestMapping("api/v1/resources/static")
-public class StaticContentController {
-//TODO implement 
-//    api/v1/resources/static/ - all static info
-//    api/v1/resources/static/{contentDescription} - concrete static info
+public class VideoEntryController {
+// TODO
+//    api/v1/resources/video – all video
+//    api/v1/resources/video/{videoId} – concrete video
+//    api/v1/resources/video?pageNumber={int}&pageSize={int} – paginated video
+    
 }
