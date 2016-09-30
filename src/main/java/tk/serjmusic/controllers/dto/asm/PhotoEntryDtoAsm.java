@@ -29,6 +29,7 @@ package tk.serjmusic.controllers.dto.asm;
 
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
+import tk.serjmusic.controllers.PhotoEntryController;
 import tk.serjmusic.controllers.dto.PhotoEntryDto;
 import tk.serjmusic.models.PhotoEntry;
 
@@ -39,18 +40,23 @@ import tk.serjmusic.models.PhotoEntry;
  */
 public class PhotoEntryDtoAsm extends ResourceAssemblerSupport<PhotoEntry, PhotoEntryDto>{
 
-    public PhotoEntryDtoAsm(Class<?> controllerClass, Class<PhotoEntryDto> resourceType) {
-        super(controllerClass, resourceType);
-        // TODO Auto-generated constructor stub
+    public PhotoEntryDtoAsm() {
+        super(PhotoEntryController.class, PhotoEntryDto.class);
     }
 
     /* (non-Javadoc)
      * @see org.springframework.hateoas.ResourceAssembler#toResource(java.lang.Object)
      */
     @Override
-    public PhotoEntryDto toResource(PhotoEntry entity) {
-        // TODO Auto-generated method stub
-        return null;
+    public PhotoEntryDto toResource(PhotoEntry photoEntry) {
+        PhotoEntryDto photoEntryDto = new PhotoEntryDto();
+        photoEntryDto.setBackgroundImage(photoEntry.isBackgroundImage());
+        photoEntryDto.setDescription(photoEntry.getDescription());
+        photoEntryDto.setImageLink(photoEntry.getImageLink());
+        photoEntryDto.setPhotoEntryId(photoEntry.getId());
+        photoEntryDto.setTitle(photoEntry.getTitle());
+        // TODO add links
+        return photoEntryDto;
     }
 
 }

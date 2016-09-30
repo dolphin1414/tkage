@@ -28,12 +28,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.ResourceSupport;
 
 import tk.serjmusic.models.User;
+import tk.serjmusic.models.UserRole;
+import tk.serjmusic.utils.logging.Loggable;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
 /**
- * The DTO for {@link User} entity.
+ * The DTO for a {@link User} entity.
  *
  * @author Roman Kondakov
  */
@@ -45,6 +49,31 @@ public class UserDto extends ResourceSupport {
     private String email;
     private Set<String> roles;
     private boolean isBanned;
+    private String imageLink;
+    private byte[] imageFile;
+    
+    /**
+     * Overwrite non null fields of JPA entity with an information from DTO.
+     * 
+     * @param user - entity to be overwritten
+     * @return overwritten entity
+     */
+    public User overwriteEntity(User user) {
+        if (userId > 0) user.setId(userId);
+        if (username != null) user.setUsername(username);
+        if (password != null) user.setPassword(password);
+        if (email != null) user.setEmail(email);
+        //TODO implement security issues with roles setting
+        if (roles != null) {
+            Set<UserRole> userRoles = new HashSet<>();
+            roles.forEach(role -> userRoles.add(UserRole.valueOf(role)));
+            user.setRoles(userRoles);
+        }
+        user.setBanned(isBanned); 
+        if (imageLink != null) user.setImageLink(imageLink);
+        if (imageFile != null) user.setImageFile(imageFile);
+        return user;
+    }
     
     /**
      * Id getter.
@@ -154,6 +183,44 @@ public class UserDto extends ResourceSupport {
      */
     public void setBanned(boolean isBanned) {
         this.isBanned = isBanned;
+    }
+    
+    /**
+     * Getter for UserDto imageLink.
+     *
+     * @return the imageLink
+     */
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    /**
+     * Setter for UserDto imageLink.
+     *
+     * @param imageLink the imageLink to set
+     */
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
+
+    /**
+     * Getter for UserDto imageFile.
+     *
+     * @return the imageFile
+     */
+    @JsonIgnore
+    public byte[] getImageFile() {
+        return imageFile;
+    }
+
+    /**
+     * Setter for UserDto imageFile.
+     *
+     * @param imageFile the imageFile to set
+     */
+    @JsonProperty
+    public void setImageFile(byte[] imageFile) {
+        this.imageFile = imageFile;
     }
 
     /* (non-Javadoc)

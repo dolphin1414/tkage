@@ -29,6 +29,7 @@ package tk.serjmusic.controllers.dto.asm;
 
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
+import tk.serjmusic.controllers.BlogCommentController;
 import tk.serjmusic.controllers.dto.BlogEntryDto;
 import tk.serjmusic.models.BlogEntry;
 
@@ -38,19 +39,27 @@ import tk.serjmusic.models.BlogEntry;
  * @author Roman Kondakov
  */
 public class BlogEntryDtoAsm extends ResourceAssemblerSupport<BlogEntry, BlogEntryDto> {
+    
+    private static final UserDtoAsm userDtoAsm = new UserDtoAsm();
 
-    public BlogEntryDtoAsm(Class<?> controllerClass, Class<BlogEntryDto> resourceType) {
-        super(controllerClass, resourceType);
-        // TODO Auto-generated constructor stub
+    public BlogEntryDtoAsm() {
+        super(BlogCommentController.class, BlogEntryDto.class);
     }
 
     /* (non-Javadoc)
      * @see org.springframework.hateoas.ResourceAssembler#toResource(java.lang.Object)
      */
     @Override
-    public BlogEntryDto toResource(BlogEntry entity) {
-        // TODO Auto-generated method stub
-        return null;
+    public BlogEntryDto toResource(BlogEntry blogEntry) {
+        BlogEntryDto blogEntryDto = new BlogEntryDto();
+        blogEntryDto.setAuthor(userDtoAsm.toResource(blogEntry.getAuthor()));
+        blogEntryDto.setBlogId(blogEntry.getId());
+        blogEntryDto.setContent(blogEntry.getContent());
+        blogEntryDto.setDateCreated(blogEntry.getDateCreated());
+        blogEntryDto.setImageLink(blogEntry.getImageLink());
+        blogEntryDto.setTitle(blogEntry.getTitle());
+        //TODO add links
+        return blogEntryDto;
     }
 
 }

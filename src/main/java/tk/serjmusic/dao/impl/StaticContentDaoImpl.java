@@ -27,14 +27,22 @@
 
 package tk.serjmusic.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import tk.serjmusic.dao.StaticContentDao;
 import tk.serjmusic.models.StaticContent;
+import tk.serjmusic.models.StaticContent_;
+import tk.serjmusic.utils.R;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  * JPA implementation of {@link StaticContentDao}.
@@ -45,6 +53,8 @@ import javax.persistence.PersistenceContext;
 public class StaticContentDaoImpl extends AbstractGenericDao<StaticContent>
         implements StaticContentDao {
     
+    private static final Logger logger = Logger.getLogger(StaticContentDaoImpl.class);
+    
     @PersistenceContext
     private EntityManager entityManager;
     
@@ -52,5 +62,28 @@ public class StaticContentDaoImpl extends AbstractGenericDao<StaticContent>
     private void init() {
         setEntityManager(entityManager);
     }
-    
+
+    /* (non-Javadoc)
+     * @see tk.serjmusic.dao.StaticContentDao#findUserByUsername(java.lang.String)
+     */
+    @Override
+    public StaticContent findStaticContentByDescription(String description) {
+        StaticContent result = null;
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<StaticContent> cq = cb.createQuery(StaticContent.class);
+            Root<StaticContent> from = cq.from(StaticContent.class);
+            cq.select(from)
+                    .where(cb.equal(from.get(StaticContent_.contentDescription), description));
+            TypedQuery<StaticContent> tq = entityManager.createQuery(cq);
+            tq.setHint(R.HIBERNATE_QUERY_CACHE_NAME, true);
+            result = tq.getSingleResult();
+        } catch (NoResultException ex) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("No results for getUserByUsername " + description, ex);
+            }
+            result = null;
+        }
+        return result;
+    }
 }

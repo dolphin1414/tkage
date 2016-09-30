@@ -68,12 +68,12 @@ public abstract class AbstractGenericServiceImpl<T extends AbstractEntity>
      */
     @Loggable
     @Override
-    public void create(T t) {
+    public T create(T t) {
         if (t == null) {
             throw new IllegalArgumentException("entity is null");
         }
         try {
-            dao.persist(t);
+            return dao.merge(t);
         } catch (EntityExistsException ex) {
             throw new AlreadyExistsException("entity: " + t, ex);
         } catch (PersistenceException ex) {
@@ -99,8 +99,7 @@ public abstract class AbstractGenericServiceImpl<T extends AbstractEntity>
             throw new PersistentLayerProblemsException("id: " + id, ex);
         }
         if (result == null) {
-            throw new CanNotFindException(
-                    "DAO " + dao.getClass().getSimpleName() + " can not find entity for id=" + id);
+            throw new CanNotFindException("Can not find entity for id=" + id);
         }
         return result;
     }
@@ -158,8 +157,7 @@ public abstract class AbstractGenericServiceImpl<T extends AbstractEntity>
             throw new PersistentLayerProblemsException("no result ", ex);
         }
         if (result == null) {
-            throw new CanNotFindException(
-                    "DAO " + dao.getClass().getSimpleName() + " can not find entities");
+            throw new CanNotFindException("Can not find entities");
         }
         return result;
     }
@@ -179,8 +177,7 @@ public abstract class AbstractGenericServiceImpl<T extends AbstractEntity>
             throw new PersistentLayerProblemsException("no result ", ex);
         }
         if (result == 0) {
-            throw new CanNotFindException(
-                    "DAO " + dao.getClass().getSimpleName() + " can not find entities");
+            throw new CanNotFindException("Can not find entities");
         }
         return result;
     }
@@ -204,8 +201,7 @@ public abstract class AbstractGenericServiceImpl<T extends AbstractEntity>
             throw new PersistentLayerProblemsException("no result ", ex);
         }
         if (result == null) {
-            throw new CanNotFindException(
-                    "DAO " + dao.getClass().getSimpleName() + " can not find entities");
+            throw new CanNotFindException("Can not find entities");
         }
         return result;
     }

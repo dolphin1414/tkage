@@ -29,6 +29,8 @@ package tk.serjmusic.controllers.dto;
 
 import org.springframework.hateoas.ResourceSupport;
 
+import tk.serjmusic.models.BlogComment;
+import tk.serjmusic.models.PhotoEntry;
 import tk.serjmusic.models.StaticContent;
 
 /**
@@ -42,6 +44,20 @@ public class StaticContentDto extends ResourceSupport {
     private String contentDescription;
     private String language;
     private String content;
+    
+    /**
+     * Overwrite non null fields of JPA entity with an information from DTO.
+     * 
+     * @param staticContent - entity to be overwritten
+     * @return overwritten entity
+     */
+    public StaticContent overwriteEntity(StaticContent staticContent) {
+        if (staticContentId > 0) staticContent.setId(staticContentId);
+        if (contentDescription != null) staticContent.setContentDescription(contentDescription);
+        if (language != null) staticContent.setLanguage(language);
+        if (content != null) staticContent.setContent(content);
+        return staticContent;
+    }
     
     /**
      * Getter for StaticContentDto staticContentId.

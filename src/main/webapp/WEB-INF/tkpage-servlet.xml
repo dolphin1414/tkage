@@ -15,7 +15,8 @@
 
 	<mvc:annotation-driven />
 
-	<context:component-scan base-package="tk.serjmusic.controllers" />
+	<context:component-scan base-package="tk.serjmusic.controllers,
+										  tk.serjmusic.controllers.exceptions" />
 
 	<mvc:resources location="/css/" mapping="/css/**" />
 	<mvc:resources location="/fonts/" mapping="/fonts/**" />

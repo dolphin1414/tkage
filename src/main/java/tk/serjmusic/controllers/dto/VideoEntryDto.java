@@ -37,6 +37,20 @@ public class VideoEntryDto extends ResourceSupport {
     private String title;
     private String description;
     private String youTubeLink;
+    
+    /**
+     * Overwrite non null fields of JPA entity with an information from DTO.
+     * 
+     * @param videoEntry - entity to be overwritten
+     * @return overwritten entity
+     */
+    public VideoEntry overwriteEntity(VideoEntry videoEntry) {
+        if (videoEntryId > 0) videoEntry.setId(videoEntryId);
+        if (title != null) videoEntry.setTitle(title);
+        if (description != null) videoEntry.setDescription(description);
+        if (description != null) videoEntry.setYouTubeLink(youTubeLink);
+        return videoEntry;
+    }
 
     /**
      * Getter for VideoEntryDto videoEntryId.

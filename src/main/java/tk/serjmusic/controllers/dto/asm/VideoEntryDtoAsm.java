@@ -29,6 +29,7 @@ package tk.serjmusic.controllers.dto.asm;
 
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
+import tk.serjmusic.controllers.VideoEntryController;
 import tk.serjmusic.controllers.dto.VideoEntryDto;
 import tk.serjmusic.models.VideoEntry;
 
@@ -39,18 +40,22 @@ import tk.serjmusic.models.VideoEntry;
  */
 public class VideoEntryDtoAsm extends ResourceAssemblerSupport<VideoEntry, VideoEntryDto> {
     
-    public VideoEntryDtoAsm(Class<?> controllerClass, Class<VideoEntryDto> resourceType) {
-        super(controllerClass, resourceType);
-        // TODO Auto-generated constructor stub
+    public VideoEntryDtoAsm() {
+        super(VideoEntryController.class, VideoEntryDto.class);
     }
 
     /* (non-Javadoc)
      * @see org.springframework.hateoas.ResourceAssembler#toResource(java.lang.Object)
      */
     @Override
-    public VideoEntryDto toResource(VideoEntry entity) {
-        // TODO Auto-generated method stub
-        return null;
+    public VideoEntryDto toResource(VideoEntry videoEntry) {
+        VideoEntryDto videoEntryDto = new VideoEntryDto();
+        videoEntryDto.setDescription(videoEntry.getDescription());
+        videoEntryDto.setTitle(videoEntry.getTitle());
+        videoEntryDto.setVideoEntryId(videoEntry.getId());
+        videoEntryDto.setYouTubeLink(videoEntry.getYouTubeLink());
+        // TODO add links
+        return videoEntryDto;
     }
 
 }

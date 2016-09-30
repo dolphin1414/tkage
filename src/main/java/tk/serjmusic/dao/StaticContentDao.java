@@ -35,5 +35,12 @@ import tk.serjmusic.models.StaticContent;
  * @author Roman Kondakov
  */
 public interface StaticContentDao extends GenericDao<StaticContent> {
-
+    
+    /**
+     * Retrieve static content by it's description.
+     * 
+     * @param description description of static content for lookup
+     * @return found {@link StaticContent}
+     */
+    public StaticContent findStaticContentByDescription(String description);
 }

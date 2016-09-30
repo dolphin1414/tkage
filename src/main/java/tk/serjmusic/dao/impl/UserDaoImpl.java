@@ -144,6 +144,9 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao {
             }
             result = null;
         }
+        if ((result != null) && (result.isEmpty())) {
+            result = null;
+        }
         return result;
     }
 }

@@ -28,9 +28,16 @@
 package tk.serjmusic.controllers.dto.asm;
 
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
+import org.springframework.hateoas.Link;
+
+import tk.serjmusic.controllers.UsersController;
 import tk.serjmusic.controllers.dto.UserDto;
 import tk.serjmusic.models.User;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * DTO assembler for {@link User} entity.
@@ -39,18 +46,30 @@ import tk.serjmusic.models.User;
  */
 public class UserDtoAsm extends ResourceAssemblerSupport<User, UserDto> {
 
-    public UserDtoAsm(Class<?> controllerClass, Class<UserDto> resourceType) {
-        super(controllerClass, resourceType);
-        // TODO Auto-generated constructor stub
+    public UserDtoAsm() {
+        super(UsersController.class, UserDto.class);
     }
 
     /* (non-Javadoc)
      * @see org.springframework.hateoas.ResourceAssembler#toResource(java.lang.Object)
      */
     @Override
-    public UserDto toResource(User entity) {
-        // TODO Auto-generated method stub
-        return null;
+    public UserDto toResource(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setUserId(user.getId());
+        userDto.setUsername(user.getUsername());
+        userDto.setPassword(user.getPassword());
+        userDto.setEmail(user.getEmail());
+        userDto.setBanned(user.isBanned());
+        userDto.setImageLink(user.getImageLink());
+        userDto.setImageFile(user.getImageFile());
+        Set<String> roles = new HashSet<>();
+        user.getRoles().forEach(role -> roles.add(role.toString()));
+        userDto.setRoles(roles);
+        Link link = linkTo(UsersController.class).slash(user.getId()).withSelfRel();
+        userDto.add(link);
+        //TODO add links to blog entries and comments
+        return userDto;
     }
 
 }

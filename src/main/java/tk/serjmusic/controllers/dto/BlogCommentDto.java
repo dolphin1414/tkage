@@ -30,6 +30,8 @@ package tk.serjmusic.controllers.dto;
 import org.springframework.hateoas.ResourceSupport;
 
 import tk.serjmusic.models.BlogComment;
+import tk.serjmusic.models.BlogEntry;
+import tk.serjmusic.models.User;
 
 import java.util.Date;
 
@@ -46,6 +48,22 @@ public class BlogCommentDto extends ResourceSupport {
     private Date dateCreated;
     private UserDto author;
     private BlogEntryDto blogEntry;
+    
+    /**
+     * Overwrite non null fields of JPA entity with an information from DTO.
+     * 
+     * @param blogComment - entity to be overwritten
+     * @return overwritten entity
+     */
+    public BlogComment overwriteEntity(BlogComment blogComment) {
+        if (commentId > 0) blogComment.setId(commentId);
+        if (content != null) blogComment.setContent(content);
+        if (dateCreated != null) blogComment.setDateCreated(dateCreated);
+        if (author != null) blogComment.setAuthor(author.overwriteEntity(new User()));
+        if (blogEntry != null) blogComment.setBlogEntry(
+                blogEntry.overwriteEntity(new BlogEntry()));
+       return blogComment;
+    }
     
     /**
      * Getter for BlogCommentDto commentId.

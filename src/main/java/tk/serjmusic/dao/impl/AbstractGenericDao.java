@@ -76,7 +76,7 @@ public abstract class AbstractGenericDao<T extends AbstractEntity> implements Ge
     @Loggable
     @Override
     public void persist(T t) {
-        entityManager.persist(t);
+        entityManager.persist(t);  
     }
 
     /*
@@ -118,7 +118,7 @@ public abstract class AbstractGenericDao<T extends AbstractEntity> implements Ge
     @Loggable
     @Override
     public void remove(T t) {
-        entityManager.remove(t);
+        entityManager.remove(entityManager.contains(t) ? t : entityManager.merge(t));
     }
 
     /*
@@ -142,6 +142,9 @@ public abstract class AbstractGenericDao<T extends AbstractEntity> implements Ge
             if (logger.isDebugEnabled()) {
                 logger.debug("No results for findAll " + genericType , ex);
             }
+            result = null;
+        }
+        if ((result != null) && (result.isEmpty())) {
             result = null;
         }
         return result;
@@ -194,12 +197,16 @@ public abstract class AbstractGenericDao<T extends AbstractEntity> implements Ge
             typedQuery.setFirstResult(startPosition).setMaxResults(pageSize);
             typedQuery.setHint(R.HIBERNATE_QUERY_CACHE_NAME, true);
             result =  typedQuery.getResultList();
+            logger.debug("result: " + result);
         } catch (NoResultException ex) {
             if (logger.isDebugEnabled()) {
                 logger.debug("No results for findPaginatedAndOrdered " + genericType 
                         + "; Id asc order: " + ascOrderById + "; page number: " + pageNumber
                         + "; page size: " + pageSize, ex);
             }
+            result = null;
+        }
+        if ((result != null) && (result.isEmpty())) {
             result = null;
         }
         return result;

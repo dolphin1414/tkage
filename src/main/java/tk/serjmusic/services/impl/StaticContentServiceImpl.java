@@ -27,11 +27,17 @@
 
 package tk.serjmusic.services.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import tk.serjmusic.dao.StaticContentDao;
 import tk.serjmusic.models.StaticContent;
 import tk.serjmusic.services.StaticContentService;
+import tk.serjmusic.services.exceptions.CanNotFindException;
+import tk.serjmusic.services.exceptions.PersistentLayerProblemsException;
+
+import javax.persistence.PersistenceException;
 
 /**
  * An implementation of {@link StaticContentService}. Most of basic logic is implemented in the
@@ -44,5 +50,27 @@ import tk.serjmusic.services.StaticContentService;
 @Transactional
 public class StaticContentServiceImpl extends AbstractGenericServiceImpl<StaticContent> 
         implements StaticContentService{
+    
+    @Autowired
+    private StaticContentDao staticContentDao;
 
+    /* (non-Javadoc)
+     * @see tk.serjmusic.services.StaticContentService#getStaticContentByDescription(java.lang.String)
+     */
+    @Override
+    public StaticContent getStaticContentByDescription(String description) {
+        if (description == null) {
+            throw new IllegalArgumentException("description is null");
+        }
+        StaticContent result = null;
+        try {
+            result = staticContentDao.findStaticContentByDescription(description);
+        } catch (PersistenceException ex) {
+            throw new PersistentLayerProblemsException("description: " + description, ex);
+        }
+        if (result == null) {
+            throw new CanNotFindException("DAO  can not find entity for username=" + description);
+        }
+        return result;
+    }
 }

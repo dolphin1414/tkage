@@ -43,7 +43,7 @@ public interface GenericService<T extends AbstractEntity> {
      * 
      * @param t - entity instance
      */
-    public void create(T t);
+    public T create(T t);
     
     /**
      * Get entity from data layer by id.

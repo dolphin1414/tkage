@@ -29,6 +29,7 @@ package tk.serjmusic.controllers.dto.asm;
 
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
+import tk.serjmusic.controllers.StaticContentController;
 import tk.serjmusic.controllers.dto.StaticContentDto;
 import tk.serjmusic.models.StaticContent;
 
@@ -40,18 +41,22 @@ import tk.serjmusic.models.StaticContent;
 public class StaticContentDtoAsm 
         extends ResourceAssemblerSupport<StaticContent, StaticContentDto> {
 
-    public StaticContentDtoAsm(Class<?> controllerClass, Class<StaticContentDto> resourceType) {
-        super(controllerClass, resourceType);
-        // TODO Auto-generated constructor stub
+    public StaticContentDtoAsm() {
+        super(StaticContentController.class, StaticContentDto.class);
     }
 
     /* (non-Javadoc)
      * @see org.springframework.hateoas.ResourceAssembler#toResource(java.lang.Object)
      */
     @Override
-    public StaticContentDto toResource(StaticContent entity) {
-        // TODO Auto-generated method stub
-        return null;
+    public StaticContentDto toResource(StaticContent staticContent) {
+        StaticContentDto staticContentDto = new StaticContentDto();
+        staticContentDto.setContent(staticContent.getContent());
+        staticContentDto.setContentDescription(staticContent.getContentDescription());
+        staticContentDto.setLanguage(staticContent.getLanguage());
+        staticContentDto.setStaticContentId(staticContent.getId());
+        // TODO add links
+        return staticContentDto;
     }
 
 }

@@ -36,5 +36,11 @@ import tk.serjmusic.models.StaticContent;
  */
 public interface StaticContentService extends GenericService<StaticContent> {
 
-    
+    /**
+     * Retrieve static content by it's description.
+     * 
+     * @param description description of static content for lookup
+     * @return found {@link StaticContent}
+     */
+    public StaticContent getStaticContentByDescription(String description);
 }

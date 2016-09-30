@@ -29,6 +29,7 @@ package tk.serjmusic.controllers.dto;
 
 import org.springframework.hateoas.ResourceSupport;
 
+import tk.serjmusic.models.BlogComment;
 import tk.serjmusic.models.PhotoEntry;
 
 
@@ -44,6 +45,21 @@ public class PhotoEntryDto extends ResourceSupport {
     private String description;
     private String imageLink;
     private boolean isBackgroundImage;
+    
+    /**
+     * Overwrite non null fields of JPA entity with an information from DTO.
+     * 
+     * @param photoEntry - entity to be overwritten
+     * @return overwritten entity
+     */
+    public PhotoEntry overwriteEntity(PhotoEntry photoEntry) {
+        if (photoEntryId > 0) photoEntry.setId(photoEntryId);
+        if (title != null) photoEntry.setTitle(title);
+        if (description != null) photoEntry.setDescription(description);
+        if (imageLink != null) photoEntry.setImageLink(imageLink);
+        photoEntry.setBackgroundImage(isBackgroundImage);
+        return photoEntry;
+    }
     
     /**
      * Getter for PhotoEntryDto photoEntryId.

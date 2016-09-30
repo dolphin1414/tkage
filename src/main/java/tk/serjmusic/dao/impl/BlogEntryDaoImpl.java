@@ -92,6 +92,9 @@ public class BlogEntryDaoImpl extends AbstractGenericDao<BlogEntry> implements B
             }
             result = null;
         }
+        if ((result != null) && (result.isEmpty())) {
+            result = null;
+        }
         return result;
     }
 
