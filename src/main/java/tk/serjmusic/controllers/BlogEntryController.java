@@ -131,12 +131,13 @@ public class BlogEntryController {
      * @return {@link BlogEntryDto} of updated {@link BlogEntry}
      */
     @RequestMapping(path = "/{blogId}", method = RequestMethod.PUT)
-    public ResponseEntity<BlogEntryDto> updateBlogById(@RequestBody BlogEntryDto blogDto) {
+    public ResponseEntity<BlogEntryDto> updateBlogById(
+            @RequestBody BlogEntryDto blogDto, @PathVariable("blogId") int blogId) {
         if (blogDto == null) {
             throw new IllegalArgumentException("BlogDto should not be null");
         }
         BlogEntry blog = blogService
-                .update(blogDto.overwriteEntity(blogService.getById(blogDto.getBlogId())));
+                .update(blogDto.overwriteEntity(blogService.getById(blogId)));
         return new ResponseEntity<BlogEntryDto>(blogDtoAsm.toResource(blog), HttpStatus.OK);
     }
 

@@ -25,32 +25,33 @@
 * For more information, please refer to <http://unlicense.org/>
 */
 
-package tk.serjmusic.models;
+package tk.serjmusic.security;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-import javax.persistence.Cacheable;
+import tk.serjmusic.services.UserService;
 
 /**
- * Enumeration of user roles for access distinction. It's an implementation 
- * of {@link GrantedAuthority} interface
+ * An implementation of {@link UserDetailsService} interface.
  *
  * @author Roman Kondakov
  */
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-public enum UserRole implements GrantedAuthority {
+@Service("userDetailsServiceImpl")
+public class UserDetailsServiceImpl implements UserDetailsService{
     
-    ROLE_USER, ROLE_ADMIN, ROLE_EDITOR;
-
-    /* (non-Javadoc)
-     * @see org.springframework.security.core.GrantedAuthority#getAuthority()
-     */
-    @Override
-    public String getAuthority() {
-        return name();
+    @Autowired
+    UserService userService;
+    
+    public UserDetailsServiceImpl() {
     }
     
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userService.getUserByUsername(username);
+    }
+
 }

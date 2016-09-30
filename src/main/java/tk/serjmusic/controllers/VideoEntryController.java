@@ -128,12 +128,13 @@ public class VideoEntryController {
      * @return {@link VideoEntryDto} of updated {@link VideoEntry}
      */
     @RequestMapping(path = "/{videoId}", method = RequestMethod.PUT)
-    public ResponseEntity<VideoEntryDto> updateVideoById(@RequestBody VideoEntryDto videoDto) {
+    public ResponseEntity<VideoEntryDto> updateVideoById(
+            @RequestBody VideoEntryDto videoDto, @PathVariable("videoId") int videoId) {
         if (videoDto == null) {
             throw new IllegalArgumentException("Video DTO should not be null");
         }
         VideoEntry video = videoService
-                .update(videoDto.overwriteEntity(videoService.getById(videoDto.getVideoEntryId())));
+                .update(videoDto.overwriteEntity(videoService.getById(videoId)));
         return new ResponseEntity<VideoEntryDto>(videoDtoAsm.toResource(video), HttpStatus.OK);
     }
 

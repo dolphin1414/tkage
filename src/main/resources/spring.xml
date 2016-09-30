@@ -21,7 +21,8 @@
 										  tk.serjmusic.dao.impl,
 										  tk.serjmusic.services,
 										  tk.serjmusic.services.impl,
-										  tk.serjmusic.utils.logging" />
+										  tk.serjmusic.utils.logging,
+										  tk.serjmusic.security" />
 
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 

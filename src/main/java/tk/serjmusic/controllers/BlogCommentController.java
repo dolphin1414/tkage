@@ -105,12 +105,12 @@ public class BlogCommentController {
      */
     @RequestMapping(path = "/{commentId}", method = RequestMethod.PUT)
     public ResponseEntity<BlogCommentDto> updateCommentById(
-            @RequestBody BlogCommentDto blogCommentDto) {
+            @RequestBody BlogCommentDto blogCommentDto, @PathVariable("commentId") int commentId) {
         if (blogCommentDto == null) {
             throw new IllegalArgumentException("Blog comment should not be null");
         }
         BlogComment comment = commentsService.update(blogCommentDto
-                .overwriteEntity(commentsService.getById(blogCommentDto.getCommentId())));
+                .overwriteEntity(commentsService.getById(commentId)));
         return new ResponseEntity<BlogCommentDto>(blogCommentDtoAsm.toResource(comment), 
                 HttpStatus.OK);
     }

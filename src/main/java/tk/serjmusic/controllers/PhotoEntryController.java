@@ -124,12 +124,13 @@ public class PhotoEntryController {
      * @return {@link PhotoEntryDto} of updated {@link PhotoEntry}
      */
     @RequestMapping(path = "/{photoId}", method = RequestMethod.PUT)
-    public ResponseEntity<PhotoEntryDto> updatePhotoById(@RequestBody PhotoEntryDto photoDto) {
+    public ResponseEntity<PhotoEntryDto> updatePhotoById(
+            @RequestBody PhotoEntryDto photoDto, @PathVariable("photoId") int photoId) {
         if (photoDto == null) {
             throw new IllegalArgumentException("Photo DTO should not be null");
         }
         PhotoEntry photo = photoService
-                .update(photoDto.overwriteEntity(photoService.getById(photoDto.getPhotoEntryId())));
+                .update(photoDto.overwriteEntity(photoService.getById(photoId)));
         return new ResponseEntity<PhotoEntryDto>(photoDtoAsm.toResource(photo), HttpStatus.OK);
     }
 

@@ -28,6 +28,7 @@
 package tk.serjmusic.controllers.exceptions;
 
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -47,40 +48,44 @@ import tk.serjmusic.services.exceptions.PersistentLayerProblemsException;
 public class ExceptionHandlerAdvice {
     
     private static final Logger logger = Logger.getLogger(ExceptionHandlerAdvice.class);
+    HttpHeaders responseHeaders = new HttpHeaders();
     
-    //TODO implement handlers for all exceptions
+    {
+        responseHeaders.add("Content-Type", "application/json");
+    }
+    
     @ExceptionHandler
     public ResponseEntity<String> handleException(CanNotFindException ex) {
         logger.info("Not found exception ", ex);
-        return new ResponseEntity<String>(getRootCause(ex).getMessage(),
+        return new ResponseEntity<String>(toErrorMessage(ex), responseHeaders,
                 HttpStatus.NOT_FOUND);
     }
     
     @ExceptionHandler
     public ResponseEntity<String> handleException(AlreadyExistsException ex) {
         logger.info("Entity already exists ", ex);
-        return new ResponseEntity<String>(getRootCause(ex).getMessage(),
+        return new ResponseEntity<String>(toErrorMessage(ex), responseHeaders,
                 HttpStatus.CONFLICT);
     }
     
     @ExceptionHandler
     public ResponseEntity<String> handleException(PersistentLayerProblemsException ex) {
         logger.warn("Can not handle request. ", ex);
-        return new ResponseEntity<String>(getRootCause(ex).getMessage(),
+        return new ResponseEntity<String>(toErrorMessage(ex), responseHeaders,
                 HttpStatus.CONFLICT);
     }
     
     @ExceptionHandler
     public ResponseEntity<String> handleException(IllegalArgumentException ex) {
         logger.info("Bad request ", ex);
-        return new ResponseEntity<String>(getRootCause(ex).getMessage(),
+        return new ResponseEntity<String>(toErrorMessage(ex), responseHeaders,
                 HttpStatus.BAD_REQUEST);
     }
     
     @ExceptionHandler
     public ResponseEntity<String> handleException(Throwable ex) {
         logger.warn("Unexpectable exception: ", ex);
-        return new ResponseEntity<String>(getRootCause(ex).getMessage(),
+        return new ResponseEntity<String>(toErrorMessage(ex), responseHeaders,
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
@@ -91,5 +96,10 @@ public class ExceptionHandlerAdvice {
             result = cause;
         }
         return result;
+    }
+    
+    private String toErrorMessage(Throwable e) {
+        return "{ \"error\": \"" + getRootCause(e).getMessage() 
+                + "\", \"exception\": \"" + getRootCause(e).getClass() + "\" }";
     }
 }

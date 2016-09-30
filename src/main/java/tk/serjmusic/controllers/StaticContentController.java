@@ -129,12 +129,12 @@ public class StaticContentController {
      */
     @RequestMapping(path = "/{staticId}", method = RequestMethod.PUT)
     public ResponseEntity<StaticContentDto> updateStaticById(
-            @RequestBody StaticContentDto staticDto) {
+            @RequestBody StaticContentDto staticDto, @PathVariable("staticId") int staticId) {
         if (staticDto == null) {
             throw new IllegalArgumentException("Static DTO should not be null");
         }
         StaticContent staticContent = staticService.update(staticDto.overwriteEntity(
-                staticService.getById(staticDto.getStaticContentId())));
+                staticService.getById(staticId)));
         return new ResponseEntity<StaticContentDto>(
                 staticDtoAsm.toResource(staticContent), HttpStatus.OK);
     }
@@ -148,6 +148,7 @@ public class StaticContentController {
     @RequestMapping(path = "/{staticId}", method = RequestMethod.DELETE)
     public ResponseEntity<StaticContentDto> deleteStaticById(
             @PathVariable("staticId") int staticId) {
+        //TODO make some with id
         if (staticId < 0) {
             throw new IllegalArgumentException(
                     "Static id should be greater than 0, but have:" + staticId);

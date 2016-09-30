@@ -121,12 +121,13 @@ public class UsersController {
      * @return {@link UserDto} of updated {@link User}
      */
     @RequestMapping(path = "/{userId}", method = RequestMethod.PUT)
-    public ResponseEntity<UserDto> updateUserById(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> updateUserById(
+            @RequestBody UserDto userDto, @PathVariable("userId") int userId) {
         if (userDto == null) {
             throw new IllegalArgumentException("User should not be null");
         }
         User user = userService
-                .update(userDto.overwriteEntity(userService.getById(userDto.getUserId())));
+                .update(userDto.overwriteEntity(userService.getById(userId)));
         return new ResponseEntity<UserDto>(userDtoAsm.toResource(user), HttpStatus.OK);
     }
 
