@@ -35,6 +35,7 @@ package tk.serjmusic.utils;
 public class R {
     public static final String HIBERNATE_QUERY_CACHE_NAME = "org.hibernate.cacheable";
     public static final String DEFAULT_PAGE_NUMBER = "1";
-    public static final String DEFAULT_PAGE_SIZE = "10";
-    public static final boolean DEFAULT_ASC_ID_SORT_ORDER = true;
+    public static final String DEFAULT_PAGE_SIZE = "5";
+    public static final boolean DEFAULT_ASC_ID_SORT_ORDER = false;
+    public static final String DEFAULT_PAGE_SIZE_TEXT = "10";
 }

@@ -15,7 +15,11 @@
 	<context:component-scan
 		base-package="tk.serjmusic.models,
 										  tk.serjmusic.dao,
-										  tk.serjmusic.dao.impl" />
+										  tk.serjmusic.dao.impl,
+										  tk.serjmusic.services,
+										  tk.serjmusic.services.impl,
+										  tk.serjmusic.utils.logging,
+										  tk.serjmusic.security" />
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
 		destroy-method="close">
@@ -38,6 +42,9 @@
 				<entry key="hibernate.hbm2ddl.auto" value="create" />
 				<entry key="hibernate.show_sql" value="true" />
 				<entry key="hibernate.generate_statistics" value="true" />
+				<entry key="hibernate.cache.use_second_level_cache" value="false" />
+				<entry key="hibernate.cache.provider_class" value="null" />
+				<entry key="hibernate.cache.use_query_cache" value="false" />
 			</map>
 		</property>
 		<property name="packagesToScan" value="tk.serjmusic.models" />

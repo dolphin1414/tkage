@@ -245,9 +245,9 @@ public class UserServiceImplTest {
     public final void testCreate() {
         
         // should be OK
-        doNothing().when(userDao).persist(user1);
+        when(userDao.merge(user1)).thenReturn(user1);
         userService.create(user1);
-        verify(userDao, times(1)).persist(user1);
+        verify(userDao, times(1)).merge(user1);
 
         // Bad input
         boolean illegalArgumentException = false;
@@ -260,7 +260,7 @@ public class UserServiceImplTest {
         
         // Problems with persistent layer
         boolean persistentLayerProblemsException = false;
-        doThrow(new PersistenceException()).when(userDao).persist(user1);
+        doThrow(new PersistenceException()).when(userDao).merge(user1);
         try {
             userService.create(user1);
         } catch (PersistentLayerProblemsException ex) {
@@ -270,7 +270,7 @@ public class UserServiceImplTest {
         
         // Entity already exist
         boolean alreadyExistsException = false;
-        doThrow(new EntityExistsException()).when(userDao).persist(user1);
+        doThrow(new EntityExistsException()).when(userDao).merge(user1);
         try {
             userService.create(user1);
         } catch (AlreadyExistsException ex) {

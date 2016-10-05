@@ -69,13 +69,14 @@ public class BlogCommentController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<BlogCommentDto>> getPaginatedComments(
             @RequestParam(name = "pageNumber", defaultValue = R.DEFAULT_PAGE_NUMBER) int pageNumber,
-            @RequestParam(name = "pageSize", defaultValue = R.DEFAULT_PAGE_SIZE) int pageSize) {
+            @RequestParam(name = "pageSize", defaultValue = R.DEFAULT_PAGE_SIZE_TEXT) int pageSize) {
         if ((pageNumber < 1) || (pageSize < 1)) {
             throw new IllegalArgumentException("pageNumber and pageSize should be > 0"
                     + " but have pageNumber=" + pageNumber + ", pageSize=" + pageSize);
         }
         List<BlogComment> comments = commentsService
                 .getPaginatedAndOrdered(R.DEFAULT_ASC_ID_SORT_ORDER, pageNumber, pageSize);
+        System.out.println("comments: " + comments);
         List<BlogCommentDto> commentDtoList = blogCommentDtoAsm.toResources(comments);
         return new ResponseEntity<List<BlogCommentDto>>(commentDtoList, HttpStatus.OK);
     }
@@ -108,6 +109,10 @@ public class BlogCommentController {
             @RequestBody BlogCommentDto blogCommentDto, @PathVariable("commentId") int commentId) {
         if (blogCommentDto == null) {
             throw new IllegalArgumentException("Blog comment should not be null");
+        }
+        if (commentId < 0) {
+            throw new IllegalArgumentException("Comment id should be greater than 0," 
+                    + " but have:" + commentId);
         }
         BlogComment comment = commentsService.update(blogCommentDto
                 .overwriteEntity(commentsService.getById(commentId)));

@@ -26,6 +26,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import tk.serjmusic.dao.BlogEntryDao;
+import tk.serjmusic.models.AbstractEntity_;
 import tk.serjmusic.models.BlogComment;
 import tk.serjmusic.models.BlogComment_;
 import tk.serjmusic.models.BlogEntry;
@@ -43,6 +44,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
 /**
@@ -80,9 +82,13 @@ public class BlogEntryDaoImpl extends AbstractGenericDao<BlogEntry> implements B
             Join<BlogComment, BlogEntry> u = blogCommentRoot.join(BlogComment_.blogEntry);
             cq.select(blogCommentRoot).where(cb.equal(u.get(BlogEntry_.id), blogId));
             cq.distinct(true);
+            Order order = R.DEFAULT_ASC_ID_SORT_ORDER ? cb.asc(blogCommentRoot.get(AbstractEntity_.id)) 
+                    : cb.desc(blogCommentRoot.get(AbstractEntity_.id));
+            cq.orderBy(order);
             TypedQuery<BlogComment> tq = entityManager.createQuery(cq);
             tq.setHint(R.HIBERNATE_QUERY_CACHE_NAME, true);
             int startPosition = (pageNumber - 1) * pageSize;
+            
             tq.setFirstResult(startPosition).setMaxResults(pageSize);
             result = tq.getResultList();
         } catch (NoResultException ex) {

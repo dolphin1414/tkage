@@ -27,9 +27,13 @@
 
 package tk.serjmusic.controllers.dto.asm;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 import tk.serjmusic.controllers.BlogCommentController;
+import tk.serjmusic.controllers.BlogEntryController;
 import tk.serjmusic.controllers.dto.BlogEntryDto;
 import tk.serjmusic.models.BlogEntry;
 
@@ -58,7 +62,13 @@ public class BlogEntryDtoAsm extends ResourceAssemblerSupport<BlogEntry, BlogEnt
         blogEntryDto.setDateCreated(blogEntry.getDateCreated());
         blogEntryDto.setImageLink(blogEntry.getImageLink());
         blogEntryDto.setTitle(blogEntry.getTitle());
-        //TODO add links
+        Link self = linkTo(BlogEntryController.class).slash(blogEntry.getId()).withSelfRel();
+        Link allBlogEntries = linkTo(BlogEntryController.class).withRel("blogEntries");
+        Link comments = linkTo(BlogEntryController.class)
+                .slash(blogEntry.getId())
+                .slash("comments")
+                .withRel("comments");
+        blogEntryDto.add(self, allBlogEntries, comments);
         return blogEntryDto;
     }
 

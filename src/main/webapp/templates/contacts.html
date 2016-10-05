@@ -1,7 +1,9 @@
 <div class="halftransbox col-sm-5"
 	ng-controller="contactsController as contactsCtrl">
-	<h1>Контакты</h1>
-	<p>Телефон 02</p>
-	<p>е-мейл: ткачен@ткачен.ру</p>
-
+	<button ng-show="isEditor()" ng-init="editMode = false" ng-click="editMode = !editMode">Edit</button>
+	
+	<div ng-bind-html="contactsCtrl.contactData"></div>
+	
+	<p><textarea rows="7" cols="45" name="text" ng-model="contactsCtrl.contactData" ng-show="editMode"></textarea></p>
+ 	<p><button ng-click="contactsCtrl.update()" class="btn btn-default" ng-show="editMode && isEditor()">Save</button></p>
 </div>

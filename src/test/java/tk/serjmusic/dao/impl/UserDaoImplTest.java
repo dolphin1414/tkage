@@ -34,6 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,8 +65,11 @@ import java.util.Set;
  *
  * @author Roman Kondakov
  */
+@ContextHierarchy({
+    @ContextConfiguration(locations={"classpath:spring-test-dao.xml"})
+})
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-test-dao.xml")
+
 @Transactional
 @Rollback
 public class UserDaoImplTest {
@@ -208,7 +212,7 @@ public class UserDaoImplTest {
     public final void testRemove() {
         assertEquals(1, userDao.findAll().size());
         userDao.remove(userDao.findUserByUsername(PERSISTED_USERNAME));
-        assertEquals(0, userDao.findAll().size());
+        assertNull(userDao.findAll());
     }
 
     /**

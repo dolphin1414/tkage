@@ -27,6 +27,9 @@
 
 package tk.serjmusic.controllers.dto.asm;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 import tk.serjmusic.controllers.PhotoEntryController;
@@ -55,7 +58,9 @@ public class PhotoEntryDtoAsm extends ResourceAssemblerSupport<PhotoEntry, Photo
         photoEntryDto.setImageLink(photoEntry.getImageLink());
         photoEntryDto.setPhotoEntryId(photoEntry.getId());
         photoEntryDto.setTitle(photoEntry.getTitle());
-        // TODO add links
+        Link self = linkTo(PhotoEntryController.class).slash(photoEntry.getId()).withSelfRel();
+        Link allPhoto = linkTo(PhotoEntryController.class).withRel("allPhoto");
+        photoEntryDto.add(self, allPhoto);
         return photoEntryDto;
     }
 

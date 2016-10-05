@@ -1,59 +1,54 @@
 <div class="bighalftransbox col-xs-11"
-	ng-controller="blogDetailsController as blogCtrl">
+	ng-controller="blogDetailsController as blogDetailsCtrl">
 	<h4>
 		<small><a ui-sref="blog">Назад</a></small>
 	</h4>
 	<hr>
-	<h2>Мой первый пост!!</h2>
-	<h5>
-		<span class="glyphicon glyphicon-time"></span> Posted Sep 24, 2015.
-	</h5>
-	<h5>
-		<span class="label label-success">Lorem</span>
-	</h5>
-	<br>
-	<p>Ура, я написал свой первый пост!!!</p>
+	<article>
+		<hr>
+		<h2>{{blogDetailsCtrl.blog.title}}</h2>
+		<h5>
+			<span class="glyphicon glyphicon-time"></span> Posted
+			{{blogDetailsCtrl.blog.dateCreated | date : "fullDate" }}
+		</h5>
+		<br>
+		<p ng-bind-html="blogDetailsCtrl.blog.content | trust"></p>
+		<hr>
+
+	</article>
 	<hr>
 
-	<h4>Leave a Comment:</h4>
-	<form role="form">
+	<div ng-show="isLoggedIn()">
+		<h4>Оставить комментарий:</h4>
 		<div class="form-group">
-			<textarea class="form-control" rows="3" required></textarea>
+			<textarea class="form-control"
+				ng-model="blogDetailsCtrl.newComment.content" rows="3" required></textarea>
 		</div>
-		<button type="submit" class="btn btn-success">Submit</button>
-	</form>
-	<br>
+		<button ng-click="blogDetailsCtrl.sendNewComment()"
+			class="btn btn-success">Отправить</button>
+	</div>
+	<br> <br>
+
+	<p>Comments:</p>
 	<br>
 
-	<p>
-		<span class="badge">2</span> Comments:
-	</p>
-	<br>
-
-	<div class="row">
+	<div class="row" ng-repeat="comment in blogDetailsCtrl.comments">
 		<div class="col-sm-2 text-center">
-			<img src="img/RyabaTest.jpg" class="img-circle" height="65"
-				width="65" alt="Avatar">
+			<img ng-src="{{comment.author.imageLink}}" class="img-circle"
+				height="65" width="65" alt="Avatar">
 		</div>
 		<div class="col-sm-10">
 			<h4>
-				Ryabova <small>Sep 29, 2015, 9:12 PM</small>
+				{{comment.author.username}} <small>{{comment.dateCreated |
+					date : "fullDate"}}</small>
+				<button type="button" class="btn btn-default btn-sm" ng-click="blogDetailsCtrl.deleteComment(comment)" ng-show="isAuthor(comment.author.username) || isEditor()">
+					<span class="glyphicon glyphicon-trash"></span> Trash
+				</button>
 			</h4>
-			<p>Серж, ты крут!!!!</p>
+			<p>{{comment.content}}</p>
 			<br>
-		</div>
-
-		<hr />
-		<div class="col-sm-2 text-center">
-			<img src="img/TanyaTest.jpg" class="img-circle" height="65"
-				width="65" alt="Avatar">
-		</div>
-		<div class="col-sm-10">
-			<h4>
-				Танюха <small>Sep 25, 2015, 8:25 PM</small>
-			</h4>
-			<p>Мы тебя любим!!!!</p>
-
+			<hr />
 		</div>
 	</div>
+
 </div>

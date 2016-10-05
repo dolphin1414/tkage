@@ -4,58 +4,51 @@
 		<small>RECENT POSTS</small>
 	</h4>
 
-	<article>
-		<hr>
-		<h2>А здесь будешь писать посты о нелегкой судьбе звезды))</h2>
-		<h5>
-			<span class="glyphicon glyphicon-time"></span> Posted Sep 24, 2015.
-		</h5>
-		<h5>
-			<span class="label label-success">Lorem</span>
-		</h5>
-		<br>
-		<p>Ура, я написал свой первый пост!!!</p>
-		<hr>
+	<!-- ADD NEW -->
+	<div ng-show="isEditor()">
+		<h2>Добавить новую запись в блог</h2>
+		<p>Заголовок к записи:</p>
 		<p>
-			<a ui-sref="blogDetails({blogId:blogCtrl.blog.blogId})">Читать
-				далее</a>
+			<textarea rows="1" cols="45" name="text" ng-model="blogCtrl.newBlog.title"></textarea>
 		</p>
+		<p>Текст:</p>
 		<p>
-			<a ui-sref="blogDetails({blogId:blogCtrl.blog.blogId})"><span
-				class="badge">2</span> Comments:<br></a>
+			<textarea rows="7" cols="45" name="text" ng-model="blogCtrl.newBlog.content"></textarea>
 		</p>
-	</article>
+		<button class="btn btn-default" ng-show="isEditor()" ng-click="blogCtrl.addNewBlog()">Добавить запись</button>
+	<hr style="height: 1px; border: none; color: #555; background-color: #555;">
+	</div>
+	<div ng-repeat="blog in blogCtrl.data">
+	<button class="btn btn-default" ng-show="isEditor()" ng-init="editMode = false" ng-click="editMode = !editMode">Edit</button>
+		<article>
+			<hr>
+			<h2>{{blog.title}}</h2>
+			<h5>
+				<span class="glyphicon glyphicon-time"></span> Posted {{blog.dateCreated | date : "fullDate" }}
+			</h5>
+			<br>
+			<p ng-bind-html="blog.content | trust"></p>
+			<hr>
+			<p>
+				<a ui-sref="blogDetails({blogId:blog.blogId})">Читать комментарии</a>
+			</p>
+		</article>
+		<div ng-show="editMode && isEditor()">
+			<h2>Редактировать запись</h2>
+			<p>Заголовок к записи:</p>
+			<p>
+				<textarea rows="1" cols="45" name="text" ng-model="blog.title"></textarea>
+			</p>
+			<p>Сама запись:</p>
+			<p>
+				<textarea rows="3" cols="45" name="text" ng-model="blog.content"></textarea>
+			</p>
+			<button class="btn btn-default" ng-show="isEditor()" ng-click="blogCtrl.updateBlog(blog)">Сохранить запись</button>
+			<button class="btn btn-default" ng-show="isEditor()" ng-click="blogCtrl.deleteBlog(blog)">Удалить запись</button>
+		</div>
+		<hr style="height: 1px; border: none; color: #555; background-color: #555;">
+	</div>
+	
 
-	<hr
-		style="height: 1px; border: none; color: #555; background-color: #555;">
 
-	<article>
-		<hr>
-		<h2>Officially Blogging</h2>
-		<h5>
-			<span class="glyphicon glyphicon-time"></span> Posted Sep 24, 2015.
-		</h5>
-		<h5>
-			<span class="label label-success">Lorem</span>
-		</h5>
-		<br>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-			eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-			ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-			aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat
-			non proident, sunt in culpa qui officia deserunt mollit anim id est
-			laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt
-			ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-			nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat.</p>
-		<hr>
-		<p>
-			<a ui-sref="blogDetails({blogId:blogCtrl.blog.blogId})">Читать
-				далее</a>
-		</p>
-		<p>
-			<a ui-sref="blogDetails({blogId:blogCtrl.blog.blogId})"><span
-				class="badge">0</span> Comments:<br></a>
-		</p>
-	</article>
 </div>

@@ -26,6 +26,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
+import tk.serjmusic.utils.logging.Loggable;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -48,6 +50,7 @@ public class EntryPointUnauthorizedHandler implements AuthenticationEntryPoint {
      * org.springframework.security.core.AuthenticationException)
      */
     @Override
+    @Loggable
     public void commence(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException authException) throws IOException, ServletException {
         response.setContentType("application/json");

@@ -4,9 +4,18 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd">
 
+	<!-- <http security="none" pattern="/app/**" /> -->
+
 	<http auto-config="true" entry-point-ref="entryPointUnauthorizedHandler">
 		<intercept-url pattern="/login" access="permitAll" />
-		<intercept-url pattern="/**" access="permitAll" />
+		<intercept-url pattern="/**" method="GET" access="permitAll" />
+		<intercept-url pattern="/api/v1/resources/users" method="POST" access="permitAll" />
+		<intercept-url pattern="/api/v1/resources/**" method="GET" access="permitAll" />
+		<intercept-url pattern="/api/v1/resources/**" method="POST" access="hasRole('ROLE_EDITOR')" />
+		<intercept-url pattern="/api/v1/resources/**" method="PUT" access="hasRole('ROLE_EDITOR')" />
+		<intercept-url pattern="/api/v1/resources/**" method="DELETE" access="hasRole('ROLE_EDITOR')" />
+		<intercept-url pattern="/login" method="POST" access="permitAll" />
+		
 		<form-login authentication-failure-handler-ref="authFailure"
 			authentication-success-handler-ref="authSuccess" />
 

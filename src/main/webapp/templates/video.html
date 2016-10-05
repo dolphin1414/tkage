@@ -1,29 +1,56 @@
 <div class="bighalftransbox col-xs-11 "
-	ng-controller="blogController as blogCtrl">
-	<h1>Сюда ты будешь грузить свои видео</h1>
-	<article>
-		<h3>Видео номер раз</h3>
-		<p>Вот такие клипы я записываю</p>
-		<div class="videoWrapperWrapper">
-			<div class="videoWrapper">
-				<iframe width="560" height="315"
-					src="https://www.youtube.com/embed/w7hRZS-nLhY" allowfullscreen></iframe>
+	ng-controller="videoController as videoCtrl">
+
+
+	<!-- ADD NEW -->
+	<div ng-show="isEditor()">
+		<h2>Добавить видео</h2>
+		<p>Заголовок к видео:</p>
+		<p><textarea rows="1" cols="45" name="text" ng-model="videoCtrl.newVideo.title"></textarea></p>
+		<p>Комментарий к видео:</p>
+		<p><textarea rows="3" cols="45" name="text" ng-model="videoCtrl.newVideo.description"></textarea></p>
+		<p>Ссылка из Youtube (поделиться -> HTML-код):</p>
+		<p><textarea rows="3" cols="45" name="text" ng-model="videoCtrl.newVideo.youTubeLink"></textarea></p>
+		<button class="btn btn-default" ng-show="isEditor()" ng-click="videoCtrl.addNewVideo()">Добавить видео</button>
+		<hr style="height: 1px; border: none; color: #555; background-color: #555;">
+	</div>
+
+	<h1>Мои видео</h1>
+	<div class="btn-group">
+		<button type="button" class="btn btn-default"
+			ng-click="videoCtrl.showPrevPage()">prev</button>
+		<button type="button" class="btn btn-default"
+			ng-click="videoCtrl.showNextPage()">next</button>
+	</div>
+	<hr style="height: 1px; border: none; color: #555; background-color: #555;">		
+	<div ng-repeat="video in videoCtrl.data">
+		<button class="btn btn-default" ng-show="isEditor()" ng-init="editMode = false" ng-click="editMode = !editMode">Edit</button>
+		<article>
+			<h3>{{video.title}}</h3>
+			<p>{{video.description}}</p>
+			<div class="videoWrapperWrapper">
+				<div class="videoWrapper">
+					<span ng-bind-html="video.youTubeLink | trust"></span>
+				</div>
 			</div>
+		</article>
+		<div ng-show="editMode && isEditor()">
+			<h2>Редактировать видео</h2>
+			<p>Заголовок к видео:</p>
+			<p>
+				<textarea rows="1" cols="45" name="text" ng-model="video.title"></textarea>
+			</p>
+			<p>Комментарий к видео:</p>
+			<p>
+				<textarea rows="3" cols="45" name="text" ng-model="video.description"></textarea>
+			</p>
+			<p>Ссылка из Youtube (поделиться -> HTML-код):</p>
+			<p>
+				<textarea rows="3" cols="45" name="text" ng-model="video.youTubeLink"></textarea>
+			</p>
+			<button class="btn btn-default" ng-show="isEditor()" ng-click="videoCtrl.updateVideo(video)">Сохранить видео</button>
+			<button class="btn btn-default" ng-show="isEditor()" ng-click="videoCtrl.deleteVideo(video)">Удалить видео</button>
 		</div>
-	</article>
-	<hr
-		style="height: 1px; border: none; color: #555; background-color: #555;">
-	<article>
-		<h3>А вот еще один мой клип</h3>
-		<p>Смотрите и завидуйте</p>
-		<div class="videoWrapperWrapper">
-			<div class="videoWrapper">
-				<iframe width="560" height="315"
-					src="https://www.youtube.com/embed/-13I_VF5d4k" allowfullscreen></iframe>
-			</div>
-		</div>
-	</article>
-	<hr
-		style="height: 1px; border: none; color: #555; background-color: #555;">
-	<p>и т.д.....</p>
+		<hr style="height: 1px; border: none; color: #555; background-color: #555;">
+	</div>
 </div>

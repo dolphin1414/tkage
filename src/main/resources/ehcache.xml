@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true"
-	monitoring="autodetect" dynamicConfig="true">
+	monitoring="autodetect" dynamicConfig="true" >
 	<diskStore path="ehcachetmp" />
 	<defaultCache maxElementsInMemory="10000" eternal="true"
 		timeToIdleSeconds="5" timeToLiveSeconds="10" overflowToDisk="false"
 		diskPersistent="false" diskExpiryThreadIntervalSeconds="1800"
-		memoryStoreEvictionPolicy="LRU">
+		memoryStoreEvictionPolicy="LRU" >
 	</defaultCache>
 </ehcache> 

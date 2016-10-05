@@ -54,10 +54,6 @@ import java.util.List;
 @Controller
 @RequestMapping("api/v1/resources/video")
 public class VideoEntryController {
-// TODO
-//    api/v1/resources/video – all video
-//    api/v1/resources/video/{videoId} – concrete video
-//    api/v1/resources/video?pageNumber={int}&pageSize={int} – paginated video
     
     private static final VideoEntryDtoAsm videoDtoAsm = new VideoEntryDtoAsm();
 

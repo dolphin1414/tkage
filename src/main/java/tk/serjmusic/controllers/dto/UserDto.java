@@ -28,11 +28,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.ResourceSupport;
 
 import tk.serjmusic.models.User;
-import tk.serjmusic.models.UserRole;
-import tk.serjmusic.utils.logging.Loggable;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -63,13 +59,14 @@ public class UserDto extends ResourceSupport {
         if (username != null) user.setUsername(username);
         if (password != null) user.setPassword(password);
         if (email != null) user.setEmail(email);
-        //TODO implement security issues with roles setting
-        if (roles != null) {
+        //User roles couldn't be changed with DTO. Yet it possible only with database aids directly.
+        /*if (roles != null) {
             Set<UserRole> userRoles = new HashSet<>();
             roles.forEach(role -> userRoles.add(UserRole.valueOf(role)));
             user.setRoles(userRoles);
-        }
-        user.setBanned(isBanned); 
+        }*/
+        //Ban status couldn't be changed with DTO. Yet it possible only with database aids directly.
+        /*user.setBanned(isBanned); */
         if (imageLink != null) user.setImageLink(imageLink);
         if (imageFile != null) user.setImageFile(imageFile);
         return user;

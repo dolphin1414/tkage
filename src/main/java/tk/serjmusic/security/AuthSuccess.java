@@ -27,11 +27,21 @@
 
 package tk.serjmusic.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import tk.serjmusic.controllers.dto.UserDto;
+import tk.serjmusic.models.User;
+import tk.serjmusic.utils.logging.Loggable;
+
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -44,13 +54,33 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Component("authSuccess")
 public class AuthSuccess extends SimpleUrlAuthenticationSuccessHandler {
+    
+    private final static ObjectWriter objectWriter = 
+            new ObjectMapper().writer().withDefaultPrettyPrinter();
 
     /* (non-Javadoc)
      * @see org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
      */
+    @Loggable
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
+        
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof User) {
+            User user = (User) principal;
+            UserDto userDto = new UserDto();
+            userDto.setUserId(user.getId());
+            userDto.setUsername(user.getUsername());
+            userDto.setEmail(user.getEmail());
+            userDto.setImageLink(user.getImageLink());
+            Set<String> roles = new HashSet<>();
+            user.getRoles().forEach(role -> roles.add(role.toString()));
+            userDto.setRoles(roles);
+            String userJson = objectWriter.writeValueAsString(userDto);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.getWriter().println(userJson);
+        }
         response.setStatus(HttpServletResponse.SC_OK);
     }
 

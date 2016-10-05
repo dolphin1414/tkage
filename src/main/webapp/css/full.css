@@ -144,3 +144,9 @@ div::-webkit-scrollbar-thumb {
 	/* max-width: 560px !important;
 	max-height: 315px !important;  */
 }
+
+.photoWrapper {
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+}

@@ -34,6 +34,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import tk.serjmusic.services.UserService;
+import tk.serjmusic.utils.logging.Loggable;
 
 /**
  * An implementation of {@link UserDetailsService} interface.
@@ -49,6 +50,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     public UserDetailsServiceImpl() {
     }
     
+    @Loggable
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userService.getUserByUsername(username);

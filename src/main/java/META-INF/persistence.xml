@@ -10,5 +10,6 @@
 		<class>tk.serjmusic.models.StaticContent</class>
 		<class>tk.serjmusic.models.User</class>
 		<class>tk.serjmusic.models.VideoEntry</class>
+		 <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
 	</persistence-unit>
 </persistence>

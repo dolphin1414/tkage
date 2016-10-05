@@ -56,6 +56,7 @@ public class UserDtoAsm extends ResourceAssemblerSupport<User, UserDto> {
     @Override
     public UserDto toResource(User user) {
         UserDto userDto = new UserDto();
+        System.out.println("user " + user);
         userDto.setUserId(user.getId());
         userDto.setUsername(user.getUsername());
         userDto.setPassword(user.getPassword());
@@ -66,9 +67,10 @@ public class UserDtoAsm extends ResourceAssemblerSupport<User, UserDto> {
         Set<String> roles = new HashSet<>();
         user.getRoles().forEach(role -> roles.add(role.toString()));
         userDto.setRoles(roles);
-        Link link = linkTo(UsersController.class).slash(user.getId()).withSelfRel();
-        userDto.add(link);
-        //TODO add links to blog entries and comments
+        Link self = linkTo(UsersController.class).slash(user.getId()).withSelfRel();
+        userDto.add(self);
+        Link users = linkTo(UsersController.class).withRel("allUsers");
+        userDto.add(users);
         return userDto;
     }
 

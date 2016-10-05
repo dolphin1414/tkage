@@ -27,6 +27,9 @@
 
 package tk.serjmusic.controllers.dto.asm;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 import tk.serjmusic.controllers.StaticContentController;
@@ -55,7 +58,11 @@ public class StaticContentDtoAsm
         staticContentDto.setContentDescription(staticContent.getContentDescription());
         staticContentDto.setLanguage(staticContent.getLanguage());
         staticContentDto.setStaticContentId(staticContent.getId());
-        // TODO add links
+        Link self = linkTo(StaticContentController.class)
+                .slash(staticContent.getContentDescription())
+                .withSelfRel();
+        Link allStaticContent = linkTo(StaticContentController.class).withRel("allStaticContent");
+        staticContentDto.add(self, allStaticContent);
         return staticContentDto;
     }
 

@@ -44,10 +44,31 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
+	<!-- ATMOSPHERE SERVLET (COMET) 
+	<servlet>
+        <description>AtmosphereServlet</description>
+        <servlet-name>AtmosphereServlet</servlet-name>
+        <servlet-class>org.atmosphere.cpr.AtmosphereServlet</servlet-class>
+        <init-param>
+            <param-name>org.atmosphere.servlet</param-name>
+            <param-value>org.springframework.web.servlet.DispatcherServlet</param-value>
+        </init-param>
+        <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+        </init-param>
+        <async-supported>true</async-supported>
+        
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AtmosphereServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping> -->
+	
 	<!-- OTHER CONFIGURATIONS -->
 	<error-page>
 		<error-code>404</error-code>
-		<location>/WEB-INF/notfound.jsp</location>
+		<location>/index.html</location>
 	</error-page>
 
 </web-app>

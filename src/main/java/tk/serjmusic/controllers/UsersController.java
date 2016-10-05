@@ -25,6 +25,7 @@ package tk.serjmusic.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,6 +39,7 @@ import tk.serjmusic.controllers.dto.asm.BlogCommentDtoAsm;
 import tk.serjmusic.controllers.dto.asm.UserDtoAsm;
 import tk.serjmusic.models.BlogComment;
 import tk.serjmusic.models.User;
+import tk.serjmusic.models.UserRole;
 import tk.serjmusic.services.UserService;
 import tk.serjmusic.utils.R;
 
@@ -57,6 +59,8 @@ public class UsersController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Get {@link ResponseEntity} with the paginated list of {@link User} entities. For retrieving
@@ -94,23 +98,24 @@ public class UsersController {
             throw new IllegalArgumentException("User should not be null");
         }
         User user = userDto.overwriteEntity(new User());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.getRoles().add(UserRole.ROLE_USER);
         user = userService.create(user);
         return new ResponseEntity<UserDto>(userDtoAsm.toResource(user), HttpStatus.OK);
     }
 
     /**
-     * Get {@link UserDto} for its ID.
+     * Get {@link UserDto} for username.
      * 
-     * @param userId - the ID of needed user
+     * @param username - the name of needed user
      * @return - {@link ResponseEntity} with found {@link User}
      */
-    @RequestMapping(path = "/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<UserDto> getUserById(@PathVariable("userId") int userId) {
-        if (userId < 0) {
-            throw new IllegalArgumentException(
-                    "User id should be greater than 0," + " but have:" + userId);
+    @RequestMapping(path = "/{username}", method = RequestMethod.GET)
+    public ResponseEntity<UserDto> getUserById(@PathVariable("username") String username) {
+        if (username == null) {
+            throw new IllegalArgumentException("Username should not be null!");
         }
-        User user = userService.getById(userId);
+        User user = userService.getUserByUsername(username);
         return new ResponseEntity<UserDto>(userDtoAsm.toResource(user), HttpStatus.OK);
     }
 

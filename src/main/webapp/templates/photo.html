@@ -1,21 +1,55 @@
-<div class="bighalftransbox col-xs-11"
-	ng-controller="blogController as blogCtrl">
-	<h1>Сюда будешь постить фотки</h1>
-	<article>
-		<h3>Первое фото</h3>
-		<p>Это я</p>
-		<img src="https://pp.vk.me/c637216/v637216003/d2f0/CazO6ukv0fE.jpg"
-			alt="Tkachen" style="width: 100%; max-width: 600px;">
-	</article>
-	<hr
-		style="height: 1px; border: none; color: #555; background-color: #555;">
-	<article>
-		<h3>Второе фото</h3>
-		<p>И это я</p>
-		<img src="https://pp.vk.me/c637131/v637131003/964e/5VQ-8uFfrzs.jpg"
-			alt="Tkachen" style="width: 100%; max-width: 600px;">
-	</article>
-	<hr
-		style="height: 1px; border: none; color: #555; background-color: #555;">
-	<p>и т.д.....</p>
+<div class="bighalftransbox col-xs-11 "
+	ng-controller="photoController as photoCtrl">
+
+
+	<!-- ADD NEW -->
+	<div ng-show="isEditor()">
+		<h2>Добавить фото</h2>
+		<p>Заголовок к фото:</p>
+		<p><textarea rows="1" cols="45" name="text" ng-model="photoCtrl.newPhoto.title"></textarea></p>
+		<p>Комментарий к фото:</p>
+		<p><textarea rows="3" cols="45" name="text" ng-model="photoCtrl.newPhoto.description"></textarea></p>
+		<p>Ссылка на фото (http//....):</p>
+		<p><textarea rows="3" cols="45" name="text" ng-model="photoCtrl.newPhoto.imageLink"></textarea></p>
+		<button class="btn btn-default" ng-show="isEditor()" ng-click="photoCtrl.addNewPhoto()">Добавить фото</button>
+		<hr style="height: 1px; border: none; color: #555; background-color: #555;">
+	</div>
+
+	<h1>Мои фото</h1>
+	<div class="btn-group">
+		<button type="button" class="btn btn-default"
+			ng-click="photoCtrl.showPrevPage()">prev</button>
+		<button type="button" class="btn btn-default"
+			ng-click="photoCtrl.showNextPage()">next</button>
+		
+	</div>
+	<hr style="height: 1px; border: none; color: #555; background-color: #555;">
+	<div ng-repeat="photo in photoCtrl.data">
+		<button class="btn btn-default" ng-show="isEditor()" ng-init="editMode = false" ng-click="editMode = !editMode">Edit</button>
+		<article>
+			<h3>{{photo.title}}</h3>
+			<p>{{photo.description}}</p>
+			<div class="photoWrapper">
+				<img alt={{photo.title}} ng-src={{photo.imageLink}} style='height: 100%; width: 100%; object-fit: contain; max-width: 600px;'>
+			</div>
+		</article>
+		<div ng-show="editMode && isEditor()">
+			<h2>Редактировать фото</h2>
+			<p>Заголовок к фото:</p>
+			<p>
+				<textarea rows="1" cols="45" name="text" ng-model="photo.title"></textarea>
+			</p>
+			<p>Комментарий к фото:</p>
+			<p>
+				<textarea rows="3" cols="45" name="text" ng-model="photo.description"></textarea>
+			</p>
+			<p>Ссылка на фото (http//....):</p>
+			<p>
+				<textarea rows="3" cols="45" name="text" ng-model="photo.imageLink"></textarea>
+			</p>
+			<button class="btn btn-default" ng-show="isEditor()" ng-click="photoCtrl.updatePhoto(photo)">Сохранить фото</button>
+			<button class="btn btn-default" ng-show="isEditor()" ng-click="photoCtrl.deletePhoto(photo)">Удалить фото</button>
+		</div>
+		<hr style="height: 1px; border: none; color: #555; background-color: #555;">
+	</div>
 </div>

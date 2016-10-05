@@ -27,6 +27,9 @@
 
 package tk.serjmusic.controllers.dto.asm;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 import tk.serjmusic.controllers.VideoEntryController;
@@ -54,7 +57,9 @@ public class VideoEntryDtoAsm extends ResourceAssemblerSupport<VideoEntry, Video
         videoEntryDto.setTitle(videoEntry.getTitle());
         videoEntryDto.setVideoEntryId(videoEntry.getId());
         videoEntryDto.setYouTubeLink(videoEntry.getYouTubeLink());
-        // TODO add links
+        Link self = linkTo(VideoEntryController.class).slash(videoEntry.getId()).withSelfRel();
+        Link allVideo = linkTo(VideoEntryController.class).withRel("allVideo");
+        videoEntryDto.add(self, allVideo);
         return videoEntryDto;
     }
 

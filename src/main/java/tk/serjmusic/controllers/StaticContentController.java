@@ -148,7 +148,6 @@ public class StaticContentController {
     @RequestMapping(path = "/{staticId}", method = RequestMethod.DELETE)
     public ResponseEntity<StaticContentDto> deleteStaticById(
             @PathVariable("staticId") int staticId) {
-        //TODO make some with id
         if (staticId < 0) {
             throw new IllegalArgumentException(
                     "Static id should be greater than 0, but have:" + staticId);

@@ -31,6 +31,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
+import tk.serjmusic.utils.logging.Loggable;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -48,6 +50,7 @@ public class AuthFailure extends SimpleUrlAuthenticationFailureHandler {
     /* (non-Javadoc)
      * @see org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler#onAuthenticationFailure(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.AuthenticationException)
      */
+    @Loggable
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {

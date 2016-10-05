@@ -143,7 +143,7 @@ public class BlogEntry extends AbstractEntity {
      * @return the dateCreated
      */
     public Date getDateCreated() {
-        return new Date(dateCreated.getTime());
+        return dateCreated;
     }
 
     /**
@@ -152,7 +152,7 @@ public class BlogEntry extends AbstractEntity {
      * @param dateCreated the dateCreated to set
      */
     public void setDateCreated(Date dateCreated) {
-        this.dateCreated = new Date(dateCreated.getTime());
+        this.dateCreated = dateCreated;
     }
 
     /**

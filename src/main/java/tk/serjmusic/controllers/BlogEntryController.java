@@ -30,6 +30,7 @@ package tk.serjmusic.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,6 +49,7 @@ import tk.serjmusic.services.BlogCommentService;
 import tk.serjmusic.services.BlogEntryService;
 import tk.serjmusic.utils.R;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -104,6 +106,9 @@ public class BlogEntryController {
             throw new IllegalArgumentException("Blog DTO should not be null");
         }
         BlogEntry blog = blogDto.overwriteEntity(new BlogEntry());
+        blog.setDateCreated(new Date());
+        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        blog.setAuthor(author);
         blog = blogService.create(blog);
         return new ResponseEntity<BlogEntryDto>(blogDtoAsm.toResource(blog), HttpStatus.OK);
     }
@@ -202,6 +207,10 @@ public class BlogEntryController {
             throw new IllegalArgumentException("Comment DTO should not be null");
         }
         BlogComment comment = commentDto.overwriteEntity(new BlogComment());
+        comment.setDateCreated(new Date());
+        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        comment.setAuthor(author);
+        comment.setBlogEntry(blogService.getById(blogId));
         comment = commentService.create(comment);
         return new ResponseEntity<BlogCommentDto>(new BlogCommentDtoAsm().toResource(comment),
                 HttpStatus.OK);
