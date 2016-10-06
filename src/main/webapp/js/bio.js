@@ -28,7 +28,7 @@ app.controller("bioController", function(staticContentService, $sce) {
 	this.update = function() {
 		staticContentService.updateStaticContent(ctrl.staticContentId, 
 				{"content": ctrl.parsibleData},
-				function() {alert("success!");}, function() {alert("failure!");});
+				function() {alert("Сохранено!");}, function() {alert("Какие-то проблемы - не сохранено!");});
 	}
 });
 

@@ -38,4 +38,6 @@ public class R {
     public static final String DEFAULT_PAGE_SIZE = "5";
     public static final boolean DEFAULT_ASC_ID_SORT_ORDER = false;
     public static final String DEFAULT_PAGE_SIZE_TEXT = "10";
+    public static final String DUMMY_PICTURE = "https://s-media-cache-ak0.pinimg.com/"
+            + "236x/94/55/0a/94550a20f14d2623e4681a89ccda6df9.jpg";
 }

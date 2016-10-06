@@ -1,25 +1,36 @@
-<div class="bighalftransbox col-xs-11"
-	ng-controller="registerController as registerCtrl">
+<div class="bighalftransbox col-xs-11">
 	<div class="container formHolder">
 		<div class="col-sm-offset-3">
 			<h2>Регистрация</h2>
 		</div>
 		<br /> <br />
-		<form class="form-horizontal" ng-submit="registerCtrl.register()">
+		<form class="form-horizontal" ng-submit="registerCtrl.register()" name="registration">
 			<div class="form-group">
 				<label class="control-label col-sm-3" for="username">Имя
-					пользователя:</label>
+					пользователя (пока только латинские буквы):</label>
 				<div class="col-sm-6">
 					<input type="text" ng-model="registerCtrl.user.username"
 						class="form-control" name="username" id="username"
-						placeholder="Имя" class="input-xlarge">
+						placeholder="Имя" class="input-xlarge" ng-pattern="/^[a-zA-Z0-9]+$/" required>
+						<span ng-show="registration.username.$error.pattern" style="color: red"><small>Только ЛАТИНСКИЕ буквы! </small></span>
+				 <span ng-show="registration.username.$error.required" ng-if="registration.username.$dirty" style="color: red"><small>Обязательно для заполнения!</small></span>
 				</div>
+				 
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-3" for="email">E-mail</label>
 				<div class="col-sm-6">
 					<input type="email" ng-model="registerCtrl.user.email"
 						class="form-control" name="email" id="email" placeholder="e-mail"
+						class="input-xlarge" required>
+						<span ng-show="registration.email.$error.required" ng-if="registration.email.$dirty" style="color: red"><small>Обязательно для заполнения!</small></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3" for="imageLink">Ссылка на фотографию</label>
+				<div class="col-sm-6">
+					<input type="text" ng-model="registerCtrl.user.imageLink"
+						class="form-control" name="imageLink" id="imageLink" placeholder="http://i.imgur.com/Jvh1OQm.jpg"
 						class="input-xlarge">
 				</div>
 			</div>
@@ -28,7 +39,8 @@
 				<div class="col-sm-6">
 					<input type="password" ng-model="registerCtrl.user.password"
 						class="form-control" name="password" id="pwd" placeholder="Пароль"
-						class="input-xlarge">
+						class="input-xlarge" required>
+						<span ng-show="registration.password.$error.required" ng-if="registration.password.$dirty" style="color: red"><small>Обязательно для заполнения!</small></span>
 				</div>
 			</div>
 			<div class="form-group">
@@ -37,8 +49,12 @@
 				<div class="col-sm-6">
 					<input type="password" ng-model="registerCtrl.user.passwordConfirm"
 						class="form-control" name="password_confirm" id="pwd"
-						placeholder="Подтверждение пароля" class="input-xlarge">
+						placeholder="Подтверждение пароля" class="input-xlarge" required data-password-verify="registerCtrl.user.password">
+				<span ng-show="registration.password_confirm.$error.passwordVerify" style="color: red"><small>Пароли не совпадают!</small></span>
+				<span ng-show="registration.password_confirm.$error.required" ng-if="registration.password_confirm.$dirty" style="color: red"><small>Обязательно для заполнения!</small></span>
 				</div>
+				<br />
+				
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-3 col-sm-6">

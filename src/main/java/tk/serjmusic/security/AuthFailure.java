@@ -48,7 +48,10 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthFailure extends SimpleUrlAuthenticationFailureHandler {
 
     /* (non-Javadoc)
-     * @see org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler#onAuthenticationFailure(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.AuthenticationException)
+     * @see org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler
+     * #onAuthenticationFailure(javax.servlet.http.HttpServletRequest, 
+     * javax.servlet.http.HttpServletResponse, 
+     * org.springframework.security.core.AuthenticationException)
      */
     @Loggable
     @Override

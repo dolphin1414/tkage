@@ -55,10 +55,18 @@ public class UserDto extends ResourceSupport {
      * @return overwritten entity
      */
     public User overwriteEntity(User user) {
-        if (userId > 0) user.setId(userId);
-        if (username != null) user.setUsername(username);
-        if (password != null) user.setPassword(password);
-        if (email != null) user.setEmail(email);
+        if (userId > 0) {
+            user.setId(userId);
+        }
+        if (username != null) {
+            user.setUsername(username);
+        }
+        if (password != null) {
+            user.setPassword(password);
+        }
+        if (email != null) {
+            user.setEmail(email);
+        }
         //User roles couldn't be changed with DTO. Yet it possible only with database aids directly.
         /*if (roles != null) {
             Set<UserRole> userRoles = new HashSet<>();
@@ -67,8 +75,12 @@ public class UserDto extends ResourceSupport {
         }*/
         //Ban status couldn't be changed with DTO. Yet it possible only with database aids directly.
         /*user.setBanned(isBanned); */
-        if (imageLink != null) user.setImageLink(imageLink);
-        if (imageFile != null) user.setImageFile(imageFile);
+        if (imageLink != null) {
+            user.setImageLink(imageLink);
+        }
+        if (imageFile != null) {
+            user.setImageFile(imageFile);
+        }
         return user;
     }
     

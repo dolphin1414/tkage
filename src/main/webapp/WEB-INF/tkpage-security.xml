@@ -5,17 +5,26 @@
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd">
 
 	<http auto-config="true" entry-point-ref="entryPointUnauthorizedHandler">
+		<intercept-url pattern="/api/v1/resources/blogs/*/comments" method="POST" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/api/v1/resources/comments/**" method="PUT" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/api/v1/resources/comments/**" method="DELETE" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/login" access="permitAll" />
-		<intercept-url pattern="/**" access="permitAll" />
+		<intercept-url pattern="/**" method="GET" access="permitAll" />
+		<intercept-url pattern="/api/v1/resources/users" method="POST" access="permitAll" />
+		<intercept-url pattern="/api/v1/resources/**" method="GET" access="permitAll" />
+		<intercept-url pattern="/api/v1/resources/**" method="POST" access="hasRole('ROLE_EDITOR')" />
+		<intercept-url pattern="/api/v1/resources/**" method="PUT" access="hasRole('ROLE_EDITOR')" />
+		<intercept-url pattern="/api/v1/resources/**" method="DELETE" access="hasRole('ROLE_EDITOR')" />
+		
+		<intercept-url pattern="/login" method="POST" access="permitAll" />
 		<form-login authentication-failure-handler-ref="authFailure"
 			authentication-success-handler-ref="authSuccess" />
-
 		<logout invalidate-session="true" delete-cookies="JSESSIONID" />
-
-
 		<csrf disabled="true" />
 	</http>
 
+	<!-- <global-method-security pre-post-annotations="enabled"/> -->
+	
 	<authentication-manager>
 		<authentication-provider user-service-ref="userDetailsServiceImpl">
 			<password-encoder ref="passwordEncoder" />

@@ -1,11 +1,9 @@
-<div class="bighalftransbox col-xs-11"
-	ng-controller="blogDetailsController as blogDetailsCtrl">
+<div class="bighalftransbox col-xs-11">
 	<h4>
 		<small><a ui-sref="blog">Назад</a></small>
 	</h4>
 	<hr>
 	<article>
-		<hr>
 		<h2>{{blogDetailsCtrl.blog.title}}</h2>
 		<h5>
 			<span class="glyphicon glyphicon-time"></span> Posted
@@ -29,7 +27,7 @@
 	</div>
 	<br> <br>
 
-	<p>Comments:</p>
+	<h2><small>Комментарии:</small></h2>
 	<br>
 
 	<div class="row" ng-repeat="comment in blogDetailsCtrl.comments">

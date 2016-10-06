@@ -100,6 +100,9 @@ public class UsersController {
         User user = userDto.overwriteEntity(new User());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoles().add(UserRole.ROLE_USER);
+        if ((user.getImageLink() == null) && (user.getImageFile() == null)) {
+            user.setImageLink(R.DUMMY_PICTURE);
+        }
         user = userService.create(user);
         return new ResponseEntity<UserDto>(userDtoAsm.toResource(user), HttpStatus.OK);
     }

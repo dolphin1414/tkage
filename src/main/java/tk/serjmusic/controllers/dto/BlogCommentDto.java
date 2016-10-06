@@ -56,13 +56,23 @@ public class BlogCommentDto extends ResourceSupport {
      * @return overwritten entity
      */
     public BlogComment overwriteEntity(BlogComment blogComment) {
-        if (commentId > 0) blogComment.setId(commentId);
-        if (content != null) blogComment.setContent(content);
-        if (dateCreated != null) blogComment.setDateCreated(dateCreated);
-        if (author != null) blogComment.setAuthor(author.overwriteEntity(new User()));
-        if (blogEntry != null) blogComment.setBlogEntry(
-                blogEntry.overwriteEntity(new BlogEntry()));
-       return blogComment;
+        if (commentId > 0) {
+            blogComment.setId(commentId);
+        }
+        if (content != null) {
+            blogComment.setContent(content);
+        }
+        if (dateCreated != null) {
+            blogComment.setDateCreated(dateCreated);
+        }
+        if (author != null) {
+            blogComment.setAuthor(author.overwriteEntity(new User()));
+        }
+        if (blogEntry != null) {
+            blogComment.setBlogEntry(
+                    blogEntry.overwriteEntity(new BlogEntry()));
+        }
+        return blogComment;
     }
     
     /**

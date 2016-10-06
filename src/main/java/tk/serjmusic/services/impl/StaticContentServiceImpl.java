@@ -49,13 +49,14 @@ import javax.persistence.PersistenceException;
 @Service
 @Transactional
 public class StaticContentServiceImpl extends AbstractGenericServiceImpl<StaticContent> 
-        implements StaticContentService{
+        implements StaticContentService {
     
     @Autowired
     private StaticContentDao staticContentDao;
 
     /* (non-Javadoc)
-     * @see tk.serjmusic.services.StaticContentService#getStaticContentByDescription(java.lang.String)
+     * @see tk.serjmusic.services.StaticContentService
+     * #getStaticContentByDescription(java.lang.String)
      */
     @Override
     public StaticContent getStaticContentByDescription(String description) {

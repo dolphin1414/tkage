@@ -8,7 +8,7 @@ app.config(function($stateProvider) {
 			"main" : {
 				templateUrl : "templates/loginForm.html",
 				controller : "loginController",
-				controllerAs : "bioCtrl"
+				controllerAs : "loginCtrl"
 			}
 		},
 		data : {
@@ -21,7 +21,7 @@ app.config(function($stateProvider) {
 			"main" : {
 				templateUrl : "templates/registrationForm.html",
 				controller : "registerController",
-				controllerAs : "bioCtrl"
+				controllerAs : "registerCtrl"
 			}
 		},
 		data : {
@@ -55,10 +55,11 @@ app.factory("userService", function($http, $resource) {
 		return $http.post("/login", "username=" + user.username + "&password=" + user.password,
 				{headers: {"Content-Type": "application/x-www-form-urlencoded"}})
 				.then(function(response) { // OK
-					alert("Somebody logged in with username: " + user.username);//TODO: remove this line
 					principal = response.data;
+					alert("Добро пожаловать, " + user.username + "!");
 				}, function(response) { // Problem
-					alert("There are some problems with username. Reason: " + response.data.error);
+					alert("There are some problems with username. Reason: " + response.statusText);
+					console.dir(response);
 				});
 	}
 	
@@ -73,10 +74,10 @@ app.factory("userService", function($http, $resource) {
 					+ " is already registered");
 		}, function(data) { //user not exists
 			Users.save({}, user, function() { // POST new user success
-				alert("User " + user.username + " was successfully registered");//TODO: remove this line
+				alert("Поздравляем, " + user.username + "! Вы успешно зарегистрировались! Теперь можете писать комментарии в блоге Сергея.");
 				service.login(user);
 			}, function(data) { // POST new user failure
-				alert("There are some problems with register user. Reason: " + data.data.error);
+				alert("There are some problems with register user. Reason: " + data.statusText);
 			});
 		});
 	}
@@ -110,3 +111,35 @@ app.factory("userService", function($http, $resource) {
 	}
 	return service;
 });
+
+app.directive("passwordVerify", function() {
+	   return {
+	      require: "ngModel",
+	      scope: {
+	        passwordVerify: '='
+	      },
+	      link: function(scope, element, attrs, ctrl) {
+	        scope.$watch(function() {
+	            var combined;
+
+	            if (scope.passwordVerify || ctrl.$viewValue) {
+	               combined = scope.passwordVerify + '_' + ctrl.$viewValue; 
+	            }                    
+	            return combined;
+	        }, function(value) {
+	            if (value) {
+	                ctrl.$parsers.unshift(function(viewValue) {
+	                    var origin = scope.passwordVerify;
+	                    if (origin !== viewValue) {
+	                        ctrl.$setValidity("passwordVerify", false);
+	                        return undefined;
+	                    } else {
+	                        ctrl.$setValidity("passwordVerify", true);
+	                        return viewValue;
+	                    }
+	                });
+	            }
+	        });
+	     }
+	   };
+	});

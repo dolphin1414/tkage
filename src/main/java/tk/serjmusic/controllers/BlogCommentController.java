@@ -25,6 +25,7 @@ package tk.serjmusic.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,9 +34,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import tk.serjmusic.controllers.dto.BlogCommentDto;
-import tk.serjmusic.controllers.dto.UserDto;
 import tk.serjmusic.controllers.dto.asm.BlogCommentDtoAsm;
 import tk.serjmusic.models.BlogComment;
+import tk.serjmusic.models.User;
+import tk.serjmusic.models.UserRole;
 import tk.serjmusic.services.BlogCommentService;
 import tk.serjmusic.utils.R;
 
@@ -68,15 +70,16 @@ public class BlogCommentController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<BlogCommentDto>> getPaginatedComments(
-            @RequestParam(name = "pageNumber", defaultValue = R.DEFAULT_PAGE_NUMBER) int pageNumber,
-            @RequestParam(name = "pageSize", defaultValue = R.DEFAULT_PAGE_SIZE_TEXT) int pageSize) {
+            @RequestParam(name = "pageNumber", defaultValue = R.DEFAULT_PAGE_NUMBER) 
+            int pageNumber,
+            @RequestParam(name = "pageSize", defaultValue = R.DEFAULT_PAGE_SIZE_TEXT) 
+            int pageSize) {
         if ((pageNumber < 1) || (pageSize < 1)) {
             throw new IllegalArgumentException("pageNumber and pageSize should be > 0"
                     + " but have pageNumber=" + pageNumber + ", pageSize=" + pageSize);
         }
         List<BlogComment> comments = commentsService
                 .getPaginatedAndOrdered(R.DEFAULT_ASC_ID_SORT_ORDER, pageNumber, pageSize);
-        System.out.println("comments: " + comments);
         List<BlogCommentDto> commentDtoList = blogCommentDtoAsm.toResources(comments);
         return new ResponseEntity<List<BlogCommentDto>>(commentDtoList, HttpStatus.OK);
     }
@@ -88,7 +91,8 @@ public class BlogCommentController {
      * @return - {@link ResponseEntity} with found {@link BlogCommentDto}
      */
     @RequestMapping(path = "/{commentId}", method = RequestMethod.GET)
-    public ResponseEntity<BlogCommentDto> getCommentById(@PathVariable("commentId") int commentId) {
+    public ResponseEntity<BlogCommentDto> getCommentById(
+            @PathVariable("commentId") int commentId) {
         if (commentId < 0) {
             throw new IllegalArgumentException("Comment id should be greater than 0," 
                     + " but have:" + commentId);
@@ -114,8 +118,22 @@ public class BlogCommentController {
             throw new IllegalArgumentException("Comment id should be greater than 0," 
                     + " but have:" + commentId);
         }
-        BlogComment comment = commentsService.update(blogCommentDto
-                .overwriteEntity(commentsService.getById(commentId)));
+        //Check authorities for concrete user
+        User principal;
+        try {
+            principal = 
+                    (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (NullPointerException ex) {
+            principal = null;
+        }
+        BlogComment comment = blogCommentDto.overwriteEntity(commentsService.getById(commentId));
+        if ((principal == null)
+                || (!(comment.getAuthor().getUsername().equals(principal.getUsername())) 
+                && (!principal.getRoles().contains(UserRole.ROLE_EDITOR)))) {
+            return new ResponseEntity<BlogCommentDto>(HttpStatus.UNAUTHORIZED);
+        }
+            
+        comment = commentsService.update(comment);
         return new ResponseEntity<BlogCommentDto>(blogCommentDtoAsm.toResource(comment), 
                 HttpStatus.OK);
     }
@@ -127,13 +145,28 @@ public class BlogCommentController {
      * @return {@link HttpStatus.OK} in case of successful deletion.
      */
     @RequestMapping(path = "/{commentId}", method = RequestMethod.DELETE)
-    public ResponseEntity<UserDto> deleteCommentById(@PathVariable("commentId") int commentId) {
+    public ResponseEntity<BlogCommentDto> deleteCommentById(
+            @PathVariable("commentId") int commentId) {
         if (commentId < 0) {
             throw new IllegalArgumentException(
                     "Comment id should be greater than 0," + " but have:" + commentId);
         }
-        commentsService.delete(commentsService.getById(commentId));
-        return new ResponseEntity<UserDto>(HttpStatus.OK);
+        //Check authorities for concrete user
+        User principal;
+        try {
+            principal = 
+                    (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (NullPointerException ex) {
+            principal = null;
+        }
+        BlogComment comment = commentsService.getById(commentId);
+        if ((principal == null) 
+                || (!(comment.getAuthor().getUsername().equals(principal.getUsername())) 
+                && (!principal.getRoles().contains(UserRole.ROLE_EDITOR)))) {
+            return new ResponseEntity<BlogCommentDto>(HttpStatus.UNAUTHORIZED);
+        }
+        commentsService.delete(comment);
+        return new ResponseEntity<BlogCommentDto>(HttpStatus.OK);
     }
 
 }

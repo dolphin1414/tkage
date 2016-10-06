@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
-	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+    xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
     http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd 
@@ -11,45 +11,45 @@
     http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
 <context:component-scan
-		base-package="tk.serjmusic.models,
-										  tk.serjmusic.dao,
-										  tk.serjmusic.dao.impl,
-										  tk.serjmusic.services,
-										  tk.serjmusic.services.impl,
-										  tk.serjmusic.utils.logging,
-										  tk.serjmusic.security" />
+        base-package="tk.serjmusic.models,
+                                          tk.serjmusic.dao,
+                                          tk.serjmusic.dao.impl,
+                                          tk.serjmusic.services,
+                                          tk.serjmusic.services.impl,
+                                          tk.serjmusic.utils.logging,
+                                          tk.serjmusic.security" />
 
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
-		destroy-method="close">
-		<property name="driverClassName" value="org.h2.Driver" />
-		<property name="username" value="sa" />
-		<property name="password" value="sa" />
-		<property name="url" value="jdbc:h2:mem:test" />
-	</bean>
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="org.h2.Driver" />
+        <property name="username" value="sa" />
+        <property name="password" value="sa" />
+        <property name="url" value="jdbc:h2:mem:test" />
+    </bean>
 
-	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
-		</property>
+    <bean id="entityManagerFactory"
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
 
-		<property name="jpaProperties">
-			<map>
-				<entry key="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-				<entry key="hibernate.hbm2ddl.auto" value="create" />
-				<entry key="hibernate.show_sql" value="true" />
-				<entry key="hibernate.generate_statistics" value="true" />
-				<entry key="javax.persistence.sharedCache.mode" value="ENABLE_SELECTIVE"></entry>
-			</map>
-		</property>
-		<property name="packagesToScan" value="tk.serjmusic.models" />
-	</bean>
+        <property name="jpaProperties">
+            <map>
+                <entry key="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+                <entry key="hibernate.hbm2ddl.auto" value="create" />
+                <entry key="hibernate.show_sql" value="true" />
+                <entry key="hibernate.generate_statistics" value="true" />
+                <entry key="javax.persistence.sharedCache.mode" value="ENABLE_SELECTIVE"></entry>
+            </map>
+        </property>
+        <property name="packagesToScan" value="tk.serjmusic.models" />
+    </bean>
 
-	<tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
 
 </beans>

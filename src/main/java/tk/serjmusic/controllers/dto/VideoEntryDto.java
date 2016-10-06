@@ -45,10 +45,18 @@ public class VideoEntryDto extends ResourceSupport {
      * @return overwritten entity
      */
     public VideoEntry overwriteEntity(VideoEntry videoEntry) {
-        if (videoEntryId > 0) videoEntry.setId(videoEntryId);
-        if (title != null) videoEntry.setTitle(title);
-        if (description != null) videoEntry.setDescription(description);
-        if (description != null) videoEntry.setYouTubeLink(youTubeLink);
+        if (videoEntryId > 0) {
+            videoEntry.setId(videoEntryId);
+        }
+        if (title != null) {
+            videoEntry.setTitle(title);
+        }
+        if (description != null) {
+            videoEntry.setDescription(description);
+        }
+        if (description != null) {
+            videoEntry.setYouTubeLink(youTubeLink);
+        }
         return videoEntry;
     }
 

@@ -1,8 +1,14 @@
-<div class="bighalftransbox col-xs-11"
-	ng-controller="blogController as blogCtrl">
+<div class="bighalftransbox col-xs-11">
 	<h4>
 		<small>RECENT POSTS</small>
 	</h4>
+	<div class="btn-group">
+		<button type="button" class="btn btn-default"
+			ng-click="blogCtrl.showPrevPage()">prev</button>
+		<button type="button" class="btn btn-default"
+			ng-click="blogCtrl.showNextPage()">next</button>
+		
+	</div>
 
 	<!-- ADD NEW -->
 	<div ng-show="isEditor()">

@@ -42,7 +42,7 @@ import tk.serjmusic.utils.logging.Loggable;
  * @author Roman Kondakov
  */
 @Service("userDetailsServiceImpl")
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserDetailsServiceImpl implements UserDetailsService {
     
     @Autowired
     UserService userService;

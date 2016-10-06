@@ -106,7 +106,7 @@ public class StaticContentController {
     /**
      * Get {@link StaticContentDto} for the given ID.
      * 
-     * @param staticId - the ID of needed Static Entry
+     * @param description - the ID of needed Static Entry
      * @return - {@link ResponseEntity} with found {@link StaticContent}
      */
     @RequestMapping(path = "/{description}", method = RequestMethod.GET)

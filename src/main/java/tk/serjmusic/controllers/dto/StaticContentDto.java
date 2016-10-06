@@ -29,8 +29,6 @@ package tk.serjmusic.controllers.dto;
 
 import org.springframework.hateoas.ResourceSupport;
 
-import tk.serjmusic.models.BlogComment;
-import tk.serjmusic.models.PhotoEntry;
 import tk.serjmusic.models.StaticContent;
 
 /**
@@ -52,10 +50,18 @@ public class StaticContentDto extends ResourceSupport {
      * @return overwritten entity
      */
     public StaticContent overwriteEntity(StaticContent staticContent) {
-        if (staticContentId > 0) staticContent.setId(staticContentId);
-        if (contentDescription != null) staticContent.setContentDescription(contentDescription);
-        if (language != null) staticContent.setLanguage(language);
-        if (content != null) staticContent.setContent(content);
+        if (staticContentId > 0) {
+            staticContent.setId(staticContentId);
+        }
+        if (contentDescription != null) {
+            staticContent.setContentDescription(contentDescription);
+        }
+        if (language != null) {
+            staticContent.setLanguage(language);
+        }
+        if (content != null) {
+            staticContent.setContent(content);
+        }
         return staticContent;
     }
     

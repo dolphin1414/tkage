@@ -27,42 +27,44 @@
 
 package tk.serjmusic.controllers;
 
-import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.*;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doNothing;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import tk.serjmusic.controllers.dto.BlogEntryDto;
+import tk.serjmusic.controllers.dto.asm.BlogEntryDtoAsm;
 import tk.serjmusic.controllers.exceptions.ExceptionHandlerAdvice;
 import tk.serjmusic.models.BlogComment;
 import tk.serjmusic.models.BlogEntry;
 import tk.serjmusic.models.User;
-import tk.serjmusic.services.BlogCommentService;
 import tk.serjmusic.services.BlogEntryService;
 
 import java.util.Arrays;
@@ -76,10 +78,11 @@ import java.util.List;
 
 @WebAppConfiguration
 @ContextHierarchy({
-    @ContextConfiguration(locations={"classpath:spring-test-dao.xml"}),
-    @ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/tkpage-servlet.xml", 
-            "classpath:tkpage-security-test.xml"})
-  })
+        @ContextConfiguration(locations = {"classpath:spring-test-dao.xml"}),
+        @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/tkpage-servlet.xml", 
+                "classpath:tkpage-security-test.xml"})
+         })
+@RunWith(SpringJUnit4ClassRunner.class)
 public class BlogEntryControllerTest {
     
     @Mock
@@ -89,7 +92,7 @@ public class BlogEntryControllerTest {
     private BlogEntryController blogController;
     
     private MockMvc mockMvc;
-    private ArgumentCaptor<BlogComment> argumentCaptor;
+    private ArgumentCaptor<BlogEntry> argumentCaptor;
     private ObjectMapper jsonMapper = new ObjectMapper();
     
     private BlogComment comment1;
@@ -102,7 +105,7 @@ public class BlogEntryControllerTest {
     /**
      * Set up method.
      * 
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception sometimes
      */
     @Before
     public void setUp() throws Exception {
@@ -110,6 +113,7 @@ public class BlogEntryControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(blogController)
                                  .setControllerAdvice(new ExceptionHandlerAdvice())
                                  .build();
+        argumentCaptor = ArgumentCaptor.forClass(BlogEntry.class);
         
         comment1 = new BlogComment("test_comment_1");
         comment2 = new BlogComment("test_comment_2");
@@ -135,8 +139,9 @@ public class BlogEntryControllerTest {
     }
 
     /**
-     * Test method for {@link tk.serjmusic.controllers.BlogEntryController#getPaginatedBlogs(int, int)}.
-     * @throws Exception 
+     * Test method for {@link tk.serjmusic.controllers.BlogEntryController
+     * #getPaginatedBlogs(int, int)}.
+     * @throws Exception  sometimes
      */
     @Test
     public final void testGetPaginatedBlogs() throws Exception {
@@ -157,24 +162,41 @@ public class BlogEntryControllerTest {
     }
 
     /**
-     * Test method for {@link tk.serjmusic.controllers.BlogEntryController#addNewBlogEntry(tk.serjmusic.controllers.dto.BlogEntryDto)}.
+     * Test method for {@link tk.serjmusic.controllers.BlogEntryController
+     * #addNewBlogEntry(tk.serjmusic.controllers.dto.BlogEntryDto)}.
+     * 
+     * @throws Exception sometimes
      */
     @Test
-    public final void testAddNewBlogEntry() {
-        fail("Not yet implemented"); // TODO
+    public final void testAddNewBlogEntry() throws Exception {
+        when(blogService.create(any())).thenReturn(blogEntry1);
+        String path = "/api/v1/resources/blogs";
+        BlogEntryDto blogDto = new BlogEntryDtoAsm().toResource(blogEntry1);
+        String blogJson = jsonMapper.writeValueAsString(blogDto);
+        mockMvc.perform(post(path)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(blogJson)).andExpect(status().isOk());
+        verify(blogService).create(argumentCaptor.capture());
+        assertEquals(blogEntry1.getTitle(), argumentCaptor.getValue().getTitle());
+        path = "/api/v1/resources/blogs/-1";
+        mockMvc.perform(get(path))
+                .andExpect(status().isBadRequest());
     }
 
     /**
      * Test method for {@link tk.serjmusic.controllers.BlogEntryController#getBlogById(int)}.
      */
+    @Ignore
     @Test
     public final void testGetBlogById() {
         fail("Not yet implemented"); // TODO
     }
 
     /**
-     * Test method for {@link tk.serjmusic.controllers.BlogEntryController#updateBlogById(tk.serjmusic.controllers.dto.BlogEntryDto, int)}.
+     * Test method for {@link tk.serjmusic.controllers.BlogEntryController
+     * #updateBlogById(tk.serjmusic.controllers.dto.BlogEntryDto, int)}.
      */
+    @Ignore
     @Test
     public final void testUpdateBlogById() {
         fail("Not yet implemented"); // TODO
@@ -183,22 +205,28 @@ public class BlogEntryControllerTest {
     /**
      * Test method for {@link tk.serjmusic.controllers.BlogEntryController#deleteUserById(int)}.
      */
+    @Ignore
     @Test
     public final void testDeleteUserById() {
         fail("Not yet implemented"); // TODO
     }
 
     /**
-     * Test method for {@link tk.serjmusic.controllers.BlogEntryController#getPaginatedCommentsForBlog(int, int, int)}.
+     * Test method for {@link tk.serjmusic.controllers.BlogEntryController
+     * #getPaginatedCommentsForBlog(int, int, int)}.
      */
+    @Ignore
     @Test
     public final void testGetPaginatedCommentsForBlog() {
         fail("Not yet implemented"); // TODO
     }
 
     /**
-     * Test method for {@link tk.serjmusic.controllers.BlogEntryController#addNewCommentForBlogId(int, tk.serjmusic.controllers.dto.BlogCommentDto)}.
+     * Test method for {@link tk.serjmusic.controllers.BlogEntryController
+     * #addNewCommentForBlogId
+     * (int, tk.serjmusic.controllers.dto.BlogCommentDto)}.
      */
+    @Ignore
     @Test
     public final void testAddNewCommentForBlogId() {
         fail("Not yet implemented"); // TODO

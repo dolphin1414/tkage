@@ -51,13 +51,13 @@ public class UserTest {
     @Test
     public final void testHashCodeEqualsContract() {
         EqualsVerifier.forClass(BlogEntry.class)
-        .withPrefabValues(User.class, new User("a"), new User("b"))
-        .withPrefabValues(BlogEntry.class, new BlogEntry("a"), new BlogEntry("b"))
-        .withPrefabValues(HashSet.class, 
-                new HashSet<BlogEntry>(Arrays.asList(new BlogEntry("a"))),
-                new HashSet<BlogEntry>(Arrays.asList(new BlogEntry("b"))))
-        .suppress(Warning.STRICT_INHERITANCE)
-        .suppress(Warning.ALL_FIELDS_SHOULD_BE_USED)
-        .verify();
+                .withPrefabValues(User.class, new User("a"), new User("b"))
+                .withPrefabValues(BlogEntry.class, new BlogEntry("a"), new BlogEntry("b"))
+                .withPrefabValues(HashSet.class, 
+                        new HashSet<BlogEntry>(Arrays.asList(new BlogEntry("a"))),
+                        new HashSet<BlogEntry>(Arrays.asList(new BlogEntry("b"))))
+                .suppress(Warning.STRICT_INHERITANCE)
+                .suppress(Warning.ALL_FIELDS_SHOULD_BE_USED)
+                .verify();
     }
 }

@@ -82,7 +82,8 @@ public class BlogEntryDaoImpl extends AbstractGenericDao<BlogEntry> implements B
             Join<BlogComment, BlogEntry> u = blogCommentRoot.join(BlogComment_.blogEntry);
             cq.select(blogCommentRoot).where(cb.equal(u.get(BlogEntry_.id), blogId));
             cq.distinct(true);
-            Order order = R.DEFAULT_ASC_ID_SORT_ORDER ? cb.asc(blogCommentRoot.get(AbstractEntity_.id)) 
+            Order order = R.DEFAULT_ASC_ID_SORT_ORDER 
+                    ? cb.asc(blogCommentRoot.get(AbstractEntity_.id)) 
                     : cb.desc(blogCommentRoot.get(AbstractEntity_.id));
             cq.orderBy(order);
             TypedQuery<BlogComment> tq = entityManager.createQuery(cq);

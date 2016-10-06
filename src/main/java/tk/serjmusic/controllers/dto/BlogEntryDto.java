@@ -58,13 +58,24 @@ public class BlogEntryDto extends ResourceSupport {
      */
     @Loggable
     public BlogEntry overwriteEntity(BlogEntry blogEntry) {
-        System.out.println("blogEntry: " + blogEntry);
-        if (blogId > 0) blogEntry.setId(blogId);
-        if (title != null) blogEntry.setTitle(title);
-        if (content != null) blogEntry.setContent(content);
-        if (imageLink != null) blogEntry.setImageLink(imageLink);
-        if (dateCreated != null) blogEntry.setDateCreated(dateCreated);
-        if (author != null) blogEntry.setAuthor(author.overwriteEntity(new User()));
+        if (blogId > 0) {
+            blogEntry.setId(blogId);
+        }
+        if (title != null) {
+            blogEntry.setTitle(title);
+        }
+        if (content != null) {
+            blogEntry.setContent(content);
+        }
+        if (imageLink != null) {
+            blogEntry.setImageLink(imageLink);
+        }
+        if (dateCreated != null) {
+            blogEntry.setDateCreated(dateCreated);
+        }
+        if (author != null) {
+            blogEntry.setAuthor(author.overwriteEntity(new User()));
+        }
         return blogEntry;
     }
     

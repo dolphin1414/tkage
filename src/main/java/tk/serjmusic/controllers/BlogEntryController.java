@@ -107,7 +107,20 @@ public class BlogEntryController {
         }
         BlogEntry blog = blogDto.overwriteEntity(new BlogEntry());
         blog.setDateCreated(new Date());
-        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal;
+        try {
+            principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (NullPointerException ex) {
+            principal = null;
+        }
+         
+        User author = null;
+        if (principal instanceof User) {
+            author = (User) principal;
+        } /*else {
+            author = blogDto.getAuthor()
+                    .overwriteEntity(userService.getById(blogDto.getAuthor().getUserId()));
+        }*/
         blog.setAuthor(author);
         blog = blogService.create(blog);
         return new ResponseEntity<BlogEntryDto>(blogDtoAsm.toResource(blog), HttpStatus.OK);

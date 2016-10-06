@@ -27,17 +27,10 @@
 
 package tk.serjmusic.models;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
-import tk.serjmusic.dao.impl.PhotoEntryDaoImpl;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-
 /**
- * 
+ * test.
  *
  * @author Roman Kondakov
  */
@@ -47,14 +40,18 @@ public class SandBox {
     
 
     /**
-     * @param args
+     * w.
+     * 
+     * @param args w
      */
     public static void main(String[] args) {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+       /* ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         
-        EntityManagerFactory factory = ctx.getBean(EntityManagerFactory.class, "entityManagerFactory");
+        EntityManagerFactory factory = ctx.getBean(EntityManagerFactory.class, 
+        "entityManagerFactory");
         //EntityManager em =  factory.createEntityManager();
-        PhotoEntryDaoImpl photoEntryDaoImpl = ctx.getBean(PhotoEntryDaoImpl.class, "photoEntryDaoImpl");
+        PhotoEntryDaoImpl photoEntryDaoImpl = ctx.getBean(PhotoEntryDaoImpl.class, 
+        "photoEntryDaoImpl");
         System.out.println("photoEntryDaoImpl " + photoEntryDaoImpl);
         photoEntryDaoImpl.persist(new PhotoEntry("kokoko"));
         System.out.println("1 " + photoEntryDaoImpl.findAll());
@@ -63,7 +60,7 @@ public class SandBox {
         photo.setBackgroundImage(true);
         photoEntryDaoImpl.merge(photo);
         System.out.println("3 " + photoEntryDaoImpl.findAll());
-        System.out.println("4 " + photoEntryDaoImpl.findAll());
+        System.out.println("4 " + photoEntryDaoImpl.findAll());*/
         
     }
 

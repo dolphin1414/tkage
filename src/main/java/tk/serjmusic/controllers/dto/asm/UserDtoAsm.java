@@ -27,10 +27,10 @@
 
 package tk.serjmusic.controllers.dto.asm;
 
-import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 import tk.serjmusic.controllers.UsersController;
 import tk.serjmusic.controllers.dto.UserDto;
@@ -56,7 +56,6 @@ public class UserDtoAsm extends ResourceAssemblerSupport<User, UserDto> {
     @Override
     public UserDto toResource(User user) {
         UserDto userDto = new UserDto();
-        System.out.println("user " + user);
         userDto.setUserId(user.getId());
         userDto.setUsername(user.getUsername());
         userDto.setPassword(user.getPassword());

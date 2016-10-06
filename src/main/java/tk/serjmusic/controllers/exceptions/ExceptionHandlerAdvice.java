@@ -54,6 +54,12 @@ public class ExceptionHandlerAdvice {
         responseHeaders.add("Content-Type", "application/json");
     }
     
+    /**
+     * Handler for {@link CanNotFindException}.
+     * 
+     * @param ex exception
+     * @return NOT_FOUND status
+     */
     @ExceptionHandler
     public ResponseEntity<String> handleException(CanNotFindException ex) {
         logger.info("Not found exception ", ex);
@@ -61,6 +67,12 @@ public class ExceptionHandlerAdvice {
                 HttpStatus.NOT_FOUND);
     }
     
+    /**
+     * Handler for {@link CanNotFindException}.
+     * 
+     * @param ex AlreadyExistsException
+     * @return CONFLICT status
+     */
     @ExceptionHandler
     public ResponseEntity<String> handleException(AlreadyExistsException ex) {
         logger.info("Entity already exists ", ex);
@@ -68,6 +80,12 @@ public class ExceptionHandlerAdvice {
                 HttpStatus.CONFLICT);
     }
     
+    /**
+     * Handler for {@link PersistentLayerProblemsException}.
+     * 
+     * @param ex PersistentLayerProblemsException
+     * @return CONFLICT status
+     */
     @ExceptionHandler
     public ResponseEntity<String> handleException(PersistentLayerProblemsException ex) {
         logger.warn("Can not handle request. ", ex);
@@ -75,6 +93,12 @@ public class ExceptionHandlerAdvice {
                 HttpStatus.CONFLICT);
     }
     
+    /**
+     * Handler for {@link PersistentLayerProblemsException}.
+     * 
+     * @param ex IllegalArgumentException
+     * @return BAD_REQUEST status
+     */
     @ExceptionHandler
     public ResponseEntity<String> handleException(IllegalArgumentException ex) {
         logger.info("Bad request ", ex);
@@ -82,6 +106,12 @@ public class ExceptionHandlerAdvice {
                 HttpStatus.BAD_REQUEST);
     }
     
+    /**
+     * Handler for all other exceptions.
+     * 
+     * @param ex exception
+     * @return INTERNAL_SERVER_ERROR status
+     */
     @ExceptionHandler
     public ResponseEntity<String> handleException(Throwable ex) {
         logger.warn("Unexpectable exception: ", ex);
@@ -89,15 +119,27 @@ public class ExceptionHandlerAdvice {
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
+    /**
+     * Find root cause of the exception.
+     * 
+     * @param e - exception
+     * @return - root cause
+     */
     private Throwable getRootCause(Throwable e) {
         Throwable cause = null; 
         Throwable result = e;
-        while(null != (cause = result.getCause())  && (result != cause) ) {
+        while (null != (cause = result.getCause())  && (result != cause) ) {
             result = cause;
         }
         return result;
     }
     
+    /**
+     * Conver exception to JSON  format.
+     * 
+     * @param e - eexception
+     * @return JSON string
+     */
     private String toErrorMessage(Throwable e) {
         return "{ \"error\": \"" + getRootCause(e).getMessage() 
                 + "\", \"exception\": \"" + getRootCause(e).getClass() + "\" }";

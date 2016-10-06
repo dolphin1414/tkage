@@ -41,7 +41,7 @@ import tk.serjmusic.models.PhotoEntry;
  *
  * @author Roman Kondakov
  */
-public class PhotoEntryDtoAsm extends ResourceAssemblerSupport<PhotoEntry, PhotoEntryDto>{
+public class PhotoEntryDtoAsm extends ResourceAssemblerSupport<PhotoEntry, PhotoEntryDto> {
 
     public PhotoEntryDtoAsm() {
         super(PhotoEntryController.class, PhotoEntryDto.class);

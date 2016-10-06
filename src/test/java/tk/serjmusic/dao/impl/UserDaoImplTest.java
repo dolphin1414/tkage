@@ -65,9 +65,7 @@ import java.util.Set;
  *
  * @author Roman Kondakov
  */
-@ContextHierarchy({
-    @ContextConfiguration(locations={"classpath:spring-test-dao.xml"})
-})
+@ContextHierarchy({@ContextConfiguration(locations = {"classpath:spring-test-dao.xml"})})
 @RunWith(SpringJUnit4ClassRunner.class)
 
 @Transactional
@@ -105,7 +103,7 @@ public class UserDaoImplTest {
     @Commit
     @Before
     public void setUp() {
-        
+
         // set peristed user data
         persisted = new User(PERSISTED_USERNAME);
         persisted.setEmail(PERSISTED_EMAIL);
@@ -113,16 +111,16 @@ public class UserDaoImplTest {
         persisted.setRoles(new HashSet<>(Arrays.asList(UserRole.ROLE_ADMIN)));
         persisted.setBlogs(new HashSet<>(Arrays.asList(blog)));
         persisted.setComments(comments);
-        
+
         // set transient users data
         transient1.setEmail("test_email_1");
         transient2.setEmail("test_email_2");
-        
+
         // set blog data
         blog.setContent("test_content_1");
         blog.setAuthor(persisted);
         blog.setComments(new ArrayList<>(comments));
-        
+
         // set blog comments
         blogComment1.setContent("test_content_1");
         blogComment2.setContent("test_content_2");
@@ -133,7 +131,7 @@ public class UserDaoImplTest {
         blogComment1.setAuthor(persisted);
         blogComment2.setAuthor(persisted);
         blogComment3.setAuthor(persisted);
-        
+
         // persist entities
         commentDao.persist(blogComment1);
         commentDao.persist(blogComment2);
@@ -259,21 +257,21 @@ public class UserDaoImplTest {
         users = userDao.findPaginatedAndOrdered(false, 1, 1);
         assertEquals(transient2, users.get(0));
     }
-    
+
     /**
      * Test method for
      * {@link tk.serjmusic.dao.BlogEntryDaoImpl#findPaginatedCommentsForBlogId(int, int, int)}.
      */
     @Test
     public final void testFindPaginatedCommentsForBlogId() {
-        List<BlogComment> derivedcommentsomments = 
+        List<BlogComment> derivedcommentsomments =
                 blogDao.findPaginatedCommentsForBlogId(blog.getId(), 1, 2);
         assertEquals(2, derivedcommentsomments.size());
-        assertTrue(derivedcommentsomments.contains(blogComment1));
+        assertTrue(derivedcommentsomments.contains(blogComment3));
         assertTrue(derivedcommentsomments.contains(blogComment2));
         derivedcommentsomments = blogDao.findPaginatedCommentsForBlogId(blog.getId(), 2, 2);
         assertEquals(1, derivedcommentsomments.size());
-        assertTrue(derivedcommentsomments.contains(blogComment3));
+        assertTrue(derivedcommentsomments.contains(blogComment1));
     }
 
 }

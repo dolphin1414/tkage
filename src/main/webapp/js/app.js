@@ -27,7 +27,7 @@ app.config(
 		})
 
 .run(function($rootScope, $state, userService) {
-	// Чуть-чуть быдлокода, чтоб убрать адресную строку в мобильном браузере
+	// Remove browser address bar
 	window.addEventListener("load", function() {
 		setTimeout(function() {
 			window.scrollTo(0, 1);
@@ -48,7 +48,6 @@ app.controller("appCtrl", function AppCtrl($interval, $scope, $location,
 		$state, $stateParams, $rootScope, userService) {
 	$scope.$on("$stateChangeSuccess", function(event, toState, toParams,
 			fromState, fromParams) {
-		$interval.cancel($rootScope.timer);
 		if (angular.isDefined(toState.data.pageTitle)) {
 			$scope.pageTitle = toState.data.pageTitle;
 		}

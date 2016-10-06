@@ -55,11 +55,13 @@ import javax.servlet.http.HttpServletResponse;
 @Component("authSuccess")
 public class AuthSuccess extends SimpleUrlAuthenticationSuccessHandler {
     
-    private final static ObjectWriter objectWriter = 
+    private static final ObjectWriter objectWriter = 
             new ObjectMapper().writer().withDefaultPrettyPrinter();
 
     /* (non-Javadoc)
-     * @see org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
+     * @see org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
+     * #onAuthenticationSuccess(javax.servlet.http.HttpServletRequest, 
+     * javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
      */
     @Loggable
     @Override
