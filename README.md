@@ -80,9 +80,3 @@ api/v1/resources/photo?pageNumber={int}&pageSize={int} – GET paginated photo
 ## Client side
 
 The client side is based on AngularJS framework with UI-Router (https://angular-ui.github.io/ui-router/site/) for site navigation. 
-
-
-
-
-
-
